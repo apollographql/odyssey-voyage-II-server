@@ -189,11 +189,7 @@ const resolvers = {
           };
         }
       } else {
-        return {
-          code: 400,
-          success: false,
-          message: 'Only hosts can create new listings',
-        };
+        throw new ForbiddenError('Only hosts have access to listings.');
       }
     },
     updateListing: async (_, { listingId, listing }, { dataSources, userId }) => {
