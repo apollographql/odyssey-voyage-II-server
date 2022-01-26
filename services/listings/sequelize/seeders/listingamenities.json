@@ -1,0 +1,16 @@
+[
+  { "AmenityId": "am-1", "ListingId": "listing-1" },
+  { "AmenityId": "am-2", "ListingId": "listing-1" },
+  { "AmenityId": "am-3", "ListingId": "listing-1" },
+  { "AmenityId": "am-4", "ListingId": "listing-1" },
+  { "AmenityId": "am-5", "ListingId": "listing-1" },
+  { "AmenityId": "am-6", "ListingId": "listing-1" },
+  { "AmenityId": "am-7", "ListingId": "listing-1" },
+  { "AmenityId": "am-1", "ListingId": "listing-2" },
+  { "AmenityId": "am-2", "ListingId": "listing-2" },
+  { "AmenityId": "am-3", "ListingId": "listing-2" },
+  { "AmenityId": "am-4", "ListingId": "listing-2" },
+  { "AmenityId": "am-5", "ListingId": "listing-2" },
+  { "AmenityId": "am-6", "ListingId": "listing-2" },
+  { "AmenityId": "am-7", "ListingId": "listing-2" }
+]

@@ -1,0 +1,105 @@
+[
+  {
+    "costPerNight": 120.0,
+    "title": "Campsite on Moon",
+    "locationType": "CAMPSITE",
+    "description": "Enjoy this amazing campsite on the Moon! It's amazing!",
+    "id": "listing-1",
+    "numOfBeds": 2,
+    "photoThumbnail": "https://source.unsplash.com/featured/?space",
+    "hostId": "user-1"
+  },
+  {
+    "costPerNight": 592.0,
+    "title": "Room on Space Station",
+    "locationType": "ROOM",
+    "description": "Enjoy this amazing room on the space station! It's amazing!",
+    "id": "listing-2",
+    "numOfBeds": 4,
+    "photoThumbnail": "https://source.unsplash.com/featured/?space",
+    "hostId": "user-1",
+    "isFeatured": true
+  },
+  {
+    "costPerNight": 313.0,
+    "title": "The Veni Station orbiting Mnemosyne",
+    "locationType": "HOUSE",
+    "description": "Private Yacht. The Even Odds has a golden hull and advanced ion engines. It is equipped with a single luxury suite and defensive force shield.",
+    "id": "listing-3",
+    "numOfBeds": 5,
+    "photoThumbnail": "https://source.unsplash.com/featured/?space",
+    "hostId": "user-1"
+  },
+  {
+    "costPerNight": 520.0,
+    "title": "Stellar Pathfinder",
+    "locationType": "CAMPSITE",
+    "description": "Research Spaceship. The Stellar Pathfinder has an aerodyne hull and inefficient sublight engines. It is equipped with an advanced sensor system and defensive force shield.\n",
+    "id": "listing-4",
+    "numOfBeds": 3,
+    "photoThumbnail": "https://source.unsplash.com/featured/?space",
+    "hostId": "user-1"
+  },
+  {
+    "costPerNight": 580.0,
+    "title": "Flame of Uryuon",
+    "locationType": "HOUSE",
+    "description": "The Harrier has a well-armored hull and long-range fusion engines with automatic repair systems. It is equipped with point-defense lasers and armed with rapid-fire railguns.",
+    "id": "listing-5",
+    "numOfBeds": 1,
+    "photoThumbnail": "https://source.unsplash.com/featured/?space",
+    "hostId": "user-1",
+    "isFeatured": true
+  },
+  {
+    "costPerNight": 330.0,
+    "title": "The Sari Terraforming Complex on New Theia",
+    "locationType": "SPACESHIP",
+    "description": "Exploration Spaceship. The Yukon has a salvaged hull and an inefficient FTL drive which requires repairs after every run. It is equipped with a planetary sensor system and defensive laser cannon.",
+    "id": "listing-6",
+    "numOfBeds": 1,
+    "photoThumbnail": "https://source.unsplash.com/featured/?space",
+    "hostId": "user-4"
+  },
+  {
+    "costPerNight": 430.0,
+    "title": "The Desert Moon of Leko",
+    "locationType": "SPACESHIP",
+    "description": "Cargo Spaceship. The Gloni Carrier has an ellipsoid hull and advanced sublight engines. It is equipped with a large detachable cargo container and landing shuttle.",
+    "id": "listing-7",
+    "numOfBeds": 2,
+    "photoThumbnail": "https://source.unsplash.com/featured/?space",
+    "hostId": "user-4"
+  },
+  {
+    "costPerNight": 688.0,
+    "title": "The Wreckage of Bari Station orbiting 2250 Dou Xiu VI",
+    "locationType": "ROOM",
+    "description": "The Citadel of Mone has a needle-like primary hull welded to twin spherical secondary hulls. It is equipped with a stealth system and armed with particle accelerators and autonomous attack drones.",
+    "id": "listing-8",
+    "numOfBeds": 3,
+    "photoThumbnail": "https://source.unsplash.com/featured/?space",
+    "hostId": "user-5"
+  },
+  {
+    "costPerNight": 474.0,
+    "title": "The Volcanic Continent of 7597 Jiao Xiu IV",
+    "locationType": "HOUSE",
+    "description": "The John Glenn has an elegant hull and an advanced FTL drive. It is equipped with a planetary sensor system and landing shuttle.",
+    "id": "listing-9",
+    "numOfBeds": 4,
+    "photoThumbnail": "https://source.unsplash.com/featured/?space",
+    "hostId": "user-6",
+    "isFeatured": true
+  },
+  {
+    "costPerNight": 687.0,
+    "title": "The Hollow World of Lycia",
+    "locationType": "APARTMENT",
+    "description": "e Spectral Shift has an aerodyne hull with large observation windows. It is equipped with autonomous sensor probes and a landing shuttle.",
+    "id": "listing-10",
+    "numOfBeds": 4,
+    "photoThumbnail": "https://source.unsplash.com/featured/?space",
+    "hostId": "user-6"
+  }
+]

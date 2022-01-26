@@ -1,0 +1,101 @@
+[
+  {
+    "id": "booking-1",
+    "checkInDate": "2021-09-08T04:00:00.000Z",
+    "checkOutDate": "2021-09-17T04:00:00.000Z",
+    "status": "COMPLETED",
+    "listingId": "listing-1",
+    "guestId": "user-2",
+    "totalCost": 1080
+  },
+  {
+    "id": "booking-2",
+    "checkInDate": "2021-10-10T05:00:00.000Z",
+    "checkOutDate": "2021-10-11T04:00:00.000Z",
+    "status": "UPCOMING",
+    "listingId": "listing-1",
+    "guestId": "user-3",
+    "totalCost": 1920
+  },
+  {
+    "id": "booking-3",
+    "checkInDate": "2021-10-12T04:00:00.000Z",
+    "checkOutDate": "2021-10-16T04:00:00.000Z",
+    "status": "UPCOMING",
+    "listingId": "listing-1",
+    "guestId": "user-7",
+    "totalCost": 480
+  },
+  {
+    "id": "booking-4",
+    "checkInDate": "2021-07-04T04:00:00.000Z",
+    "checkOutDate": "2021-07-06T04:00:00.000Z",
+    "status": "COMPLETED",
+    "listingId": "listing-1",
+    "guestId": "user-8",
+    "totalCost": 240
+  },
+  {
+    "id": "booking-5",
+    "checkInDate": "2022-02-01T05:00:00.000Z",
+    "checkOutDate": "2022-02-04T05:00:00.000Z",
+    "status": "UPCOMING",
+    "listingId": "listing-2",
+    "guestId": "user-2",
+    "totalCost": 1776
+  },
+  {
+    "id": "booking-6",
+    "checkInDate": "2022-02-07T05:00:00.000Z",
+    "checkOutDate": "2022-02-11T05:00:00.000Z",
+    "status": "UPCOMING",
+    "listingId": "listing-2",
+    "guestId": "user-3",
+    "totalCost": 2368
+  },
+  {
+    "id": "booking-7",
+    "checkInDate": "2022-06-06T04:00:00.000Z",
+    "checkOutDate": "2022-06-17T04:00:00.000Z",
+    "status": "UPCOMING",
+    "listingId": "listing-2",
+    "guestId": "user-3",
+    "totalCost": 6512
+  },
+  {
+    "id": "booking-8",
+    "checkInDate": "2021-05-03T04:00:00.000Z",
+    "checkOutDate": "2021-05-05T04:00:00.000Z",
+    "status": "COMPLETED",
+    "listingId": "listing-2",
+    "guestId": "user-3",
+    "totalCost": 1184
+  },
+  {
+    "id": "booking-9",
+    "checkInDate": "2021-11-05T04:00:00.000Z",
+    "checkOutDate": "2021-12-01T05:00:00.000Z",
+    "status": "UPCOMING",
+    "listingId": "listing-2",
+    "guestId": "user-7",
+    "totalCost": 15392
+  },
+  {
+    "id": "booking-10",
+    "checkInDate": "2022-01-01T05:00:00.000Z",
+    "checkOutDate": "2022-02-09T05:00:00.000Z",
+    "status": "UPCOMING",
+    "listingId": "listing-3",
+    "guestId": "user-2",
+    "totalCost": 12207
+  },
+  {
+    "id": "booking-11",
+    "checkInDate": "2021-07-04T04:00:00.000Z",
+    "checkOutDate": "2021-07-30T04:00:00.000Z",
+    "status": "COMPLETED",
+    "listingId": "listing-3",
+    "guestId": "user-8",
+    "totalCost": 8138
+  }
+]

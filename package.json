@@ -1,0 +1,42 @@
+{
+  "name": "s2-demo-app-research",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint-schema": "graphql-schema-linter schema.graphql",
+    "launch": "node utils/launch.js",
+    "postinstall": "npm run install-services",
+    "install-services": "node utils/install.js",
+    "db:reset": "node utils/reset.js"
+  },
+  "nodemonConfig": {
+    "ext": "*.js, *.graphql"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^3.0.2",
+    "apollo-datasource": "^3.1.0",
+    "apollo-datasource-rest": "^3.2.0",
+    "apollo-server": "^3.3.0",
+    "axios": "^0.24.0",
+    "concurrently": "^6.3.0",
+    "date-fns": "^2.25.0",
+    "graphql": "^15.5.3",
+    "graphql-schema-linter": "^2.0.1",
+    "nodemon": "^2.0.12",
+    "sequelize": "^6.9.0",
+    "sqlite3": "^5.0.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^16.9.1",
+    "prisma": "^3.0.2",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
+  }
+}
