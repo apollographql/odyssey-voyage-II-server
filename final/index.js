@@ -22,7 +22,12 @@ const server = new ApolloServer({
     const token = req.headers.authorization || '';
     const userId = token.split(' ')[1]; // get the user name after 'Bearer '
     if (userId) {
-      const { data } = await axios.get(`https://rt-airlock-services-account.herokuapp.com/login/${userId}`);
+      const { data } = await axios
+        .get(`https://rt-airlock-services-account.herokuapp.com/login/${userId}`)
+        .catch((error) => {
+          throw new AuthenticationError(error.message);
+        });
+
       return { userId: data.id, userRole: data.role };
     }
   },
