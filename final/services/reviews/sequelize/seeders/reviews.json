@@ -1,0 +1,92 @@
+[
+  {
+    "id": "review-1",
+    "authorId": "user-2",
+    "targetId": "listing-1",
+    "bookingId": "booking-1",
+    "targetType": "LISTING",
+    "text": "review for the listing",
+    "rating": 4
+  },
+  {
+    "id": "review-2",
+    "authorId": "user-7",
+    "targetId": "listing-1",
+    "bookingId": "booking-3",
+    "targetType": "LISTING",
+    "text": "review for the listing",
+    "rating": 3
+  },
+  {
+    "id": "review-3",
+    "authorId": "user-8",
+    "targetId": "listing-1",
+    "bookingId": "booking-4",
+    "targetType": "LISTING",
+    "text": "review for the listing",
+    "rating": 5
+  },
+  {
+    "id": "review-4",
+    "authorId": "user-2",
+    "bookingId": "booking-1",
+    "targetType": "HOST",
+    "text": "review for the host",
+    "rating": 5,
+    "targetId": "user-1"
+  },
+  {
+    "id": "review-5",
+    "authorId": "user-7",
+    "bookingId": "booking-3",
+    "targetType": "HOST",
+    "text": "review for the host",
+    "rating": 5,
+    "targetId": "user-1"
+  },
+  {
+    "id": "review-6",
+    "authorId": "user-3",
+    "targetId": "listing-2",
+    "bookingId": "booking-8",
+    "targetType": "LISTING",
+    "text": "review for the listing",
+    "rating": 5
+  },
+  {
+    "id": "review-7",
+    "authorId": "user-8",
+    "targetId": "listing-3",
+    "bookingId": "booking-11",
+    "targetType": "LISTING",
+    "text": "review for the listing",
+    "rating": 3
+  },
+  {
+    "id": "review-8",
+    "authorId": "user-3",
+    "targetId": "user-1",
+    "bookingId": "booking-8",
+    "targetType": "HOST",
+    "text": "review for the host",
+    "rating": 3
+  },
+  {
+    "id": "review-9",
+    "authorId": "user-8",
+    "targetId": "user-1",
+    "bookingId": "booking-4",
+    "targetType": "HOST",
+    "text": "review for the host",
+    "rating": 4
+  },
+  {
+    "id": "review-10",
+    "authorId": "user-8",
+    "targetId": "user-1",
+    "bookingId": "booking-11",
+    "targetType": "HOST",
+    "text": "review for the host",
+    "rating": 5
+  }
+]
