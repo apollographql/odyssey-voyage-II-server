@@ -1,12 +1,10 @@
 {
-  "name": "s2-demo-app-research",
+  "name": "airlock-course2-final",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint-schema": "graphql-schema-linter schema.graphql",
     "launch": "node utils/launch.js",
     "postinstall": "npm run install-services",
     "install-services": "node utils/install.js",
@@ -27,7 +25,6 @@
     "concurrently": "^6.3.0",
     "date-fns": "^2.25.0",
     "graphql": "^15.5.3",
-    "graphql-schema-linter": "^2.0.1",
     "nodemon": "^2.0.12",
     "sequelize": "^6.9.0",
     "sqlite3": "^5.0.2",
