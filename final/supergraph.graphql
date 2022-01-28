@@ -154,38 +154,46 @@ type CreateListingResponse implements MutationResponse {
   success: Boolean!
 }
 
-type Guest implements User {
+type Guest implements User
+  @join__owner(graph: ACCOUNTS)
+  @join__type(graph: ACCOUNTS, key: "id")
+  @join__type(graph: MONOLITH, key: "id")
+{
   """The reservations guest has"""
-  bookings: [Booking]!
+  bookings: [Booking]! @join__field(graph: MONOLITH)
 
   """Amount of money in the guest's wallet"""
-  funds: Float!
-  id: ID!
+  funds: Float! @join__field(graph: MONOLITH)
+  id: ID! @join__field(graph: ACCOUNTS)
 
   """The user's first and last name"""
-  name: String!
+  name: String! @join__field(graph: ACCOUNTS)
 
   """The user's profile photo URL"""
-  profilePicture: String!
+  profilePicture: String! @join__field(graph: ACCOUNTS)
 }
 
-type Host implements User {
-  id: ID!
+type Host implements User
+  @join__owner(graph: ACCOUNTS)
+  @join__type(graph: ACCOUNTS, key: "id")
+  @join__type(graph: MONOLITH, key: "id")
+{
+  id: ID! @join__field(graph: ACCOUNTS)
 
   """The listings this host owns"""
-  listings: [Listing]
+  listings: [Listing] @join__field(graph: MONOLITH)
 
   """The user's first and last name"""
-  name: String!
+  name: String! @join__field(graph: ACCOUNTS)
 
   """The overall calculated rating for the host"""
-  overallRating: Float
+  overallRating: Float @join__field(graph: MONOLITH)
 
   """The host's profile bio description, will be shown in the listing"""
-  profileDescription: String!
+  profileDescription: String! @join__field(graph: ACCOUNTS)
 
   """The user's profile photo URL"""
-  profilePicture: String!
+  profilePicture: String! @join__field(graph: ACCOUNTS)
 }
 
 type Listing {
@@ -310,7 +318,7 @@ type Query {
   listingAmenities: [Amenity!]! @join__field(graph: MONOLITH)
 
   """Currently logged-in user"""
-  me: User! @join__field(graph: MONOLITH)
+  me: User! @join__field(graph: ACCOUNTS)
 
   """Past bookings for guest based on current date"""
   pastGuestBookings: [Booking]! @join__field(graph: MONOLITH)
@@ -320,7 +328,7 @@ type Query {
 
   """Upcoming and current bookings for guest based on current date"""
   upcomingGuestBookings: [Booking]! @join__field(graph: MONOLITH)
-  user(id: ID!): User @join__field(graph: MONOLITH)
+  user(id: ID!): User @join__field(graph: ACCOUNTS)
 }
 
 """
@@ -498,5 +506,6 @@ enum core__Purpose {
 scalar join__FieldSet
 
 enum join__Graph {
+  ACCOUNTS @join__graph(name: "accounts" url: "http://localhost:4002")
   MONOLITH @join__graph(name: "monolith" url: "http://localhost:4001")
 }
