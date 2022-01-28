@@ -86,24 +86,6 @@ const resolvers = {
     },
   },
   Mutation: {
-    updateProfile: async (_, { updateProfileInput }, { dataSources, userId }) => {
-      if (!userId) throw new AuthenticationError(authErrMessage);
-      try {
-        const updatedUser = await dataSources.accountsAPI.updateUser({ userId, userInfo: updateProfileInput });
-        return {
-          code: 200,
-          success: true,
-          message: 'Profile successfully updated!',
-          user: updatedUser,
-        };
-      } catch (err) {
-        return {
-          code: 400,
-          success: false,
-          message: err.message,
-        };
-      }
-    },
     createBooking: async (_, { createBookingInput }, { dataSources, userId }) => {
       if (!userId) throw new AuthenticationError(authErrMessage);
 

@@ -272,7 +272,7 @@ type Mutation {
   updateListing(listing: UpdateListingInput!, listingId: ID!): UpdateListingResponse! @join__field(graph: MONOLITH)
 
   """Updates the logged-in user's profile information"""
-  updateProfile(updateProfileInput: UpdateProfileInput): UpdateProfileResponse! @join__field(graph: MONOLITH)
+  updateProfile(updateProfileInput: UpdateProfileInput): UpdateProfileResponse! @join__field(graph: ACCOUNTS)
 }
 
 interface MutationResponse {

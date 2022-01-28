@@ -25,10 +25,6 @@ type Query {
 }
 
 type Mutation {
-  ### Accounts
-  "Updates the logged-in user's profile information"
-  updateProfile(updateProfileInput: UpdateProfileInput): UpdateProfileResponse!
-
   ### Listings
   "Creates a new listing for the currently authenticated host"
   createListing(listing: CreateListingInput!): CreateListingResponse!
@@ -92,26 +88,6 @@ extend type Guest implements User @key(fields: "id") {
   bookings: [Booking]!
   "Amount of money in the guest's wallet"
   funds: Float!
-}
-
-input UpdateProfileInput {
-  "The user's first and last name"
-  name: String
-  "The user's profile photo URL"
-  profilePicture: String
-  "The host's profile bio description, will be shown in the listing"
-  profileDescription: String
-}
-
-type UpdateProfileResponse implements MutationResponse {
-  "Similar to HTTP status code, represents the status of the mutation"
-  code: Int!
-  "Indicates whether the mutation was successful"
-  success: Boolean!
-  "Human-readable message for the UI"
-  message: String!
-  "Updated user"
-  user: User
 }
 
 type AddFundsToWalletResponse implements MutationResponse {
