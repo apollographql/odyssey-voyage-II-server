@@ -1,9 +1,4 @@
 type Query {
-  ### User accounts
-  user(id: ID!): User
-  "Currently logged-in user"
-  me: User!
-
   ### Listings
   "A curated array of listings to feature on the homepage"
   featuredListings: [Listing!]!
@@ -75,26 +70,24 @@ interface User {
   profilePicture: String!
 }
 
-type Host implements User {
-  id: ID!
+extend type Host implements User @key(fields: "id")  {
+  id: ID! @external
   "The user's first and last name"
-  name: String!
+  name: String! @external
   "The user's profile photo URL"
-  profilePicture: String!
-  "The host's profile bio description, will be shown in the listing"
-  profileDescription: String!
+  profilePicture: String! @external
   "The listings this host owns"
   listings: [Listing]
   "The overall calculated rating for the host"
   overallRating: Float
 }
 
-type Guest implements User {
-  id: ID!
+extend type Guest implements User @key(fields: "id") {
+  id: ID! @external
   "The user's first and last name"
-  name: String!
+  name: String! @external
   "The user's profile photo URL"
-  profilePicture: String!
+  profilePicture: String! @external
   "The reservations guest has"
   bookings: [Booking]!
   "Amount of money in the guest's wallet"
