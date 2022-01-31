@@ -125,65 +125,6 @@ const resolvers = {
         };
       }
     },
-    createListing: async (_, { listing }, { dataSources, userId, userRole }) => {
-      if (!userId) throw new AuthenticationError(authErrMessage);
-
-      const { title, description, photoThumbnail, numOfBeds, costPerNight, locationType, amenities } = listing;
-
-      if (userRole === 'Host') {
-        try {
-          const newListing = await dataSources.listingsAPI.createListing({
-            title,
-            description,
-            photoThumbnail,
-            numOfBeds,
-            costPerNight,
-            hostId: userId,
-            locationType,
-            amenities,
-          });
-
-          return {
-            code: 200,
-            success: true,
-            message: 'Listing successfully created!',
-            listing: newListing,
-          };
-        } catch (err) {
-          return {
-            code: 400,
-            success: false,
-            message: err.message,
-          };
-        }
-      } else {
-        return {
-          code: 400,
-          success: false,
-          message: 'Only hosts can create new listings',
-        };
-      }
-    },
-    updateListing: async (_, { listingId, listing }, { dataSources, userId }) => {
-      if (!userId) throw new AuthenticationError(authErrMessage);
-
-      try {
-        const updatedListing = await dataSources.listingsAPI.updateListing({ listingId, listing });
-
-        return {
-          code: 200,
-          success: true,
-          message: 'Listing successfully updated!',
-          listing: updatedListing,
-        };
-      } catch (err) {
-        return {
-          code: 400,
-          success: false,
-          message: err.message,
-        };
-      }
-    },
     submitGuestReview: async (_, { bookingId, guestReview }, { dataSources, userId }) => {
       if (!userId) throw new AuthenticationError(authErrMessage);
 
@@ -320,11 +261,6 @@ const resolvers = {
       const role = review.targetType === 'LISTING' ? 'Guest' : 'Host';
       return { __typename: role, id: review.authorId };
     },
-  },
-  AmenityCategory: {
-    ACCOMMODATION_DETAILS: 'Accommodation Details',
-    SPACE_SURVIVAL: 'Space Survival',
-    OUTDOORS: 'Outdoors',
   },
 };
 
