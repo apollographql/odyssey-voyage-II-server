@@ -5,11 +5,15 @@ const { readFileSync } = require('fs');
 const typeDefs = gql(readFileSync('./schema.graphql', { encoding: 'utf-8' }));
 const resolvers = require('./resolvers');
 
+const ListingsAPI = require('./datasources/listings');
+const BookingsDb = require('./datasources/bookings');
+
 const server = new ApolloServer({
   schema: buildSubgraphSchema({ typeDefs, resolvers }),
   dataSources: () => {
     return {
-      // TODO: add data sources here
+      listingsAPI: new ListingsAPI(),
+      bookingsDb: new BookingsDb(),
     };
   },
   context: ({ req }) => {
