@@ -176,12 +176,13 @@ type Guest implements User
 type Host implements User
   @join__owner(graph: ACCOUNTS)
   @join__type(graph: ACCOUNTS, key: "id")
+  @join__type(graph: LISTINGS, key: "id")
   @join__type(graph: MONOLITH, key: "id")
 {
   id: ID! @join__field(graph: ACCOUNTS)
 
   """The listings this host owns"""
-  listings: [Listing] @join__field(graph: MONOLITH)
+  listings: [Listing] @join__field(graph: LISTINGS)
 
   """The user's first and last name"""
   name: String! @join__field(graph: ACCOUNTS)
@@ -196,51 +197,55 @@ type Host implements User
   profilePicture: String! @join__field(graph: ACCOUNTS)
 }
 
-type Listing {
+type Listing
+  @join__owner(graph: LISTINGS)
+  @join__type(graph: LISTINGS, key: "id")
+  @join__type(graph: MONOLITH, key: "id")
+{
   """The amenities available for this listing"""
-  amenities: [Amenity]!
+  amenities: [Amenity]! @join__field(graph: LISTINGS)
 
   """The list of bookings for a listing"""
-  bookings: [Booking]!
+  bookings: [Booking]! @join__field(graph: MONOLITH)
 
   """The cost per night"""
-  costPerNight: Float!
+  costPerNight: Float! @join__field(graph: LISTINGS)
 
   """
   An array of upcoming reserved dates that the listing has been booked for
   """
-  currentlyBookedDates: [ReservedDate]!
+  currentlyBookedDates: [ReservedDate]! @join__field(graph: MONOLITH)
 
   """The listing's description"""
-  description: String!
+  description: String! @join__field(graph: LISTINGS)
 
   """Owner of the listing"""
-  host: Host!
-  id: ID!
+  host: Host! @join__field(graph: LISTINGS)
+  id: ID! @join__field(graph: LISTINGS)
 
   """The location type of the listing"""
-  locationType: LocationType!
+  locationType: LocationType! @join__field(graph: LISTINGS)
 
   """The number of beds available"""
-  numOfBeds: Int!
+  numOfBeds: Int! @join__field(graph: LISTINGS)
 
   """The number of current and upcoming bookings for a listing"""
-  numberOfUpcomingBookings: Int!
+  numberOfUpcomingBookings: Int! @join__field(graph: MONOLITH)
 
   """The overall calculated rating for a listing"""
-  overallRating: Float
+  overallRating: Float @join__field(graph: MONOLITH)
 
   """The thumbnail image for the listing"""
-  photoThumbnail: String!
+  photoThumbnail: String! @join__field(graph: LISTINGS)
 
   """The submitted reviews for this listing"""
-  reviews: [Review]!
+  reviews: [Review]! @join__field(graph: MONOLITH)
 
   """The listing's title"""
-  title: String!
+  title: String! @join__field(graph: LISTINGS)
 
   """Calculated total cost of the listing with the given arguments"""
-  totalCost(checkInDate: String!, checkOutDate: String!): Float!
+  totalCost(checkInDate: String!, checkOutDate: String!): Float! @join__field(graph: LISTINGS)
 }
 
 enum LocationType {
@@ -256,7 +261,7 @@ type Mutation {
   createBooking(createBookingInput: CreateBookingInput): CreateBookingResponse! @join__field(graph: MONOLITH)
 
   """Creates a new listing for the currently authenticated host"""
-  createListing(listing: CreateListingInput!): CreateListingResponse! @join__field(graph: MONOLITH)
+  createListing(listing: CreateListingInput!): CreateListingResponse! @join__field(graph: LISTINGS)
 
   """
   Creates a review for the guest - must be authored by host of past booking
@@ -269,7 +274,7 @@ type Mutation {
   submitHostAndLocationReviews(bookingId: ID!, hostReview: ReviewInput!, locationReview: ReviewInput!): SubmitHostAndLocationReviewsResponse! @join__field(graph: MONOLITH)
 
   """Updates an existing listing"""
-  updateListing(listing: UpdateListingInput!, listingId: ID!): UpdateListingResponse! @join__field(graph: MONOLITH)
+  updateListing(listing: UpdateListingInput!, listingId: ID!): UpdateListingResponse! @join__field(graph: LISTINGS)
 
   """Updates the logged-in user's profile information"""
   updateProfile(updateProfileInput: UpdateProfileInput): UpdateProfileResponse! @join__field(graph: ACCOUNTS)
@@ -303,19 +308,19 @@ type Query {
   currentGuestBooking: Booking @join__field(graph: MONOLITH)
 
   """A curated array of listings to feature on the homepage"""
-  featuredListings: [Listing!]! @join__field(graph: MONOLITH)
+  featuredListings: [Listing!]! @join__field(graph: LISTINGS)
 
   """A list of bookings for the guest - must be authenticated as guest"""
   guestBookings: [Booking]! @join__field(graph: MONOLITH)
 
   """Return the listings that belong to the currently logged-in host"""
-  hostListings: [Listing!]! @join__field(graph: MONOLITH)
+  hostListings: [Listing!]! @join__field(graph: LISTINGS)
 
   """Returns the details about this listing"""
-  listing(id: ID!): Listing @join__field(graph: MONOLITH)
+  listing(id: ID!): Listing @join__field(graph: LISTINGS)
 
   """Returns all possible amenities for a listing"""
-  listingAmenities: [Amenity!]! @join__field(graph: MONOLITH)
+  listingAmenities: [Amenity!]! @join__field(graph: LISTINGS)
 
   """Currently logged-in user"""
   me: User! @join__field(graph: ACCOUNTS)
@@ -324,7 +329,7 @@ type Query {
   pastGuestBookings: [Booking]! @join__field(graph: MONOLITH)
 
   """Search results for listings that fit the criteria provided"""
-  searchListings(criteria: SearchListingsInput): [Listing!]! @join__field(graph: MONOLITH)
+  searchListings(criteria: SearchListingsInput): [Listing!]! @join__field(graph: LISTINGS)
 
   """Upcoming and current bookings for guest based on current date"""
   upcomingGuestBookings: [Booking]! @join__field(graph: MONOLITH)
@@ -507,5 +512,6 @@ scalar join__FieldSet
 
 enum join__Graph {
   ACCOUNTS @join__graph(name: "accounts" url: "http://localhost:4002")
+  LISTINGS @join__graph(name: "listings" url: "http://localhost:4003")
   MONOLITH @join__graph(name: "monolith" url: "http://localhost:4001")
 }
