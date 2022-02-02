@@ -42,7 +42,7 @@ const resolvers = {
     },
     listing: async (_, { id }, { dataSources }) => {
       const listing = await dataSources.listingsAPI.getListing(id);
-      return { ...listing, amenities: listing.Amenities };
+      return listing;
     },
     featuredListings: async (_, __, { dataSources }) => {
       const limit = 3;
@@ -179,7 +179,7 @@ const resolvers = {
             code: 200,
             success: true,
             message: 'Listing successfully created!',
-            listing: { ...newListing, amenities: newListing.Amenities },
+            listing: newListing,
           };
         } catch (err) {
           return {
@@ -206,7 +206,7 @@ const resolvers = {
           code: 200,
           success: true,
           message: 'Listing successfully updated!',
-          listing: { ...updatedListing, amenities: updatedListing.Amenities },
+          listing: updatedListing,
         };
       } catch (err) {
         return {

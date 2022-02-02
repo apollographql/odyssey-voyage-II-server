@@ -10,4 +10,18 @@ const getDifferenceInDays = (checkIn, checkOut) => {
   return Math.round(diffInTime / oneDayConversion);
 };
 
-module.exports = { getDifferenceInDays };
+const transformListingWithAmenities = (listingInstance) => {
+  // Amenities and ListingAmenities need to be converted to just `amenities`
+  const listing = listingInstance.toJSON();
+  const { Amenities, ...listingPropertiesToReturn } = listing;
+
+  const amenities = Amenities.map((a) => {
+    const { ListingAmenities, ...amenitiesToReturn } = a;
+    return amenitiesToReturn;
+  });
+
+  return { ...listingPropertiesToReturn, amenities };
+};
+
+module.exports = { getDifferenceInDays, transformListingWithAmenities };
+

@@ -1,5 +1,5 @@
 const express = require('express');
-const { getDifferenceInDays } = require('./helpers');
+const { getDifferenceInDays, transformListingWithAmenities } = require('./helpers');
 const { v4: uuidv4 } = require('uuid');
 const app = express();
 const port = 4010 || process.env.PORT;
@@ -14,15 +14,15 @@ app.get('/', (req, res) => {
 // get listing matching query params
 app.get('/listings', async (req, res) => {
   // default: page = 1, limit 20 results per page
-  const { page = 1, limit = 5, sortBy} = req.query;
+  const { page = 1, limit = 5, sortBy } = req.query;
   const skipValue = (parseInt(page, 10) - 1) * parseInt(limit, 10); // 0 indexed for page
 
   const { numOfBeds: minNumOfBeds } = req.query;
   const { gte } = listingsDb.Sequelize.Op;
 
   let sortOrder = ['costPerNight', 'DESC']; // default descending cost
-  if (sortBy === 'COST_ASC') { 
-    sortOrder = ['costPerNight', 'ASC']; 
+  if (sortBy === 'COST_ASC') {
+    sortOrder = ['costPerNight', 'ASC'];
   }
 
   const listings = await listingsDb.Listing.findAll({
@@ -59,11 +59,13 @@ app.get('/user/:userId/listings', async (req, res) => {
 
 // get listing info for a specific listing
 app.get('/listings/:listingId', async (req, res) => {
-  const listing = await listingsDb.Listing.findOne({
+  const listingInstance = await listingsDb.Listing.findOne({
     where: { id: req.params.listingId },
     include: listingsDb.Amenity,
   });
-  return res.json(listing);
+  const listingToReturn = transformListingWithAmenities(listingInstance);
+
+  return res.json(listingToReturn);
 });
 
 // get listing info for a specific listing
@@ -91,7 +93,6 @@ app.get('/listings/:listingId/totalCost', async (req, res) => {
 
 // get all possible listing amenities
 app.get('/listing/amenities', async (req, res) => {
-  console.log('test');
   const amenities = await listingsDb.Amenity.findAll();
   return res.json(amenities);
 });
@@ -120,8 +121,9 @@ app.post('/listings', async (req, res) => {
     include: listingsDb.Amenity,
     where: { id },
   });
+  const listingToReturn = transformListingWithAmenities(updatedListing);
 
-  return res.json(updatedListing);
+  return res.json(listingToReturn);
 });
 
 // edit a listing
@@ -141,8 +143,9 @@ app.patch('/listings/:listingId', async (req, res) => {
     include: listingsDb.Amenity,
     where: { id: req.params.listingId },
   });
+  const listingToReturn = transformListingWithAmenities(updatedListing);
 
-  return res.json(updatedListing);
+  return res.json(listingToReturn);
 });
 
 app.listen(port, () => {
