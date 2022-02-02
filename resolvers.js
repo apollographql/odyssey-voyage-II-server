@@ -42,7 +42,7 @@ const resolvers = {
     },
     listing: async (_, { id }, { dataSources }) => {
       const listing = await dataSources.listingsAPI.getListing(id);
-      return { ...listing, amenities: listing.Amenities };
+      return listing;
     },
     featuredListings: async (_, __, { dataSources }) => {
       const limit = 3;
@@ -114,7 +114,7 @@ const resolvers = {
         return {
           code: 400,
           success: false,
-          message: err,
+          message: err.message,
         };
       }
     },
@@ -153,7 +153,7 @@ const resolvers = {
         return {
           code: 400,
           success: false,
-          message: err,
+          message: err.message,
         };
       }
     },
@@ -179,17 +179,21 @@ const resolvers = {
             code: 200,
             success: true,
             message: 'Listing successfully created!',
-            listing: { ...newListing, amenities: newListing.Amenities },
+            listing: newListing,
           };
         } catch (err) {
           return {
             code: 400,
             success: false,
-            message: err,
+            message: err.message,
           };
         }
       } else {
-        throw new ForbiddenError('Only hosts have access to listings.');
+        return {
+          code: 400,
+          success: false,
+          message: 'Only hosts can create new listings',
+        };
       }
     },
     updateListing: async (_, { listingId, listing }, { dataSources, userId }) => {
@@ -202,13 +206,13 @@ const resolvers = {
           code: 200,
           success: true,
           message: 'Listing successfully updated!',
-          listing: { ...updatedListing, amenities: updatedListing.Amenities },
+          listing: updatedListing,
         };
       } catch (err) {
         return {
           code: 400,
           success: false,
-          message: err,
+          message: err.message,
         };
       }
     },
@@ -275,7 +279,7 @@ const resolvers = {
         return {
           code: 400,
           success: false,
-          message: err,
+          message: err.message,
         };
       }
     },
