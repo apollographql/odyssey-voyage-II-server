@@ -114,7 +114,7 @@ const resolvers = {
         return {
           code: 400,
           success: false,
-          message: err,
+          message: err.message,
         };
       }
     },
@@ -153,7 +153,7 @@ const resolvers = {
         return {
           code: 400,
           success: false,
-          message: err,
+          message: err.message,
         };
       }
     },
@@ -185,7 +185,7 @@ const resolvers = {
           return {
             code: 400,
             success: false,
-            message: err,
+            message: err.message,
           };
         }
       } else {
@@ -212,7 +212,7 @@ const resolvers = {
         return {
           code: 400,
           success: false,
-          message: err,
+          message: err.message,
         };
       }
     },
@@ -279,7 +279,7 @@ const resolvers = {
         return {
           code: 400,
           success: false,
-          message: err,
+          message: err.message,
         };
       }
     },
