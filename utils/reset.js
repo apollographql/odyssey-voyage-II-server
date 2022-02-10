@@ -17,7 +17,7 @@ concurrently(
     {
       command: 'npm run db:reset',
       name: 'reviews',
-      cwd: path.resolve(__dirname, '../services/payments'),
+      cwd: path.resolve(__dirname, '../services/reviews'),
       prefixColor: 'bgGreen',
     },
   ],
