@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServer, gql, AuthenticationError } = require('apollo-server');
 const { readFileSync } = require('fs');
 const axios = require('axios');
 
