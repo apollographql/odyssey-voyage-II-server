@@ -14,9 +14,9 @@
   { "id": "am-13", "category": "Space Survival", "name": "Jetpack" },
   { "id": "am-14", "category": "Space Survival", "name": "Rover" },
   { "id": "am-15", "category": "Space Survival", "name": "Water recycler" },
-  { "id": "am-16", "category": "Space Survival", "name": "Oxygen1" },
-  { "id": "am-17", "category": "Space Survival", "name": "Oxygen2" },
-  { "id": "am-18", "category": "Space Survival", "name": "Oxygen3" },
+  { "id": "am-16", "category": "Space Survival", "name": "Panic button" },
+  { "id": "am-17", "category": "Space Survival", "name": "Space boots" },
+  { "id": "am-18", "category": "Space Survival", "name": "Flares" },
   { "id": "am-19", "category": "Outdoors", "name": "Fire pit" },
   { "id": "am-20", "category": "Outdoors", "name": "Patio" },
   { "id": "am-21", "category": "Outdoors", "name": "Waterfront" },
@@ -25,5 +25,5 @@
   { "id": "am-24", "category": "Outdoors", "name": "Underground" },
   { "id": "am-25", "category": "Outdoors", "name": "Tourist attraction" },
   { "id": "am-26", "category": "Outdoors", "name": "Meteor showers" },
-  { "id": "am-27", "category": "Outdoors", "name": "Fire pit2" }
+  { "id": "am-27", "category": "Outdoors", "name": "Wildlife" }
 ]
