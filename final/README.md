@@ -1,12 +1,12 @@
-# FINAL CODE - Airlock (Server) - Odyssey Federation Part 2 App
+# FINAL CODE - Odyssey Voyage II - Server (Airlock)
 
-This is the final state of the codebase after going through the Odyssey course.
+This is the final state of the codebase after going through the Odyssey Voyage II course.
 
-Welcome to the companion app (server) of Odyssey's Federation Part 2 Course! You can [find the course lessons and instructions on Odyssey](http://odyssey.apollographql.com), Apollo's learning platform.
+You can [find the course lessons and instructions on Odyssey](http://odyssey.apollographql.com/voyage-part2), Apollo's learning platform.
 
-You can [preview the completed demo app here](http://odyssey.apollographql.com).
+You can [preview the completed demo app here](https://odyssey-airlock.netlify.app/).
 
-You can [find the client counterpart here](http://odyssey.apollographql.com).
+You can [find the client counterpart here](https://github.com/apollographql/odyssey-voyage-II-client).
 
 ## How to use this repo
 
@@ -17,7 +17,7 @@ To get started:
 1. Run `npm install`.
 1. Run `npm start`.
 
-This will start the GraphQL API server on localhost:4000.
+This will start the GraphQL API server on [http://localhost:4000](http://localhost:4000)
 
 Next, let's run some local services.
 
