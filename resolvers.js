@@ -40,16 +40,14 @@ const resolvers = {
         throw new ForbiddenError('Only hosts have access to listings.');
       }
     },
-    listing: async (_, { id }, { dataSources }) => {
-      const listing = await dataSources.listingsAPI.getListing(id);
-      return listing;
+    listing: (_, { id }, { dataSources }) => {
+      return dataSources.listingsAPI.getListing(id);
     },
-    featuredListings: async (_, __, { dataSources }) => {
+    featuredListings: (_, __, { dataSources }) => {
       const limit = 3;
-      const featuredListings = await dataSources.listingsAPI.getFeaturedListings(limit);
-      return featuredListings;
+      return dataSources.listingsAPI.getFeaturedListings(limit);
     },
-    listingAmenities: async (_, __, { dataSources }) => {
+    listingAmenities: (_, __, { dataSources }) => {
       return dataSources.listingsAPI.getAllAmenities();
     },
     guestBookings: async (_, __, { dataSources, userId, userRole }) => {
@@ -301,23 +299,23 @@ const resolvers = {
     },
   },
   Listing: {
-    host: async ({ hostId }, _, { dataSources }) => {
-      return await dataSources.accountsAPI.getUser(hostId);
+    host: ({ hostId }, _, { dataSources }) => {
+      return dataSources.accountsAPI.getUser(hostId);
     },
-    overallRating: async ({ id }, _, { dataSources }) => {
-      return await dataSources.reviewsDb.getOverallRatingForListing(id);
+    overallRating: ({ id }, _, { dataSources }) => {
+      return dataSources.reviewsDb.getOverallRatingForListing(id);
     },
-    reviews: async ({ id }, _, { dataSources }) => {
+    reviews: ({ id }, _, { dataSources }) => {
       return dataSources.reviewsDb.getReviewsForListing(id);
     },
     totalCost: async ({ id }, { checkInDate, checkOutDate }, { dataSources }) => {
       const { totalCost } = await dataSources.listingsAPI.getTotalCost({ id, checkInDate, checkOutDate });
       return totalCost;
     },
-    currentlyBookedDates: async ({ id }, _, { dataSources }) => {
+    currentlyBookedDates: ({ id }, _, { dataSources }) => {
       return dataSources.bookingsDb.getCurrentlyBookedDateRangesForListing(id);
     },
-    bookings: async ({ id }, _, { dataSources }) => {
+    bookings: ({ id }, _, { dataSources }) => {
       return dataSources.bookingsDb.getBookingsForListing(id);
     },
     numberOfUpcomingBookings: async ({ id }, _, { dataSources }) => {
@@ -326,7 +324,7 @@ const resolvers = {
     },
   },
   Booking: {
-    listing: async ({ listingId }, _, { dataSources }) => {
+    listing: ({ listingId }, _, { dataSources }) => {
       return dataSources.listingsAPI.getListing(listingId);
     },
     checkInDate: ({ checkInDate }, _, { dataSources }) => {
@@ -335,25 +333,25 @@ const resolvers = {
     checkOutDate: ({ checkOutDate }, _, { dataSources }) => {
       return dataSources.bookingsDb.getHumanReadableDate(checkOutDate);
     },
-    guest: async ({ guestId }, _, { dataSources }) => {
+    guest: ({ guestId }, _, { dataSources }) => {
       return dataSources.accountsAPI.getUser(guestId);
     },
     totalPrice: async ({ listingId, checkInDate, checkOutDate }, _, { dataSources }) => {
       const { totalCost } = await dataSources.listingsAPI.getTotalCost({ id: listingId, checkInDate, checkOutDate });
       return totalCost;
     },
-    guestReview: async ({ id }, _, { dataSources }) => {
+    guestReview: ({ id }, _, { dataSources }) => {
       return dataSources.reviewsDb.getReviewForBooking('GUEST', id);
     },
-    hostReview: async ({ id }, _, { dataSources }) => {
+    hostReview: ({ id }, _, { dataSources }) => {
       return dataSources.reviewsDb.getReviewForBooking('HOST', id);
     },
-    locationReview: async ({ id }, _, { dataSources }) => {
+    locationReview: ({ id }, _, { dataSources }) => {
       return dataSources.reviewsDb.getReviewForBooking('LISTING', id);
     },
   },
   Review: {
-    author: async ({ authorId }, _, { dataSources }) => {
+    author: ({ authorId }, _, { dataSources }) => {
       return dataSources.accountsAPI.getUser(authorId);
     },
   },
