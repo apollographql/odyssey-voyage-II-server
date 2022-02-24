@@ -4,6 +4,12 @@ concurrently(
   [
     {
       command: 'npm run db:reset',
+      name: 'accounts',
+      cwd: path.resolve(__dirname, '../services/accounts'),
+      prefixColor: 'blue',
+    },
+    {
+      command: 'npm run db:reset',
       name: 'listings',
       cwd: path.resolve(__dirname, '../services/listings'),
       prefixColor: 'bgMagenta',

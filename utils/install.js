@@ -5,6 +5,12 @@ concurrently(
   [
     {
       command: 'npm install',
+      name: 'accounts',
+      cwd: path.resolve(__dirname, '../services/accounts'),
+      prefixColor: 'blue',
+    },
+    {
+      command: 'npm install',
       name: 'listings',
       cwd: path.resolve(__dirname, '../services/listings'),
       prefixColor: 'bgMagenta',
