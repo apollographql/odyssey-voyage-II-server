@@ -3,7 +3,7 @@ const { RESTDataSource } = require('apollo-datasource-rest');
 class AccountsAPI extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = 'https://rt-airlock-services-account.herokuapp.com/';
+    this.baseURL = 'http://localhost:4011/';
   }
 
   login(username) {
