@@ -12,19 +12,19 @@ concurrently(
       command: 'npm run db:reset',
       name: 'listings',
       cwd: path.resolve(__dirname, '../services/listings'),
-      prefixColor: 'bgMagenta',
+      prefixColor: 'magenta',
     },
     {
       command: 'npm run db:reset',
       name: 'bookings',
       cwd: path.resolve(__dirname, '../services/bookings'),
-      prefixColor: 'bgYellow',
+      prefixColor: 'green',
     },
     {
       command: 'npm run db:reset',
       name: 'reviews',
       cwd: path.resolve(__dirname, '../services/reviews'),
-      prefixColor: 'bgGreen',
+      prefixColor: 'yellow',
     },
   ],
   {

@@ -12,13 +12,13 @@ concurrently(
       command: 'npm start',
       name: 'listings',
       cwd: path.resolve(__dirname, '../services/listings'),
-      prefixColor: 'bgMagenta',
+      prefixColor: 'magenta',
     },
     {
       command: 'npm run booking:update',
       name: 'bookings',
       cwd: path.resolve(__dirname, '../services/bookings'),
-      prefixColor: 'bgYellow',
+      prefixColor: 'green',
     },
   ],
   {

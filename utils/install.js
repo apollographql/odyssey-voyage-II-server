@@ -13,19 +13,19 @@ concurrently(
       command: 'npm install',
       name: 'listings',
       cwd: path.resolve(__dirname, '../services/listings'),
-      prefixColor: 'bgMagenta',
+      prefixColor: 'magenta',
     },
     {
       command: 'npm install',
       name: 'bookings',
       cwd: path.resolve(__dirname, '../services/bookings'),
-      prefixColor: 'bgYellow',
+      prefixColor: 'green',
     },
     {
       command: 'npm install',
       name: 'reviews',
       cwd: path.resolve(__dirname, '../services/reviews'),
-      prefixColor: 'bgGreen',
+      prefixColor: 'yellow',
     },
   ],
   {
