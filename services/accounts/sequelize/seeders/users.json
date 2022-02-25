@@ -1,0 +1,72 @@
+[
+  {
+    "id": "user-1",
+    "name": "Eves",
+    "role": "Host",
+    "profilePicture": "https://res.cloudinary.com/apollographql/image/upload/odyssey/airlock/user-1.png",
+    "profileDescription": "I've been to 15 different planets and decided to make a home for myself and others in my favourites. Each planet and location has its own distinct environment, so read the description carefully. I have equipped them all with the necessary amenities."
+  },
+  {
+    "id": "user-2",
+    "name": "Jackenn",
+    "role": "Guest",
+    "profilePicture": "https://res.cloudinary.com/apollographql/image/upload/odyssey/airlock/user-2.png",
+    "profileDescription": "Not a guest feature yet."
+  },
+  {
+    "id": "user-3",
+    "name": "Athes",
+    "role": "Guest",
+    "profilePicture": "https://res.cloudinary.com/apollographql/image/upload/odyssey/airlock/user-3.png",
+    "profileDescription": "Not a guest feature yet."
+  },
+  {
+    "id": "user-4",
+    "name": "Kelle",
+    "role": "Host",
+    "profilePicture": "https://res.cloudinary.com/apollographql/image/upload/odyssey/airlock/user-4.png",
+    "profileDescription": "So excited to have you! I'm readily available if you need anything, from missing bath towels to local food recommendations. Have an awesome time!"
+  },
+  {
+    "id": "user-5",
+    "name": "Renie",
+    "role": "Host",
+    "profilePicture": "https://res.cloudinary.com/apollographql/image/upload/odyssey/airlock/user-5.png",
+    "profileDescription": "You won't regret staying at my place! My listings get booked up quickly so better get to it!"
+  },
+  {
+    "id": "user-6",
+    "name": "Flinson",
+    "role": "Host",
+    "profilePicture": "https://res.cloudinary.com/apollographql/image/upload/odyssey/airlock/user-6.png",
+    "profileDescription": "I'm new at this, please be nice."
+  },
+  {
+    "id": "user-7",
+    "name": "Cara",
+    "role": "Guest",
+    "profilePicture": "https://res.cloudinary.com/apollographql/image/upload/odyssey/airlock/user-7.png",
+    "profileDescription": "Not a guest feature yet."
+  },
+  {
+    "id": "user-8",
+    "name": "Wardy",
+    "role": "Guest",
+    "profilePicture": "https://res.cloudinary.com/apollographql/image/upload/odyssey/airlock/user-8.png",
+    "profileDescription": "Not a guest feature yet."
+  },
+  {
+    "id": "user-9",
+    "name": "Brise",
+    "role": "Guest",
+    "profilePicture": "https://res.cloudinary.com/apollographql/image/upload/odyssey/airlock/user-9.png",
+    "profileDescription": "Not a guest feature yet."
+  },
+  {
+    "id": "user-10",
+    "name": "Hendav",
+    "role": "Guest",
+    "profilePicture": "https://res.cloudinary.com/apollographql/image/upload/odyssey/airlock/user-10.png",
+    "profileDescription": "Not a guest feature yet."
+  }
+]
