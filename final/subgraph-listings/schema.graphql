@@ -147,6 +147,4 @@ type UpdateListingResponse implements MutationResponse {
 
 extend type Host @key(fields: "id") {
   id: ID! @external
-  "The listings this host owns"
-  listings: [Listing]
 }
