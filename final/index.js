@@ -1,30 +1,23 @@
-const { ApolloGateway, RemoteGraphQLDataSource } = require('@apollo/gateway');
-const { ApolloServer, AuthenticationError } = require('apollo-server');
-const axios = require('axios');
+const { ApolloServer, gql, AuthenticationError } = require('apollo-server');
 const { readFileSync } = require('fs');
+const axios = require('axios');
 
-class AuthenticatedDataSource extends RemoteGraphQLDataSource {
-  willSendRequest({ request, context }) {
-    // Pass the user's id from the context to each subgraph
-    // as a header called `userid` and `userrole`
-    if (context.userId) {
-      request.http.headers.set('userid', context.userId);
-      request.http.headers.set('userrole', context.userRole);
-    }
-  }
-}
-
-const gateway = new ApolloGateway({
-  supergraphSdl: readFileSync('./supergraph.graphql', {
-    encoding: 'utf-8',
-  }).toString(),
-  buildService: ({ url }) => {
-    return new AuthenticatedDataSource({ url });
-  },
-});
+const typeDefs = gql(readFileSync('./schema.graphql', { encoding: 'utf-8' }));
+const resolvers = require('./resolvers');
+const { BookingsDataSource, ReviewsDataSource, ListingsAPI, AccountsAPI, PaymentsAPI } = require('./services');
 
 const server = new ApolloServer({
-  gateway,
+  typeDefs,
+  resolvers,
+  dataSources: () => {
+    return {
+      bookingsDb: new BookingsDataSource(),
+      reviewsDb: new ReviewsDataSource(),
+      listingsAPI: new ListingsAPI(),
+      accountsAPI: new AccountsAPI(),
+      paymentsAPI: new PaymentsAPI(),
+    };
+  },
   context: async ({ req }) => {
     const token = req.headers.authorization || '';
     const userId = token.split(' ')[1]; // get the user name after 'Bearer '

@@ -1,4 +1,21 @@
 type Query {
+  ### User accounts
+  user(id: ID!): User
+  "Currently logged-in user"
+  me: User!
+
+  ### Listings
+  "A curated array of listings to feature on the homepage"
+  featuredListings: [Listing!]!
+  "Search results for listings that fit the criteria provided"
+  searchListings(criteria: SearchListingsInput): [Listing!]!
+  "Return the listings that belong to the currently logged-in host"
+  hostListings: [Listing!]!
+  "Returns the details about this listing"
+  listing(id: ID!): Listing
+  "Returns all possible amenities for a listing"
+  listingAmenities: [Amenity!]!
+
   ### Bookings
   "All bookings for the given listing, optionally filtered by a BookingStatus"
   bookingsForListing(listingId: ID!, status: BookingStatus): [Booking]!
@@ -13,6 +30,16 @@ type Query {
 }
 
 type Mutation {
+  ### Accounts
+  "Updates the logged-in user's profile information"
+  updateProfile(updateProfileInput: UpdateProfileInput): UpdateProfileResponse!
+
+  ### Listings
+  "Creates a new listing for the currently authenticated host"
+  createListing(listing: CreateListingInput!): CreateListingResponse!
+  "Updates an existing listing"
+  updateListing(listingId: ID!, listing: UpdateListingInput!): UpdateListingResponse!
+
   ### Bookings
   createBooking(createBookingInput: CreateBookingInput): CreateBookingResponse!
 
@@ -48,24 +75,46 @@ interface User {
   profilePicture: String!
 }
 
-extend type Host implements User @key(fields: "id") {
-  id: ID! @external
+type Host implements User {
+  id: ID!
   "The user's first and last name"
-  name: String! @external
+  name: String!
   "The user's profile photo URL"
-  profilePicture: String! @external
+  profilePicture: String!
+  "The host's profile bio description, will be shown in the listing"
+  profileDescription: String!
   "The overall calculated rating for the host"
   overallRating: Float
 }
 
-extend type Guest implements User @key(fields: "id") {
-  id: ID! @external
+type Guest implements User {
+  id: ID!
   "The user's first and last name"
-  name: String! @external
+  name: String!
   "The user's profile photo URL"
-  profilePicture: String! @external
+  profilePicture: String!
   "Amount of money in the guest's wallet"
   funds: Float!
+}
+
+input UpdateProfileInput {
+  "The user's first and last name"
+  name: String
+  "The user's profile photo URL"
+  profilePicture: String
+  "The host's profile bio description, will be shown in the listing"
+  profileDescription: String
+}
+
+type UpdateProfileResponse implements MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int!
+  "Indicates whether the mutation was successful"
+  success: Boolean!
+  "Human-readable message for the UI"
+  message: String!
+  "Updated user"
+  user: User
 }
 
 type AddFundsToWalletResponse implements MutationResponse {
@@ -80,8 +129,24 @@ type AddFundsToWalletResponse implements MutationResponse {
 }
 
 ### Listings
-extend type Listing @key(fields: "id") {
-  id: ID! @external
+type Listing {
+  id: ID!
+  "The listing's title"
+  title: String!
+  "The listing's description"
+  description: String!
+  "The thumbnail image for the listing"
+  photoThumbnail: String!
+  "The number of beds available"
+  numOfBeds: Int!
+  "The cost per night"
+  costPerNight: Float!
+  "The location type of the listing"
+  locationType: LocationType!
+  "Owner of the listing"
+  host: Host!
+  "The amenities available for this listing"
+  amenities: [Amenity]!
   "The list of bookings for a listing"
   bookings: [Booking]!
   "The number of current and upcoming bookings for a listing"
@@ -92,6 +157,8 @@ extend type Listing @key(fields: "id") {
   reviews: [Review]!
   "The overall calculated rating for a listing"
   overallRating: Float
+  "Calculated total cost of the listing with the given arguments"
+  totalCost(checkInDate: String!, checkOutDate: String!): Float!
 }
 
 "A booking is reserved for a certain date range, marked by the checkInDate and checkOutDate fields"
@@ -102,7 +169,104 @@ type ReservedDate {
   checkOutDate: String!
 }
 
+"""
+What the location provides. An amenity should be tied to a specific category.
+"""
+type Amenity {
+  id: ID!
+  "The category for the amenity"
+  category: AmenityCategory!
+  "The name of the amenity. Should be short."
+  name: String!
+}
+
+enum AmenityCategory {
+  ACCOMMODATION_DETAILS
+  SPACE_SURVIVAL
+  OUTDOORS
+}
+
+enum LocationType {
+  SPACESHIP
+  HOUSE
+  CAMPSITE
+  APARTMENT
+  ROOM
+}
+
+input SearchListingsInput {
+  checkInDate: String!
+  checkOutDate: String!
+  numOfBeds: Int
+  page: Int
+  limit: Int
+  sortBy: SortByCriteria
+}
+
+enum SortByCriteria {
+  COST_ASC
+  COST_DESC
+}
+
+input CreateListingInput {
+  "The listing's title"
+  title: String!
+  "The listing's description"
+  description: String!
+  "The thumbnail image for the listing"
+  photoThumbnail: String!
+  "The number of beds available"
+  numOfBeds: Int!
+  "The cost per night"
+  costPerNight: Float!
+  "The location type of the listing"
+  locationType: LocationType!
+  "The Listing's amenities "
+  amenities: [ID!]!
+}
+
+"Updates the properties included. If none are given, don't update anything"
+input UpdateListingInput {
+  "The listing's title"
+  title: String
+  "The listing's description"
+  description: String
+  "The thumbnail image for the listing"
+  photoThumbnail: String
+  "The number of beds available"
+  numOfBeds: Int
+  "The cost per night"
+  costPerNight: Float
+  "The location type of the listing"
+  locationType: LocationType
+  "The Listing's amenities "
+  amenities: [ID]
+}
+
+type CreateListingResponse implements MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int!
+  "Indicates whether the mutation was successful"
+  success: Boolean!
+  "Human-readable message for the UI"
+  message: String!
+  "The newly created listing"
+  listing: Listing
+}
+
+type UpdateListingResponse implements MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int!
+  "Indicates whether the mutation was successful"
+  success: Boolean!
+  "Human-readable message for the UI"
+  message: String!
+  "The newly created listing"
+  listing: Listing
+}
+
 ### Bookings
+
 "A booking is a reservation for a specific listing"
 type Booking {
   id: ID!
