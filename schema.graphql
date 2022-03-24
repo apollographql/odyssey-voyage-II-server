@@ -90,8 +90,6 @@ type Host implements User {
   profilePicture: String!
   "The host's profile bio description, will be shown in the listing"
   profileDescription: String!
-  "The listings this host owns"
-  listings: [Listing]
   "The overall calculated rating for the host"
   overallRating: Float
 }
@@ -105,8 +103,6 @@ type Guest implements User {
   name: String!
   "The user's profile photo URL"
   profilePicture: String!
-  "The reservations guest has"
-  bookings: [Booking]!
   "Amount of money in the guest's wallet"
   funds: Float!
 }

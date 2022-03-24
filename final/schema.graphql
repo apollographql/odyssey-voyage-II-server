@@ -64,8 +64,6 @@ extend type Guest implements User @key(fields: "id") {
   name: String! @external
   "The user's profile photo URL"
   profilePicture: String! @external
-  "The reservations guest has"
-  bookings: [Booking]!
   "Amount of money in the guest's wallet"
   funds: Float!
 }
