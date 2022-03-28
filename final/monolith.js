@@ -18,6 +18,9 @@ const server = new ApolloServer({
       paymentsAPI: new PaymentsAPI(),
     };
   },
+  context: ({ req }) => {
+    return { userId: req.headers.userid, userRole: req.headers.userrole };
+  },
 });
 
 server
