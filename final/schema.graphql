@@ -8,9 +8,9 @@ type Query {
   "A curated array of listings to feature on the homepage"
   featuredListings: [Listing!]!
   "Search results for listings that fit the criteria provided"
-  searchListings(criteria: SearchListingsInput): [Listing!]!
+  searchListings(criteria: SearchListingsInput): [Listing]!
   "Return the listings that belong to the currently logged-in host"
-  hostListings: [Listing!]!
+  hostListings: [Listing]!
   "Returns the details about this listing"
   listing(id: ID!): Listing
   "Returns all possible amenities for a listing"
