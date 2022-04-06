@@ -67,6 +67,10 @@ interface MutationResponse {
 }
 
 #### User accounts
+
+"""
+Represents an Airlock user's common properties
+"""
 interface User {
   id: ID!
   "The user's first and last name"
@@ -75,6 +79,9 @@ interface User {
   profilePicture: String!
 }
 
+"""
+A host is a type of Airlock user. They own listings.
+"""
 type Host implements User {
   id: ID!
   "The user's first and last name"
@@ -87,6 +94,9 @@ type Host implements User {
   overallRating: Float
 }
 
+"""
+A guest is a type of Airlock user. They book places to stay.
+"""
 type Guest implements User {
   id: ID!
   "The user's first and last name"
@@ -97,6 +107,9 @@ type Guest implements User {
   funds: Float!
 }
 
+"""
+Fields that can be updated
+"""
 input UpdateProfileInput {
   "The user's first and last name"
   name: String
@@ -106,6 +119,9 @@ input UpdateProfileInput {
   profileDescription: String
 }
 
+"""
+The response after updating a profile
+"""
 type UpdateProfileResponse implements MutationResponse {
   "Similar to HTTP status code, represents the status of the mutation"
   code: Int!
@@ -117,18 +133,11 @@ type UpdateProfileResponse implements MutationResponse {
   user: User
 }
 
-type AddFundsToWalletResponse implements MutationResponse {
-  "Similar to HTTP status code, represents the status of the mutation"
-  code: Int!
-  "Indicates whether the mutation was successful"
-  success: Boolean!
-  "Human-readable message for the UI"
-  message: String!
-  "Updated wallet amount"
-  amount: Float
-}
-
 ### Listings
+
+"""
+A listing is a location owned by a host. A listing has a list of amenities it offers. Listings have a fixed cost per night value.
+"""
 type Listing {
   id: ID!
   "The listing's title"
@@ -180,12 +189,18 @@ type Amenity {
   name: String!
 }
 
+"""
+The category an amenity belongs to.
+"""
 enum AmenityCategory {
   ACCOMMODATION_DETAILS
   SPACE_SURVIVAL
   OUTDOORS
 }
 
+"""
+A listing can be one of these types.
+"""
 enum LocationType {
   SPACESHIP
   HOUSE
@@ -194,20 +209,32 @@ enum LocationType {
   ROOM
 }
 
+"""
+To search for a listing, you need these fields.
+"""
 input SearchListingsInput {
   checkInDate: String!
   checkOutDate: String!
   numOfBeds: Int
+  "The page in the search results, defaults to 1"
   page: Int
+  "The number of listings you can display in a page, defaults to 5"
   limit: Int
+  "The results sort order, defaults to cost descending"
   sortBy: SortByCriteria
 }
 
+"""
+Listings can be sorted by these options
+"""
 enum SortByCriteria {
   COST_ASC
   COST_DESC
 }
 
+"""
+Used to create a listing
+"""
 input CreateListingInput {
   "The listing's title"
   title: String!
@@ -243,6 +270,9 @@ input UpdateListingInput {
   amenities: [ID]
 }
 
+"""
+Response after creating a listing
+"""
 type CreateListingResponse implements MutationResponse {
   "Similar to HTTP status code, represents the status of the mutation"
   code: Int!
@@ -254,6 +284,9 @@ type CreateListingResponse implements MutationResponse {
   listing: Listing
 }
 
+"""
+Response after updating a listing
+"""
 type UpdateListingResponse implements MutationResponse {
   "Similar to HTTP status code, represents the status of the mutation"
   code: Int!
@@ -261,7 +294,7 @@ type UpdateListingResponse implements MutationResponse {
   success: Boolean!
   "Human-readable message for the UI"
   message: String!
-  "The newly created listing"
+  "The newly updated listing"
   listing: Listing
 }
 
@@ -332,6 +365,8 @@ type CreateBookingResponse implements MutationResponse {
   booking: NewBookingResponse
 }
 
+### Reviews
+
 """
 A review consists of a numerical rating and written text. It can be written by a host or a guest.
 """
@@ -381,4 +416,17 @@ type SubmitGuestReviewResponse implements MutationResponse {
   message: String!
   "Newly created review about the guest"
   guestReview: Review
+}
+
+### Payments
+
+type AddFundsToWalletResponse implements MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int!
+  "Indicates whether the mutation was successful"
+  success: Boolean!
+  "Human-readable message for the UI"
+  message: String!
+  "Updated wallet amount"
+  amount: Float
 }
