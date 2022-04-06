@@ -68,9 +68,7 @@ interface MutationResponse {
 
 #### User accounts
 
-"""
-Represents an Airlock user's common properties
-"""
+"Represents an Airlock user's common properties"
 interface User {
   id: ID!
   "The user's first and last name"
@@ -79,9 +77,7 @@ interface User {
   profilePicture: String!
 }
 
-"""
-A host is a type of Airlock user. They own listings.
-"""
+"A host is a type of Airlock user. They own listings."
 type Host implements User {
   id: ID!
   "The user's first and last name"
@@ -94,9 +90,7 @@ type Host implements User {
   overallRating: Float
 }
 
-"""
-A guest is a type of Airlock user. They book places to stay.
-"""
+"A guest is a type of Airlock user. They book places to stay."
 type Guest implements User {
   id: ID!
   "The user's first and last name"
@@ -107,9 +101,7 @@ type Guest implements User {
   funds: Float!
 }
 
-"""
-Fields that can be updated
-"""
+"Fields that can be updated"
 input UpdateProfileInput {
   "The user's first and last name"
   name: String
@@ -119,9 +111,7 @@ input UpdateProfileInput {
   profileDescription: String
 }
 
-"""
-The response after updating a profile
-"""
+"The response after updating a profile"
 type UpdateProfileResponse implements MutationResponse {
   "Similar to HTTP status code, represents the status of the mutation"
   code: Int!
@@ -135,9 +125,7 @@ type UpdateProfileResponse implements MutationResponse {
 
 ### Listings
 
-"""
-A listing is a location owned by a host. A listing has a list of amenities it offers. Listings have a fixed cost per night value.
-"""
+"A listing is a location owned by a host. A listing has a list of amenities it offers. Listings have a fixed cost per night value."
 type Listing {
   id: ID!
   "The listing's title"
@@ -178,9 +166,7 @@ type ReservedDate {
   checkOutDate: String!
 }
 
-"""
-What the location provides. An amenity should be tied to a specific category.
-"""
+"What the location provides. An amenity should be tied to a specific category."
 type Amenity {
   id: ID!
   "The category for the amenity"
@@ -189,18 +175,14 @@ type Amenity {
   name: String!
 }
 
-"""
-The category an amenity belongs to.
-"""
+"The category an amenity belongs to."
 enum AmenityCategory {
   ACCOMMODATION_DETAILS
   SPACE_SURVIVAL
   OUTDOORS
 }
 
-"""
-A listing can be one of these types.
-"""
+"A listing can be one of these types."
 enum LocationType {
   SPACESHIP
   HOUSE
@@ -209,9 +191,7 @@ enum LocationType {
   ROOM
 }
 
-"""
-To search for a listing, you need these fields.
-"""
+"To search for a listing, you need these fields."
 input SearchListingsInput {
   checkInDate: String!
   checkOutDate: String!
@@ -224,17 +204,13 @@ input SearchListingsInput {
   sortBy: SortByCriteria
 }
 
-"""
-Listings can be sorted by these options
-"""
+"Listings can be sorted by these options"
 enum SortByCriteria {
   COST_ASC
   COST_DESC
 }
 
-"""
-Used to create a listing
-"""
+"Used to create a listing"
 input CreateListingInput {
   "The listing's title"
   title: String!
@@ -270,9 +246,7 @@ input UpdateListingInput {
   amenities: [ID]
 }
 
-"""
-Response after creating a listing
-"""
+"Response after creating a listing"
 type CreateListingResponse implements MutationResponse {
   "Similar to HTTP status code, represents the status of the mutation"
   code: Int!
@@ -284,9 +258,7 @@ type CreateListingResponse implements MutationResponse {
   listing: Listing
 }
 
-"""
-Response after updating a listing
-"""
+"Response after updating a listing"
 type UpdateListingResponse implements MutationResponse {
   "Similar to HTTP status code, represents the status of the mutation"
   code: Int!
@@ -323,18 +295,14 @@ type Booking {
   guestReview: Review
 }
 
-"""
-The status of a booking
-"""
+"The status of a booking"
 enum BookingStatus {
   CURRENT
   COMPLETED
   UPCOMING
 }
 
-"""
-Fields for creating a booking
-"""
+"Fields for creating a booking"
 input CreateBookingInput {
   "ID of the listing associated with the booking"
   listingId: ID!
@@ -351,9 +319,7 @@ type NewBookingResponse {
   checkOutDate: String!
 }
 
-"""
-The response after creating a booking.
-"""
+"The response after creating a booking."
 type CreateBookingResponse implements MutationResponse {
   "Similar to HTTP status code, represents the status of the mutation"
   code: Int!
@@ -367,9 +333,7 @@ type CreateBookingResponse implements MutationResponse {
 
 ### Reviews
 
-"""
-A review consists of a numerical rating and written text. It can be written by a host or a guest.
-"""
+"A review consists of a numerical rating and written text. It can be written by a host or a guest."
 type Review {
   id: ID!
   "Written comment the author has written about the review target"
@@ -380,17 +344,13 @@ type Review {
   rating: Float!
 }
 
-"""
-ReviewInput is the bare minimum needed to submit a review, not tied to any target.
-"""
+"ReviewInput is the bare minimum needed to submit a review, not tied to any target."
 input ReviewInput {
   text: String!
   rating: Float!
 }
 
-"""
-The response after submitting reviews for both host and location together.
-"""
+"The response after submitting reviews for both host and location together."
 type SubmitHostAndLocationReviewsResponse implements MutationResponse {
   "Similar to HTTP status code, represents the status of the mutation"
   code: Int!
@@ -404,9 +364,7 @@ type SubmitHostAndLocationReviewsResponse implements MutationResponse {
   locationReview: Review
 }
 
-"""
-The response after submitting reviews for a guest.
-"""
+"The response after submitting reviews for a guest."
 type SubmitGuestReviewResponse implements MutationResponse {
   "Similar to HTTP status code, represents the status of the mutation"
   code: Int!
