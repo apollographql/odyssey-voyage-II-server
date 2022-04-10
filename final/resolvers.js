@@ -203,6 +203,13 @@ const resolvers = {
       const { amount } = await dataSources.paymentsAPI.getUserWalletAmount(userId);
       return amount;
     },
+    bookings: async ({ __typename, id }, __, { dataSources }) => {
+      if (__typename === "Guest") {
+        const bookings = await dataSources.bookingsDb.getBookingsForUser(id);
+        return bookings;
+      }
+      throw new ForbiddenError("Only guests have access to trips");
+    },
   },
   Listing: {
     host: ({ hostId }) => {
