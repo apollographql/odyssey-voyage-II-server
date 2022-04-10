@@ -114,6 +114,14 @@ const resolvers = {
       return totalCost;
     },
   },
+  Host: {
+    listings: ({ __typename, id }, __, { dataSources }) => {
+      if (__typename === "Host") {
+        return dataSources.listingsAPI.getListingsForUser(id);
+      }
+      throw new ForbiddenError("Only hosts have access to listings.");
+    },
+  },
   AmenityCategory: {
     ACCOMMODATION_DETAILS: 'Accommodation Details',
     SPACE_SURVIVAL: 'Space Survival',
