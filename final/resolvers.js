@@ -204,7 +204,7 @@ const resolvers = {
       return amount;
     },
     bookings: async ({ __typename, id }, __, { dataSources }) => {
-      if (__typename === "Guest") {
+      if (!__typename || __typename === "Guest") {
         const bookings = await dataSources.bookingsDb.getBookingsForUser(id);
         return bookings;
       }
