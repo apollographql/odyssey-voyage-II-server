@@ -1,9 +1,21 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0",
+        import: ["@key"])
+        
 type Query {
   user(id: ID!): User
   "Currently logged-in user"
   me: User!
 }
 
+type Mutation {
+  "Updates the logged-in user's profile information"
+  updateProfile(
+    updateProfileInput: UpdateProfileInput
+  ): UpdateProfileResponse!
+}
+
+"Represents an Airlock user's common properties"
 interface User {
   id: ID!
   "The user's first and last name"
@@ -12,6 +24,7 @@ interface User {
   profilePicture: String!
 }
 
+"A host is a type of Airlock user. They own listings."
 type Host implements User @key(fields: "id") {
   id: ID!
   "The user's first and last name"
@@ -22,18 +35,13 @@ type Host implements User @key(fields: "id") {
   profileDescription: String!
 }
 
+"A guest is a type of Airlock user. They book places to stay."
 type Guest implements User @key(fields: "id") {
   id: ID!
   "The user's first and last name"
   name: String!
   "The user's profile photo URL"
   profilePicture: String!
-}
-
-type Mutation {
-  ### Accounts
-  "Updates the logged-in user's profile information"
-  updateProfile(updateProfileInput: UpdateProfileInput): UpdateProfileResponse!
 }
 
 interface MutationResponse {
@@ -45,6 +53,7 @@ interface MutationResponse {
   message: String!
 }
 
+"Fields that can be updated"
 input UpdateProfileInput {
   "The user's first and last name"
   name: String
@@ -54,6 +63,7 @@ input UpdateProfileInput {
   profileDescription: String
 }
 
+"The response after updating a profile"
 type UpdateProfileResponse implements MutationResponse {
   "Similar to HTTP status code, represents the status of the mutation"
   code: Int!

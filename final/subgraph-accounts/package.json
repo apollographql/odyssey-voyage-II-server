@@ -1,5 +1,5 @@
 {
-  "name": "accounts-subgraph",
+  "name": "subgraph-accounts",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,9 +13,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/subgraph": "^0.1.1",
+    "@apollo/subgraph": "^2.0.1",
     "apollo-server": "^3.4.0",
-    "graphql": "^15.6.1"
+    "graphql": "^16.3.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.13"

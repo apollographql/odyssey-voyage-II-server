@@ -31,7 +31,7 @@ const resolvers = {
         return {
           code: 400,
           success: false,
-          message: err,
+          message: err.message,
         };
       }
     },

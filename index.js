@@ -6,6 +6,8 @@ const typeDefs = gql(readFileSync('./schema.graphql', { encoding: 'utf-8' }));
 const resolvers = require('./resolvers');
 const { BookingsDataSource, ReviewsDataSource, ListingsAPI, AccountsAPI, PaymentsAPI } = require('./services');
 
+require('dotenv').config();
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,

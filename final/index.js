@@ -1,7 +1,8 @@
 const { ApolloGateway, RemoteGraphQLDataSource } = require('@apollo/gateway');
 const { ApolloServer, AuthenticationError } = require('apollo-server');
 const axios = require('axios');
-const { readFileSync } = require('fs');
+
+require('dotenv').config();
 
 class AuthenticatedDataSource extends RemoteGraphQLDataSource {
   willSendRequest({ request, context }) {
@@ -15,9 +16,6 @@ class AuthenticatedDataSource extends RemoteGraphQLDataSource {
 }
 
 const gateway = new ApolloGateway({
-  supergraphSdl: readFileSync('./supergraph.graphql', {
-    encoding: 'utf-8',
-  }).toString(),
   buildService: ({ url }) => {
     return new AuthenticatedDataSource({ url });
   },
