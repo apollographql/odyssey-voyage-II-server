@@ -19,7 +19,7 @@ This will start the GraphQL API server on [http://localhost:4000](http://localho
 
 Next, let's run some local services.
 
-1. In a new terminal window, run `npm run launch`. This will run 3 local services, which you can learn about in the accompanying Odyssey course.
+1. In a new terminal window, run `npm run launch`. This will run 4 local services, which you can learn about in the accompanying Odyssey course.
 
 ### Resetting the database
 
