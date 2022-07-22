@@ -3,28 +3,22 @@ const path = require('path');
 concurrently(
   [
     {
-      command: 'npm run db:reset',
+      command: 'npm start',
       name: 'accounts',
-      cwd: path.resolve(__dirname, '../services/accounts'),
+      cwd: path.resolve(__dirname, '../../services/accounts'),
       prefixColor: 'blue',
     },
     {
-      command: 'npm run db:reset',
+      command: 'npm start',
       name: 'listings',
-      cwd: path.resolve(__dirname, '../services/listings'),
+      cwd: path.resolve(__dirname, '../../services/listings'),
       prefixColor: 'magenta',
     },
     {
-      command: 'npm run db:reset',
+      command: 'npm run booking:update',
       name: 'bookings',
-      cwd: path.resolve(__dirname, '../services/bookings'),
+      cwd: path.resolve(__dirname, '../../services/bookings'),
       prefixColor: 'green',
-    },
-    {
-      command: 'npm run db:reset',
-      name: 'reviews',
-      cwd: path.resolve(__dirname, '../services/reviews'),
-      prefixColor: 'yellow',
     },
   ],
   {
@@ -33,15 +27,13 @@ concurrently(
     restartTries: 3,
   }
 ).then(
-  function onSuccess(exitInfo) {
-    console.log('SUCCESS: Databases successfully reset to initial state and data.');
+  function onSuccess() {
     // This code is necessary to make sure the parent terminates
     // when the application is closed successfully.
     process.exit();
   },
   function onFailure(exitInfo) {
     console.log(exitInfo);
-
     // This code is necessary to make sure the parent terminates
     // when the application is closed because of a failure.
     process.exit();
