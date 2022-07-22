@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "npm": ">=6.0.0",
+    "node": ">=14.0.0"
+  },
   "scripts": {
     "start": "nodemon .",
     "db:init": "sequelize-cli db:migrate && sequelize-cli db:seed:all",

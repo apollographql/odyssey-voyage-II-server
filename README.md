@@ -1,6 +1,6 @@
 # Odyssey Voyage II - Server (Airlock)
 
-Welcome to the companion app of Odyssey's Voyage II: Federating the Monolith! This is the `server` backend of the Airlock app. You can [find the course lessons and instructions on Odyssey](http://odyssey.apollographql.com/voyage-part2), Apollo's learning platform.
+Welcome to the companion app of Odyssey's Voyage II: Federating the Monolith! This is the `server` backend of the Airlock app. You can [find the course lessons and instructions on Odyssey](http://apollographql.com/tutorials/voyage-part2), Apollo's learning platform.
 
 You can [preview the completed demo app here](https://odyssey-airlock.netlify.app/).
 
@@ -40,7 +40,6 @@ Next, let's run the subgraphs we split off according to the course instructions:
 
 1. In a new terminal window, navigate to the root of the `final` directory, run `npm run start:monolith-subgraph`.
 1. In a new terminal window, navigate to the `final/subgraph-accounts` directory, run `npm install` then `npm start`.
-1. In a new terminal window, navigate to the `final/subgraph-listings` directory, run `npm install` then `npm start`.
 
 Finally, let's run some local services.
 
