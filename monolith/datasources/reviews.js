@@ -1,7 +1,7 @@
 const { DataSource } = require('apollo-datasource');
 const { v4: uuidv4 } = require('uuid');
 const Sequelize = require('sequelize');
-const Review = require('../services/reviews/sequelize/models/review');
+const Review = require('../../services/reviews/sequelize/models/review');
 
 class ReviewsDb extends DataSource {
   constructor() {
@@ -18,9 +18,9 @@ class ReviewsDb extends DataSource {
     const config = {
       username: 'root',
       password: null,
-      database: 'database_development',
+      database: 'dsatabase_development',
       dialect: 'sqlite',
-      storage: './services/reviews/reviews.db', // path to the reviews database file, relative to where this datasource is initialized
+      storage: './../services/reviews/reviews.db', // path to the reviews database file, relative to where this datasource is initialized
       logging: false, // set this to true if you want to see logging output in the terminal console
     };
     const sequelize = new Sequelize(config.database, config.username, config.password, config);

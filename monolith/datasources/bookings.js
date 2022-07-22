@@ -2,7 +2,7 @@ const { DataSource } = require('apollo-datasource');
 const { v4: uuidv4 } = require('uuid');
 const { format } = require('date-fns');
 const Sequelize = require('sequelize');
-const Booking = require('../services/bookings/sequelize/models/booking');
+const Booking = require('../../services/bookings/sequelize/models/booking');
 
 class BookingsDb extends DataSource {
   constructor() {
@@ -21,7 +21,7 @@ class BookingsDb extends DataSource {
       password: null,
       database: 'database_development',
       dialect: 'sqlite',
-      storage: './services/bookings/bookings.db', // path to the bookings database file, relative to where this datasource is initialized,
+      storage: './../services/bookings/bookings.db', // path to the bookings database file, relative to where this datasource is initialized,
       logging: false, // set this to true if you want to see logging output in the terminal console
     };
     const sequelize = new Sequelize(config.database, config.username, config.password, config);
