@@ -1,0 +1,128 @@
+[
+  {
+    "id": "review-1",
+    "authorId": "user-2",
+    "targetId": "listing-1",
+    "bookingId": "booking-1",
+    "targetType": "LISTING",
+    "text": "Wow, what an experience! I've never stayed in a cave before, so I was a little unprepared. Luckily, this listing had all the amenities I needed to feel safe and prepared for anything. Seriously, great experience. Giving 4 stars because the flies kept coming in at night through a hole in the cave mesh entrance.",
+    "rating": 4
+  },
+  {
+    "id": "review-2",
+    "authorId": "user-7",
+    "targetId": "listing-1",
+    "bookingId": "booking-3",
+    "targetType": "LISTING",
+    "text": "100% enjoyed the wilderness experience. Do not book if you are not an adventurer and lover of the outdoors.",
+    "rating": 5
+  },
+  {
+    "id": "review-3",
+    "authorId": "user-8",
+    "targetId": "listing-1",
+    "bookingId": "booking-4",
+    "targetType": "LISTING",
+    "text": "I thought this was going to be a cozy cave, but I was sorely disappointed. The mattress was hard, I could feel stones digging into my back. And it was COLD. They need to be more clear about this on the description.",
+    "rating": 1
+  },
+  {
+    "id": "review-4",
+    "authorId": "user-2",
+    "bookingId": "booking-1",
+    "targetType": "HOST",
+    "text": "They were super accommodating! You should really fix the hole in the mesh entrance though, the flies were not friendly.",
+    "rating": 4,
+    "targetId": "user-1"
+  },
+  {
+    "id": "review-5",
+    "authorId": "user-7",
+    "bookingId": "booking-3",
+    "targetType": "HOST",
+    "text": "I'd love to buy this place off you. Send me a ping and we'll talk numbers.",
+    "rating": 5,
+    "targetId": "user-1"
+  },
+  {
+    "id": "review-6",
+    "authorId": "user-3",
+    "targetId": "listing-2",
+    "bookingId": "booking-8",
+    "targetType": "LISTING",
+    "text": "The COOLEST yurt I've ever been in!!! Check it out, you won't regret it. The force shield is next level, we had a meteor shower come in the last night and besides a few rumbles, you couldn't even tell!",
+    "rating": 5
+  },
+  {
+    "id": "review-7",
+    "authorId": "user-8",
+    "targetId": "listing-3",
+    "bookingId": "booking-11",
+    "targetType": "LISTING",
+    "text": "Meh, could be better honestly. I was expecting more. The lake was the only good part.",
+    "rating": 2
+  },
+  {
+    "id": "review-8",
+    "authorId": "user-3",
+    "targetId": "user-1",
+    "bookingId": "booking-8",
+    "targetType": "HOST",
+    "text": "Thanks for protecting us from the meteor shower! You were a great captain.",
+    "rating": 5
+  },
+  {
+    "id": "review-9",
+    "authorId": "user-8",
+    "targetId": "user-1",
+    "bookingId": "booking-4",
+    "targetType": "HOST",
+    "text": "Completely unresponsive to my calls, I'm not impressed.",
+    "rating": 1
+  },
+  {
+    "id": "review-10",
+    "authorId": "user-8",
+    "targetId": "user-1",
+    "bookingId": "booking-11",
+    "targetType": "HOST",
+    "text": "Great welcome into the place and very friendly. Just wish the place itself was better.",
+    "rating": 5
+  },
+  {
+    "id": "review-11",
+    "authorId": "user-9",
+    "targetId": "user-1",
+    "bookingId": "booking-15",
+    "targetType": "HOST",
+    "text": "A great host sets the place up with all it needs then goes away. They were a great host.",
+    "rating": 5
+  },
+  {
+    "id": "review-12",
+    "authorId": "user-9",
+    "targetId": "listing-1",
+    "bookingId": "booking-15",
+    "targetType": "LISTING",
+    "text": "Description was accurate. It was indeed a cave campsite in the snowy part of the planet. Exactly what I needed.",
+    "rating": 5
+  },
+  {
+    "id": "review-13",
+    "authorId": "user-2",
+    "targetId": "listing-8",
+    "bookingId": "booking-17",
+    "targetType": "LISTING",
+    "text": "I had a really long stay in Origae-6 for a work trip. The pod was small, but it had all I needed. Although I was starting to get space-crazy by the last week, I managed to survive.",
+    "rating": 4
+  },
+  {
+    "id": "review-14",
+    "authorId": "user-2",
+    "targetId": "user-5",
+    "bookingId": "booking-17",
+    "targetType": "HOST",
+    "text": "Appreciated the check-ins to make sure I had everything!",
+    "rating": 5
+  }
+]

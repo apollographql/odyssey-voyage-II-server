@@ -1,0 +1,155 @@
+[
+  {
+    "id": "booking-1",
+    "checkInDate": "2021-09-08T04:00:00.000Z",
+    "checkOutDate": "2021-09-17T04:00:00.000Z",
+    "status": "COMPLETED",
+    "listingId": "listing-1",
+    "guestId": "user-2",
+    "totalCost": 1080
+  },
+  {
+    "id": "booking-2",
+    "checkInDate": "2025-10-10T05:00:00.000Z",
+    "checkOutDate": "2025-10-11T04:00:00.000Z",
+    "status": "UPCOMING",
+    "listingId": "listing-1",
+    "guestId": "user-3",
+    "totalCost": 1920
+  },
+  {
+    "id": "booking-3",
+    "checkInDate": "2021-10-12T04:00:00.000Z",
+    "checkOutDate": "2021-10-16T04:00:00.000Z",
+    "status": "COMPLETED",
+    "listingId": "listing-1",
+    "guestId": "user-7",
+    "totalCost": 480
+  },
+  {
+    "id": "booking-4",
+    "checkInDate": "2021-07-04T04:00:00.000Z",
+    "checkOutDate": "2021-07-06T04:00:00.000Z",
+    "status": "COMPLETED",
+    "listingId": "listing-1",
+    "guestId": "user-8",
+    "totalCost": 240
+  },
+  {
+    "id": "booking-5",
+    "checkInDate": "2024-01-01T05:00:00.000Z",
+    "checkOutDate": "2024-01-04T05:00:00.000Z",
+    "status": "UPCOMING",
+    "listingId": "listing-2",
+    "guestId": "user-2",
+    "totalCost": 1776
+  },
+  {
+    "id": "booking-6",
+    "checkInDate": "2024-02-07T05:00:00.000Z",
+    "checkOutDate": "2024-02-11T05:00:00.000Z",
+    "status": "UPCOMING",
+    "listingId": "listing-2",
+    "guestId": "user-3",
+    "totalCost": 2368
+  },
+  {
+    "id": "booking-7",
+    "checkInDate": "2024-06-06T04:00:00.000Z",
+    "checkOutDate": "2024-06-17T04:00:00.000Z",
+    "status": "UPCOMING",
+    "listingId": "listing-2",
+    "guestId": "user-3",
+    "totalCost": 6512
+  },
+  {
+    "id": "booking-8",
+    "checkInDate": "2021-05-03T04:00:00.000Z",
+    "checkOutDate": "2021-05-05T04:00:00.000Z",
+    "status": "COMPLETED",
+    "listingId": "listing-2",
+    "guestId": "user-3",
+    "totalCost": 1184
+  },
+  {
+    "id": "booking-9",
+    "checkInDate": "2024-11-05T04:00:00.000Z",
+    "checkOutDate": "2024-12-01T05:00:00.000Z",
+    "status": "UPCOMING",
+    "listingId": "listing-2",
+    "guestId": "user-7",
+    "totalCost": 15392
+  },
+  {
+    "id": "booking-10",
+    "checkInDate": "2024-01-01T05:00:00.000Z",
+    "checkOutDate": "2024-02-09T05:00:00.000Z",
+    "status": "UPCOMING",
+    "listingId": "listing-3",
+    "guestId": "user-2",
+    "totalCost": 12207
+  },
+  {
+    "id": "booking-11",
+    "checkInDate": "2021-07-04T04:00:00.000Z",
+    "checkOutDate": "2021-07-30T04:00:00.000Z",
+    "status": "COMPLETED",
+    "listingId": "listing-3",
+    "guestId": "user-8",
+    "totalCost": 8138
+  },
+  {
+    "id": "booking-12",
+    "checkInDate": "2025-10-04T04:00:00.000Z",
+    "checkOutDate": "2025-10-30T04:00:00.000Z",
+    "status": "UPCOMING",
+    "listingId": "listing-1",
+    "guestId": "user-7",
+    "totalCost": 8138
+  },
+  {
+    "id": "booking-13",
+    "checkInDate": "2025-03-04T04:00:00.000Z",
+    "checkOutDate": "2025-03-07T04:00:00.000Z",
+    "status": "UPCOMING",
+    "listingId": "listing-1",
+    "guestId": "user-8",
+    "totalCost": 360
+  },
+  {
+    "id": "booking-14",
+    "checkInDate": "2025-03-04T04:00:00.000Z",
+    "checkOutDate": "2025-03-07T04:00:00.000Z",
+    "status": "UPCOMING",
+    "listingId": "listing-3",
+    "guestId": "user-8",
+    "totalCost": 939
+  },
+  {
+    "id": "booking-15",
+    "checkInDate": "2020-05-04T04:00:00.000Z",
+    "checkOutDate": "2020-05-07T04:00:00.000Z",
+    "status": "COMPLETED",
+    "listingId": "listing-1",
+    "guestId": "user-9",
+    "totalCost": 360
+  },
+  {
+    "id": "booking-16",
+    "checkInDate": "2020-05-04T04:00:00.000Z",
+    "checkOutDate": "2020-05-07T04:00:00.000Z",
+    "status": "COMPLETED",
+    "listingId": "listing-6",
+    "guestId": "user-2",
+    "totalCost": 990
+  },
+  {
+    "id": "booking-17",
+    "checkInDate": "2020-06-04T04:00:00.000Z",
+    "checkOutDate": "2020-06-28T04:00:00.000Z",
+    "status": "COMPLETED",
+    "listingId": "listing-8",
+    "guestId": "user-2",
+    "totalCost": 16512
+  }
+]

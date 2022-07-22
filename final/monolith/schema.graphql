@@ -1,0 +1,390 @@
+type Query {
+  ### User accounts
+  user(id: ID!): User
+  "Currently logged-in user"
+  me: User!
+
+  ### Listings
+  "A curated array of listings to feature on the homepage"
+  featuredListings: [Listing!]!
+  "Search results for listings that fit the criteria provided"
+  searchListings(criteria: SearchListingsInput): [Listing]!
+  "Return the listings that belong to the currently logged-in host"
+  hostListings: [Listing]!
+  "Returns the details about this listing"
+  listing(id: ID!): Listing
+  "Returns all possible amenities for a listing"
+  listingAmenities: [Amenity!]!
+
+  ### Bookings
+  "All bookings for the given listing, optionally filtered by a BookingStatus"
+  bookingsForListing(listingId: ID!, status: BookingStatus): [Booking]!
+  "A list of bookings for the guest - must be authenticated as guest"
+  guestBookings: [Booking]!
+  "Past bookings for guest based on current date"
+  pastGuestBookings: [Booking]!
+  "Upcoming and current bookings for guest based on current date"
+  upcomingGuestBookings: [Booking]!
+  "Current booking for guest based on current date"
+  currentGuestBooking: Booking
+}
+
+type Mutation {
+  ### Accounts
+  "Updates the logged-in user's profile information"
+  updateProfile(updateProfileInput: UpdateProfileInput): UpdateProfileResponse!
+
+  ### Listings
+  "Creates a new listing for the currently authenticated host"
+  createListing(listing: CreateListingInput!): CreateListingResponse!
+  "Updates an existing listing"
+  updateListing(listingId: ID!, listing: UpdateListingInput!): UpdateListingResponse!
+
+  ### Bookings
+  createBooking(createBookingInput: CreateBookingInput): CreateBookingResponse!
+
+  ### Reviews
+  "Creates reviews for both host and listing for a particular booking - must be authored by guest of past booking"
+  submitHostAndLocationReviews(
+    bookingId: ID!
+    hostReview: ReviewInput!
+    locationReview: ReviewInput!
+  ): SubmitHostAndLocationReviewsResponse!
+  "Creates a review for the guest - must be authored by host of past booking"
+  submitGuestReview(bookingId: ID!, guestReview: ReviewInput!): SubmitGuestReviewResponse!
+
+  ### Wallet
+  addFundsToWallet(amount: Float!): AddFundsToWalletResponse!
+}
+
+interface MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int!
+  "Indicates whether the mutation was successful"
+  success: Boolean!
+  "Human-readable message for the UI"
+  message: String!
+}
+
+#### User accounts
+
+"Represents an Airlock user's common properties"
+interface User {
+  id: ID!
+  "The user's first and last name"
+  name: String!
+  "The user's profile photo URL"
+  profilePicture: String!
+}
+
+"A host is a type of Airlock user. They own listings."
+type Host implements User {
+  id: ID!
+  "The user's first and last name"
+  name: String!
+  "The user's profile photo URL"
+  profilePicture: String!
+  "The host's profile bio description, will be shown in the listing"
+  profileDescription: String!
+  "The overall calculated rating for the host"
+  overallRating: Float
+}
+
+"A guest is a type of Airlock user. They book places to stay."
+type Guest implements User {
+  id: ID!
+  "The user's first and last name"
+  name: String!
+  "The user's profile photo URL"
+  profilePicture: String!
+  "Amount of money in the guest's wallet"
+  funds: Float!
+}
+
+"Fields that can be updated"
+input UpdateProfileInput {
+  "The user's first and last name"
+  name: String
+  "The user's profile photo URL"
+  profilePicture: String
+  "The host's profile bio description, will be shown in the listing"
+  profileDescription: String
+}
+
+"The response after updating a profile"
+type UpdateProfileResponse implements MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int!
+  "Indicates whether the mutation was successful"
+  success: Boolean!
+  "Human-readable message for the UI"
+  message: String!
+  "Updated user"
+  user: User
+}
+
+### Listings
+
+"A listing is a location owned by a host. A listing has a list of amenities it offers. Listings have a fixed cost per night value."
+type Listing {
+  id: ID!
+  "The listing's title"
+  title: String!
+  "The listing's description"
+  description: String!
+  "The thumbnail image for the listing"
+  photoThumbnail: String!
+  "The number of beds available"
+  numOfBeds: Int!
+  "The cost per night"
+  costPerNight: Float!
+  "The location type of the listing"
+  locationType: LocationType!
+  "Owner of the listing"
+  host: Host!
+  "The amenities available for this listing"
+  amenities: [Amenity]!
+  "The list of bookings for a listing"
+  bookings: [Booking]!
+  "The number of current and upcoming bookings for a listing"
+  numberOfUpcomingBookings: Int!
+  "An array of upcoming reserved dates that the listing has been booked for"
+  currentlyBookedDates: [ReservedDate]!
+  "The submitted reviews for this listing"
+  reviews: [Review]!
+  "The overall calculated rating for a listing"
+  overallRating: Float
+  "Calculated total cost of the listing with the given arguments"
+  totalCost(checkInDate: String!, checkOutDate: String!): Float!
+}
+
+"A booking is reserved for a certain date range, marked by the checkInDate and checkOutDate fields"
+type ReservedDate {
+  "Date the guest checks in"
+  checkInDate: String!
+  "Date the guest checks out"
+  checkOutDate: String!
+}
+
+"What the location provides. An amenity should be tied to a specific category."
+type Amenity {
+  id: ID!
+  "The category for the amenity"
+  category: AmenityCategory!
+  "The name of the amenity. Should be short."
+  name: String!
+}
+
+"The category an amenity belongs to."
+enum AmenityCategory {
+  ACCOMMODATION_DETAILS
+  SPACE_SURVIVAL
+  OUTDOORS
+}
+
+"A listing can be one of these types."
+enum LocationType {
+  SPACESHIP
+  HOUSE
+  CAMPSITE
+  APARTMENT
+  ROOM
+}
+
+"To search for a listing, you need these fields."
+input SearchListingsInput {
+  checkInDate: String!
+  checkOutDate: String!
+  numOfBeds: Int
+  "The page in the search results, defaults to 1"
+  page: Int
+  "The number of listings you can display in a page, defaults to 5"
+  limit: Int
+  "The results sort order, defaults to cost descending"
+  sortBy: SortByCriteria
+}
+
+"Listings can be sorted by these options"
+enum SortByCriteria {
+  COST_ASC
+  COST_DESC
+}
+
+"Used to create a listing"
+input CreateListingInput {
+  "The listing's title"
+  title: String!
+  "The listing's description"
+  description: String!
+  "The thumbnail image for the listing"
+  photoThumbnail: String!
+  "The number of beds available"
+  numOfBeds: Int!
+  "The cost per night"
+  costPerNight: Float!
+  "The location type of the listing"
+  locationType: LocationType!
+  "The Listing's amenities "
+  amenities: [ID!]!
+}
+
+"Updates the properties included. If none are given, don't update anything"
+input UpdateListingInput {
+  "The listing's title"
+  title: String
+  "The listing's description"
+  description: String
+  "The thumbnail image for the listing"
+  photoThumbnail: String
+  "The number of beds available"
+  numOfBeds: Int
+  "The cost per night"
+  costPerNight: Float
+  "The location type of the listing"
+  locationType: LocationType
+  "The Listing's amenities "
+  amenities: [ID]
+}
+
+"Response after creating a listing"
+type CreateListingResponse implements MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int!
+  "Indicates whether the mutation was successful"
+  success: Boolean!
+  "Human-readable message for the UI"
+  message: String!
+  "The newly created listing"
+  listing: Listing
+}
+
+"Response after updating a listing"
+type UpdateListingResponse implements MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int!
+  "Indicates whether the mutation was successful"
+  success: Boolean!
+  "Human-readable message for the UI"
+  message: String!
+  "The newly updated listing"
+  listing: Listing
+}
+
+### Bookings
+
+"A booking is a reservation for a specific listing"
+type Booking {
+  id: ID!
+  "The listing associated with the reservation"
+  listing: Listing!
+  "The guest that reserved the location"
+  guest: Guest!
+  "Check-in date for the reservation"
+  checkInDate: String!
+  "Check-out date for the reservation"
+  checkOutDate: String!
+  "Total price paid, calculated using the listing's costPerNight and the check-in check-out dates"
+  totalPrice: Float!
+  "The status of the booking - check BookingStatus type for all possibilities"
+  status: BookingStatus!
+  "The guest's review of the location"
+  locationReview: Review
+  "The guest's review about the host"
+  hostReview: Review
+  "The host's review about the guest"
+  guestReview: Review
+}
+
+"The status of a booking"
+enum BookingStatus {
+  CURRENT
+  COMPLETED
+  UPCOMING
+}
+
+"Fields for creating a booking"
+input CreateBookingInput {
+  "ID of the listing associated with the booking"
+  listingId: ID!
+  "Date of check-in"
+  checkInDate: ID!
+  "Date of check-out"
+  checkOutDate: ID!
+}
+
+"Minimum details needed for a newly created booking"
+type NewBookingResponse {
+  id: ID!
+  checkInDate: String!
+  checkOutDate: String!
+}
+
+"The response after creating a booking."
+type CreateBookingResponse implements MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int!
+  "Indicates whether the mutation was successful"
+  success: Boolean!
+  "Human-readable message for the UI"
+  message: String!
+  "The newly-created booking"
+  booking: NewBookingResponse
+}
+
+### Reviews
+
+"A review consists of a numerical rating and written text. It can be written by a host or a guest."
+type Review {
+  id: ID!
+  "Written comment the author has written about the review target"
+  text: String!
+  "User that wrote the review"
+  author: User!
+  "The numerical rating for the review target, on a scale of 1-5, with 5 being excellent."
+  rating: Float!
+}
+
+"ReviewInput is the bare minimum needed to submit a review, not tied to any target."
+input ReviewInput {
+  text: String!
+  rating: Float!
+}
+
+"The response after submitting reviews for both host and location together."
+type SubmitHostAndLocationReviewsResponse implements MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int!
+  "Indicates whether the mutation was successful"
+  success: Boolean!
+  "Human-readable message for the UI"
+  message: String!
+  "Newly created review about the host"
+  hostReview: Review
+  "Newly created review about the location"
+  locationReview: Review
+}
+
+"The response after submitting reviews for a guest."
+type SubmitGuestReviewResponse implements MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int!
+  "Indicates whether the mutation was successful"
+  success: Boolean!
+  "Human-readable message for the UI"
+  message: String!
+  "Newly created review about the guest"
+  guestReview: Review
+}
+
+### Payments
+
+type AddFundsToWalletResponse implements MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int!
+  "Indicates whether the mutation was successful"
+  success: Boolean!
+  "Human-readable message for the UI"
+  message: String!
+  "Updated wallet amount"
+  amount: Float
+}
