@@ -6,11 +6,13 @@ const axios = require('axios');
 const typeDefs = gql(readFileSync('./schema.graphql', { encoding: 'utf-8' }));
 const resolvers = require('./resolvers');
 
+const AccountsAPI = require('./datasources/accounts');
+
 const server = new ApolloServer({
   schema: buildSubgraphSchema({ typeDefs, resolvers }),
   dataSources: () => {
     return {
-      // TODO: add data sources here
+      accountsAPI: new AccountsAPI(),
     };
   },
   context: async ({ req }) => {
