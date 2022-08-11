@@ -11,8 +11,6 @@ const ListingsAPI = require('./datasources/listings');
 const AccountsAPI = require('./datasources/accounts');
 const PaymentsAPI = require('./datasources/payments');
 
-require('dotenv').config();
-
 const server = new ApolloServer({
   typeDefs,
   resolvers,
