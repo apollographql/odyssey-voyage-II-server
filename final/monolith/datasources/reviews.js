@@ -18,7 +18,7 @@ class ReviewsDb extends DataSource {
     const config = {
       username: 'root',
       password: null,
-      database: 'dsatabase_development',
+      database: 'database_development',
       dialect: 'sqlite',
       storage: './../services/reviews/reviews.db', // path to the reviews database file, relative to where this datasource is initialized
       logging: false, // set this to true if you want to see logging output in the terminal console
