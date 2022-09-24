@@ -34,9 +34,11 @@ app.get('/listings', async (req, res) => {
     order: [sortOrder],
     limit: parseInt(limit, 10),
     offset: skipValue,
+    include: listingsDb.Amenity,
   });
+  const listingsToReturn = listings.map((listing) => transformListingWithAmenities(listing));
 
-  return res.json(listings);
+  return res.json(listingsToReturn);
 });
 
 // get 3 featured listings
@@ -47,14 +49,21 @@ app.get('/featured-listings', async (req, res) => {
       isFeatured: true,
     },
     limit,
+    include: listingsDb.Amenity,
   });
+  const listingsToReturn = listings.map((listing) => transformListingWithAmenities(listing));
 
-  return res.json(listings);
+  return res.json(listingsToReturn);
 });
 // get all listings for a specific user
 app.get('/user/:userId/listings', async (req, res) => {
-  const listings = await listingsDb.Listing.findAll({ where: { hostId: req.params.userId } });
-  return res.json(listings);
+  const listings = await listingsDb.Listing.findAll({ 
+    where: { hostId: req.params.userId },
+    include: listingsDb.Amenity,
+  });
+  const listingToReturn = transformListingWithAmenities(listingInstance);
+
+  return res.json(listingToReturn);
 });
 
 // get listing info for a specific listing
