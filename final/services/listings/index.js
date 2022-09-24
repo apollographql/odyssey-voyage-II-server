@@ -61,9 +61,9 @@ app.get('/user/:userId/listings', async (req, res) => {
     where: { hostId: req.params.userId },
     include: listingsDb.Amenity,
   });
-  const listingToReturn = transformListingWithAmenities(listingInstance);
+  const listingsToReturn = listings.map((listing) => transformListingWithAmenities(listingInstance));
 
-  return res.json(listingToReturn);
+  return res.json(listingsToReturn);
 });
 
 // get listing info for a specific listing
