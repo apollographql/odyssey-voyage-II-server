@@ -5,9 +5,7 @@ headers:
           named: 'Authorization'
 include_subgraph_errors:
   all: true # Propagate errors from all subgraphs
-server:
-  cors:
-    origins:
-      - http://localhost:3000 # Allows any locally-running client to run against your Router
-      - https://studio.apollographql.com/ # Allows Apollo Studio to still run queries against your Router
-
+cors:
+  origins:
+    - http://localhost:3000 # Allows any locally-running client to run against your Router
+    - https://studio.apollographql.com # Allows Apollo Studio to still run queries against your Router
