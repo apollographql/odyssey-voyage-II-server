@@ -1,4 +1,6 @@
 const { ApolloServer, gql, AuthenticationError } = require('apollo-server');
+const { buildSubgraphSchema } = require('@apollo/subgraph');
+
 const { readFileSync } = require('fs');
 const axios = require('axios');
 
@@ -12,8 +14,7 @@ const AccountsAPI = require('./datasources/accounts');
 const PaymentsAPI = require('./datasources/payments');
 
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema: buildSubgraphSchema({ typeDefs, resolvers }),
   dataSources: () => {
     return {
       bookingsDb: new BookingsDataSource(),
@@ -36,7 +37,7 @@ const server = new ApolloServer({
   },
 });
 
-const port = 4000;
+const port = 4001;
 
 server
   .listen({ port })

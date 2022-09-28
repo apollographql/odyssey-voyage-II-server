@@ -1,0 +1,71 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0",
+        import: ["@key"])
+
+type Query {
+  user(id: ID!): User
+  "Currently logged-in user"
+  me: User!
+}
+
+type Mutation {
+  "Updates the logged-in user's profile information"
+  updateProfile(updateProfileInput: UpdateProfileInput): UpdateProfileResponse!
+}
+
+input UpdateProfileInput {
+  "The user's first and last name"
+  name: String
+  "The user's profile photo URL"
+  profilePicture: String
+  "The host's profile bio description, will be shown in the listing"
+  profileDescription: String
+}
+
+type UpdateProfileResponse implements MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int!
+  "Indicates whether the mutation was successful"
+  success: Boolean!
+  "Human-readable message for the UI"
+  message: String!
+  "Updated user"
+  user: User
+}
+
+interface MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int!
+  "Indicates whether the mutation was successful"
+  success: Boolean!
+  "Human-readable message for the UI"
+  message: String!
+}
+
+"Represents an Airlock user's common properties"
+interface User {
+  id: ID!
+  "The user's first and last name"
+  name: String!
+  "The user's profile photo URL"
+  profilePicture: String!
+}
+
+type Host implements User @key(fields: "id") {
+  id: ID!
+  "The user's first and last name"
+  name: String!
+  "The user's profile photo URL"
+  profilePicture: String!
+  "The host's profile bio description, will be shown in the listing"
+  profileDescription: String!
+}
+
+"A guest is a type of Airlock user. They book places to stay."
+type Guest implements User @key(fields: "id") {
+  id: ID!
+  "The user's first and last name"
+  name: String!
+  "The user's profile photo URL"
+  profilePicture: String!
+}

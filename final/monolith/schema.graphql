@@ -1,9 +1,8 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0",
+        import: ["@key"])
+        
 type Query {
-  ### User accounts
-  user(id: ID!): User
-  "Currently logged-in user"
-  me: User!
-
   ### Listings
   "A curated array of listings to feature on the homepage"
   featuredListings: [Listing!]!
@@ -30,10 +29,6 @@ type Query {
 }
 
 type Mutation {
-  ### Accounts
-  "Updates the logged-in user's profile information"
-  updateProfile(updateProfileInput: UpdateProfileInput): UpdateProfileResponse!
-
   ### Listings
   "Creates a new listing for the currently authenticated host"
   createListing(listing: CreateListingInput!): CreateListingResponse!
@@ -71,56 +66,20 @@ interface MutationResponse {
 "Represents an Airlock user's common properties"
 interface User {
   id: ID!
-  "The user's first and last name"
-  name: String!
-  "The user's profile photo URL"
-  profilePicture: String!
 }
 
 "A host is a type of Airlock user. They own listings."
-type Host implements User {
+type Host implements User @key(fields: "id") {
   id: ID!
-  "The user's first and last name"
-  name: String!
-  "The user's profile photo URL"
-  profilePicture: String!
-  "The host's profile bio description, will be shown in the listing"
-  profileDescription: String!
   "The overall calculated rating for the host"
   overallRating: Float
 }
 
 "A guest is a type of Airlock user. They book places to stay."
-type Guest implements User {
+type Guest implements User @key(fields: "id") {
   id: ID!
-  "The user's first and last name"
-  name: String!
-  "The user's profile photo URL"
-  profilePicture: String!
   "Amount of money in the guest's wallet"
   funds: Float!
-}
-
-"Fields that can be updated"
-input UpdateProfileInput {
-  "The user's first and last name"
-  name: String
-  "The user's profile photo URL"
-  profilePicture: String
-  "The host's profile bio description, will be shown in the listing"
-  profileDescription: String
-}
-
-"The response after updating a profile"
-type UpdateProfileResponse implements MutationResponse {
-  "Similar to HTTP status code, represents the status of the mutation"
-  code: Int!
-  "Indicates whether the mutation was successful"
-  success: Boolean!
-  "Human-readable message for the UI"
-  message: String!
-  "Updated user"
-  user: User
 }
 
 ### Listings
