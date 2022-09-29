@@ -20,7 +20,10 @@ const resolvers = {
     updateProfile: async (_, { updateProfileInput }, { dataSources, userId }) => {
       if (!userId) throw new AuthenticationError(authErrMessage);
       try {
-        const updatedUser = await dataSources.accountsAPI.updateUser({ userId, userInfo: updateProfileInput });
+        const updatedUser = await dataSources.accountsAPI.updateUser({
+          userId,
+          userInfo: updateProfileInput,
+        });
         return {
           code: 200,
           success: true,

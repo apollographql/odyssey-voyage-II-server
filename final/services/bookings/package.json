@@ -2,6 +2,10 @@
   "name": "bookings",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "npm": ">=6.0.0",
+    "node": ">=14.0.0"
+  },
   "scripts": {
     "db:init": "sequelize-cli db:migrate && sequelize-cli db:seed:all",
     "db:reset": "sequelize-cli db:migrate:undo:all && npm run db:init",
@@ -14,7 +18,7 @@
     "dotenv": "^10.0.0",
     "sequelize": "^6.6.5",
     "sequelize-cli": "^6.2.0",
-    "sqlite3": "^5.0.2",
+    "sqlite3": "^5.0.8",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

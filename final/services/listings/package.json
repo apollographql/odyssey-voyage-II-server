@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "npm": ">=6.0.0",
+    "node": ">=14.0.0"
+  },
   "scripts": {
     "start": "nodemon .",
     "db:init": "sequelize-cli db:migrate && sequelize-cli db:seed:all",
@@ -15,7 +19,7 @@
     "express": "^4.17.1",
     "sequelize": "^6.6.5",
     "sequelize-cli": "^6.2.0",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.8"
   },
   "devDependencies": {
     "nodemon": "^2.0.12",
