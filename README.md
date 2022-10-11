@@ -12,6 +12,8 @@ The course will walk you through step by step how to turn this monolithic graph 
 
 To get started:
 
+In a terminal window, navigate to the `monolith` directory.
+
 1. Run `npm install`.
 1. Run `npm start`.
 
@@ -19,7 +21,7 @@ This will start the GraphQL API server on [http://localhost:4000](http://localho
 
 Next, let's run some local services.
 
-1. In a new terminal window, run `npm run launch`. This will run 4 local services, which you can learn about in the accompanying Odyssey course.
+1. In a new terminal window, still in the `monolith` directory, run `npm run launch`. This will run 4 local services, which you can learn about in the [accompanying Odyssey course](https://www.apollographql.com/tutorials/voyage-part2/monolith-graph-setup).
 
 ### Resetting the database
 
@@ -29,21 +31,22 @@ After playing around with the data, you may want to reset to its initial state. 
 
 You can take a peek at what the final version of the code should look like (after completing all the steps in the course).
 
-To run the `final` version:
+To run the `final` version, navigate to the `final/router` directory.
 
-1. Run `npm install` in the `final` directory.
-1. Run `npm start` in the `final` directory.
+In a new terminal window, run `APOLLO_KEY=<APOLLO_KEY> APOLLO_GRAPH_REF=<APOLLO_GRAPH_REF> ./router --config config.yaml`. 
 
-This will start the GraphQL API gateway on [http://localhost:4000](http://localhost:4000)
+Make sure to replace the values for `APOLLO_KEY` and `APOLLO_GRAPH_REF` (see course content for more details on how to set these up).
 
-Next, let's run the subgraphs we split off according to the course instructions: the monolith subgraph (what's left of it), the accounts subgraph and the listings subgraph.
+This will start the router on [http://localhost:4000](http://localhost:4000)
 
-1. In a new terminal window, navigate to the root of the `final` directory, run `npm run start:monolith-subgraph`.
+Next, let's run the subgraphs we split off according to the course instructions: the monolith subgraph (what's left of it) and the `accounts` subgraph.
+
+1. In a new terminal window, navigate to the root of the `final/monolith` directory, run `npm start`.
 1. In a new terminal window, navigate to the `final/subgraph-accounts` directory, run `npm install` then `npm start`.
 
 Finally, let's run some local services.
 
-1. In a new terminal window, navigate to the `final` directory, then run `npm run launch`. This will run 4 local services, which you can learn about in the accompanying Odyssey course.
+1. In a new terminal window, navigate to the `final/monolith` directory, then run `npm run launch`. This will run 4 local services, which you can learn about in the accompanying Odyssey course.
 
 ## Getting Help
 
