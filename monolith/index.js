@@ -22,6 +22,8 @@ async function startApolloServer() {
     resolvers,
   });
 
+  const port = 4000;
+
   try {
     const { url } = await startStandaloneServer(server, {
       context: async ({ req }) => {
@@ -49,7 +51,7 @@ async function startApolloServer() {
         };
       },
       listen: {
-        port: 4000,
+        port,
       },
     });
 
