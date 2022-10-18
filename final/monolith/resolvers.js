@@ -1,5 +1,4 @@
-const { AuthenticationError, ForbiddenError } = require('apollo-server');
-const authErrMessage = '*** you must be logged in ***';
+const { AuthenticationError, ForbiddenError } = require('./utils/errors');
 
 const resolvers = {
   Query: {
@@ -20,12 +19,12 @@ const resolvers = {
       return availableListings;
     },
     hostListings: async (_, __, { dataSources, userId, userRole }) => {
-      if (!userId) throw new AuthenticationError(authErrMessage);
+      if (!userId) throw AuthenticationError();
 
       if (userRole === 'Host') {
         return dataSources.listingsAPI.getListingsForUser(userId);
       } else {
-        throw new ForbiddenError('Only hosts have access to listings.');
+        throw ForbiddenError('Only hosts have access to listings.');
       }
     },
     listing: (_, { id }, { dataSources }) => {
@@ -39,37 +38,37 @@ const resolvers = {
       return dataSources.listingsAPI.getAllAmenities();
     },
     guestBookings: async (_, __, { dataSources, userId, userRole }) => {
-      if (!userId) throw new AuthenticationError(authErrMessage);
+      if (!userId) throw AuthenticationError();
 
       if (userRole === 'Guest') {
         const bookings = await dataSources.bookingsDb.getBookingsForUser(userId);
         return bookings;
       } else {
-        throw new ForbiddenError('Only guests have access to trips');
+        throw ForbiddenError('Only guests have access to trips');
       }
     },
     upcomingGuestBookings: async (_, __, { dataSources, userId, userRole }) => {
-      if (!userId) throw new AuthenticationError(authErrMessage);
+      if (!userId) throw AuthenticationError();
 
       if (userRole === 'Guest') {
         const bookings = await dataSources.bookingsDb.getBookingsForUser(userId, 'UPCOMING');
         return bookings;
       } else {
-        throw new ForbiddenError('Only guests have access to trips');
+        throw ForbiddenError('Only guests have access to trips');
       }
     },
     pastGuestBookings: async (_, __, { dataSources, userId, userRole }) => {
-      if (!userId) throw new AuthenticationError(authErrMessage);
+      if (!userId) throw AuthenticationError();
 
       if (userRole === 'Guest') {
         const bookings = await dataSources.bookingsDb.getBookingsForUser(userId, 'COMPLETED');
         return bookings;
       } else {
-        throw new ForbiddenError('Only guests have access to trips');
+        throw ForbiddenError('Only guests have access to trips');
       }
     },
     bookingsForListing: async (_, { listingId, status }, { dataSources, userId, userRole }) => {
-      if (!userId) throw new AuthenticationError(authErrMessage);
+      if (!userId) throw AuthenticationError();
 
       if (userRole === 'Host') {
         // need to check if listing belongs to host
@@ -81,13 +80,13 @@ const resolvers = {
           throw new Error('Listing does not belong to host');
         }
       } else {
-        throw new ForbiddenError('Only hosts have access to listing bookings');
+        throw ForbiddenError('Only hosts have access to listing bookings');
       }
     },
   },
   Mutation: {
     createBooking: async (_, { createBookingInput }, { dataSources, userId }) => {
-      if (!userId) throw new AuthenticationError(authErrMessage);
+      if (!userId) throw AuthenticationError();
 
       const { listingId, checkInDate, checkOutDate } = createBookingInput;
       const { totalCost } = await dataSources.listingsAPI.getTotalCost({ id: listingId, checkInDate, checkOutDate });
@@ -126,7 +125,7 @@ const resolvers = {
       }
     },
     createListing: async (_, { listing }, { dataSources, userId, userRole }) => {
-      if (!userId) throw new AuthenticationError(authErrMessage);
+      if (!userId) throw AuthenticationError();
 
       const { title, description, photoThumbnail, numOfBeds, costPerNight, locationType, amenities } = listing;
 
@@ -165,7 +164,7 @@ const resolvers = {
       }
     },
     updateListing: async (_, { listingId, listing }, { dataSources, userId }) => {
-      if (!userId) throw new AuthenticationError(authErrMessage);
+      if (!userId) throw AuthenticationError();
 
       try {
         const updatedListing = await dataSources.listingsAPI.updateListing({ listingId, listing });
@@ -185,7 +184,7 @@ const resolvers = {
       }
     },
     submitGuestReview: async (_, { bookingId, guestReview }, { dataSources, userId }) => {
-      if (!userId) throw new AuthenticationError(authErrMessage);
+      if (!userId) throw AuthenticationError();
 
       const { rating, text } = guestReview;
       const guestId = await dataSources.bookingsDb.getGuestIdForBooking(bookingId);
@@ -205,7 +204,7 @@ const resolvers = {
       };
     },
     submitHostAndLocationReviews: async (_, { bookingId, hostReview, locationReview }, { dataSources, userId }) => {
-      if (!userId) throw new AuthenticationError(authErrMessage);
+      if (!userId) throw AuthenticationError();
 
       const listingId = await dataSources.bookingsDb.getListingIdForBooking(bookingId);
       const createdLocationReview = await dataSources.reviewsDb.createReviewForListing({
@@ -234,7 +233,7 @@ const resolvers = {
       };
     },
     addFundsToWallet: async (_, { amount }, { dataSources, userId }) => {
-      if (!userId) throw new AuthenticationError(authErrMessage);
+      if (!userId) throw AuthenticationError();
       try {
         const updatedWallet = await dataSources.paymentsAPI.addFunds({ userId, amount });
         return {
