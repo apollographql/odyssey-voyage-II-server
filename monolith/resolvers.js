@@ -36,7 +36,7 @@ const resolvers = {
       if (userRole === 'Host') {
         return dataSources.listingsAPI.getListingsForUser(userId);
       } else {
-        throw new ForbiddenError('Only hosts have access to listings.');
+        throw ForbiddenError('Only hosts have access to listings.');
       }
     },
     listing: (_, { id }, { dataSources }) => {
@@ -56,7 +56,7 @@ const resolvers = {
         const bookings = await dataSources.bookingsDb.getBookingsForUser(userId);
         return bookings;
       } else {
-        throw new ForbiddenError('Only guests have access to trips');
+        throw ForbiddenError('Only guests have access to trips');
       }
     },
     upcomingGuestBookings: async (_, __, { dataSources, userId, userRole }) => {
@@ -66,7 +66,7 @@ const resolvers = {
         const bookings = await dataSources.bookingsDb.getBookingsForUser(userId, 'UPCOMING');
         return bookings;
       } else {
-        throw new ForbiddenError('Only guests have access to trips');
+        throw ForbiddenError('Only guests have access to trips');
       }
     },
     pastGuestBookings: async (_, __, { dataSources, userId, userRole }) => {
@@ -76,7 +76,7 @@ const resolvers = {
         const bookings = await dataSources.bookingsDb.getBookingsForUser(userId, 'COMPLETED');
         return bookings;
       } else {
-        throw new ForbiddenError('Only guests have access to trips');
+        throw ForbiddenError('Only guests have access to trips');
       }
     },
     bookingsForListing: async (_, { listingId, status }, { dataSources, userId, userRole }) => {
@@ -92,7 +92,7 @@ const resolvers = {
           throw new Error('Listing does not belong to host');
         }
       } else {
-        throw new ForbiddenError('Only hosts have access to listing bookings');
+        throw ForbiddenError('Only hosts have access to listing bookings');
       }
     },
   },
