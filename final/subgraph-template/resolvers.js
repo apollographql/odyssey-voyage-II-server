@@ -1,5 +1,4 @@
-const { AuthenticationError, ForbiddenError } = require('apollo-server');
-const authErrMessage = '*** you must be logged in ***';
+const { AuthenticationError, ForbiddenError } = require('./utils/errors');
 
 const resolvers = {
   // TODO: fill in resolvers
