@@ -1,5 +1,4 @@
-const { AuthenticationError, ForbiddenError } = require('apollo-server');
-const authErrMessage = '*** you must be logged in ***';
+const { AuthenticationError } = require('./utils/errors');
 
 const resolvers = {
   Query: {
@@ -11,14 +10,14 @@ const resolvers = {
       return user;
     },
     me: async (_, __, { dataSources, userId }) => {
-      if (!userId) throw new AuthenticationError(authErrMessage);
+      if (!userId) throw AuthenticationError();
       const user = await dataSources.accountsAPI.getUser(userId);
       return user;
     },
   },
   Mutation: {
     updateProfile: async (_, { updateProfileInput }, { dataSources, userId }) => {
-      if (!userId) throw new AuthenticationError(authErrMessage);
+      if (!userId) throw AuthenticationError();
       try {
         const updatedUser = await dataSources.accountsAPI.updateUser({
           userId,
