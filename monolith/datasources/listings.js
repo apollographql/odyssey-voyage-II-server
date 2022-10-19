@@ -35,7 +35,7 @@ class ListingsAPI extends RESTDataSource {
   }
 
   updateListing({ listingId, listing }) {
-    return this.patch(`listings/${listingId}`, { listing });
+    return this.patch(`listings/${listingId}`, { body: { listing } });
   }
 }
 
