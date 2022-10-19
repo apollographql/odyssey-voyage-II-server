@@ -31,7 +31,7 @@ class ListingsAPI extends RESTDataSource {
   }
 
   createListing(listing) {
-    return this.post(`listings`, { listing });
+    return this.post(`listings`, { body: { listing } });
   }
 
   updateListing({ listingId, listing }) {
