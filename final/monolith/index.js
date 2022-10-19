@@ -4,7 +4,7 @@ const { buildSubgraphSchema } = require('@apollo/subgraph');
 
 const { readFileSync } = require('fs');
 const axios = require('axios');
-const { gql } = require('graphql-tag');
+const gql = require('graphql-tag');
 
 const { AuthenticationError } = require('./utils/errors');
 
