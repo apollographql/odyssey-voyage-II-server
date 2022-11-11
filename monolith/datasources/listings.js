@@ -1,4 +1,4 @@
-const { RESTDataSource } = require('apollo-datasource-rest');
+const { RESTDataSource } = require('@apollo/datasource-rest');
 
 class ListingsAPI extends RESTDataSource {
   constructor() {
@@ -31,11 +31,11 @@ class ListingsAPI extends RESTDataSource {
   }
 
   createListing(listing) {
-    return this.post(`listings`, { listing });
+    return this.post(`listings`, { body: { listing } });
   }
 
   updateListing({ listingId, listing }) {
-    return this.patch(`listings/${listingId}`, { listing });
+    return this.patch(`listings/${listingId}`, { body: { listing } });
   }
 }
 
