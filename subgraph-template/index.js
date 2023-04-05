@@ -30,12 +30,16 @@ async function startApolloServer() {
 
         let userInfo = {};
         if (userId) {
-          const { data } = await axios.get(`http://localhost:4011/login/${userId}`).catch((error) => {
-            throw AuthenticationError();
-          });
+          const { data } = await axios
+            .get(`http://localhost:4011/login/${userId}`)
+            .catch((error) => {
+              throw AuthenticationError();
+            });
 
           userInfo = { userId: data.id, userRole: data.role };
         }
+
+        const { cache } = server;
 
         return {
           ...userInfo,

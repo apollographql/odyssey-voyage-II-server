@@ -1,10 +1,7 @@
 const { RESTDataSource } = require('@apollo/datasource-rest');
 
 class AccountsAPI extends RESTDataSource {
-  constructor() {
-    super();
-    this.baseURL = 'http://localhost:4011/';
-  }
+  baseURL = 'http://localhost:4011/';
 
   login(username) {
     return this.get(`login/${username}`);
