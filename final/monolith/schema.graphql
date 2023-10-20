@@ -1,7 +1,7 @@
 extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.0",
+  @link(url: "https://specs.apollo.dev/federation/v2.5", 
         import: ["@key"])
-        
+
 type Query {
   ### Listings
   "A curated array of listings to feature on the homepage"
