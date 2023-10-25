@@ -2,12 +2,12 @@ const concurrently = require('concurrently');
 const path = require('path');
 concurrently(
   [
-    {
-      command: 'npm start',
-      name: 'accounts',
-      cwd: path.resolve(__dirname, '../../services/accounts'),
-      prefixColor: 'blue',
-    },
+    // {
+    //   command: 'npm start',
+    //   name: 'accounts',
+    //   cwd: path.resolve(__dirname, '../../services/accounts'),
+    //   prefixColor: 'blue',
+    // },
     {
       command: 'npm start',
       name: 'listings',

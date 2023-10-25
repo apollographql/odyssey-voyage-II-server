@@ -1,2 +1,63 @@
 include_subgraph_errors:
   all: true # Propagate errors from all subgraphs
+authentication:
+  router:
+    jwt:
+      jwks: # This key is required.
+        - url: https://dev-p7nxaluy3f2ss4js.us.auth0.com/.well-known/jwks.json
+          issuer: https://dev-p7nxaluy3f2ss4js.us.auth0.com/
+
+      # These keys are optional. Default values are shown
+      header_name: Authorization
+      header_value_prefix: Bearer
+# headers:
+#   all:
+#     request:
+#       - propagate:
+#           named: 'Authorization'
+authorization:
+  preview_directives:
+    enabled: true
+coprocessor:
+  url: http://localhost:8081 # Required. Replace with the URL of your coprocessor's HTTP endpoint.
+  router:
+    request:
+      headers: true
+      context: true
+  # router: # This coprocessor hooks into the `RouterService`
+  #   request: # By including this key, the `RouterService` sends a coprocessor request whenever it first receives a client request.
+  #     headers: true # These boolean properties indicate which request data to include in the coprocessor request. All are optional and false by default.
+  #     body: true
+  #     context: true
+  #     sdl: false
+  #     path: false
+  #     method: false
+  #   response: # By including this key, the `RouterService` sends a coprocessor request whenever it's about to send response data to a client (including incremental data via @defer).
+  #     headers: true
+  #     body: true
+  #     context: true
+  #     sdl: false
+  #     status_code: false
+  # supergraph: # This coprocessor hooks into the `SupergraphService`
+  #   request: # By including this key, the `SupergraphService` sends a coprocessor request whenever it first receives a client request.
+  #     headers: true # These boolean properties indicate which request data to include in the coprocessor request. All are optional and false by default.
+  #     body: true
+  #     context: true
+  #     sdl: false
+  #     method: false
+  #   response: # By including this key, the `SupergraphService` sends a coprocessor request whenever it's about to send response data to a client (including incremental data via @defer).
+  #     headers: true
+  #     body: true
+  #     context: true
+  #     sdl: false
+  #     status_code: false
+  # subgraph:
+  #   all:
+  #     request: # By including this key, the `SubgraphService` sends a coprocessor request whenever it is about to make a request to a subgraph.
+  #       headers: true # These boolean properties indicate which request data to include in the coprocessor request. All are optional and false by default.
+  #       context: true
+  #     response:
+  #       headers: true
+  #       context: true
+# rhai:
+#   main: 'main.rhai'
