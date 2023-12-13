@@ -25,6 +25,6 @@
     "graphql-tag": "^2.12.6"
   },
   "devDependencies": {
-    "nodemon": "^2.0.13"
+    "nodemon": "^3.0.2"
   }
 }
