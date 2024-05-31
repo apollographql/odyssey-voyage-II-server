@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Amenities', {
+    await queryInterface.createTable("Amenities", {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -14,7 +14,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
     });
-    await queryInterface.createTable('Listings', {
+    await queryInterface.createTable("Listings", {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -45,28 +45,28 @@ module.exports = {
         type: Sequelize.BOOLEAN,
       },
     });
-    await queryInterface.createTable('ListingAmenities', {
+    await queryInterface.createTable("ListingAmenities", {
       ListingId: {
         allowNull: false,
         type: Sequelize.STRING,
         references: {
-          model: 'Listings',
-          key: 'id',
+          model: "Listings",
+          key: "id",
         },
       },
       AmenityId: {
         allowNull: false,
         type: Sequelize.STRING,
         references: {
-          model: 'Amenities',
-          key: 'id',
+          model: "Amenities",
+          key: "id",
         },
       },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('ListingAmenities');
-    await queryInterface.dropTable('Listings');
-    await queryInterface.dropTable('Amenities');
+    await queryInterface.dropTable("ListingAmenities");
+    await queryInterface.dropTable("Listings");
+    await queryInterface.dropTable("Amenities");
   },
 };

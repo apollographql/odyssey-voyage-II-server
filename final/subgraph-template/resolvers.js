@@ -1,9 +1,9 @@
-const { AuthenticationError, ForbiddenError } = require('./utils/errors');
+const { AuthenticationError, ForbiddenError } = require("./utils/errors");
 
 const resolvers = {
   // TODO: fill in resolvers
   Query: {
-    example: () => 'Hello World!',
+    example: () => "Hello World!",
   },
 };
 

@@ -24,4 +24,3 @@ const transformListingWithAmenities = (listingInstance) => {
 };
 
 module.exports = { getDifferenceInDays, transformListingWithAmenities };
-

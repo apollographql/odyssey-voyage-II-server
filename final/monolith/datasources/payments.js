@@ -1,7 +1,7 @@
-const { RESTDataSource } = require('@apollo/datasource-rest');
+const { RESTDataSource } = require("@apollo/datasource-rest");
 
 class PaymentsAPI extends RESTDataSource {
-  baseURL = 'https://rt-airlock-services-payments.herokuapp.com/';
+  baseURL = "https://rt-airlock-services-payments.herokuapp.com/";
 
   getUserWalletAmount(userId) {
     return this.get(`wallet/${userId}`);

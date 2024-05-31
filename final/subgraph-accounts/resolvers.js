@@ -1,11 +1,11 @@
-const { AuthenticationError } = require('./utils/errors');
+const { AuthenticationError } = require("./utils/errors");
 
 const resolvers = {
   Query: {
     user: async (_, { id }, { dataSources }) => {
       const user = await dataSources.accountsAPI.getUser(id);
       if (!user) {
-        throw new Error('No user found for this Id');
+        throw new Error("No user found for this Id");
       }
       return user;
     },
@@ -16,7 +16,11 @@ const resolvers = {
     },
   },
   Mutation: {
-    updateProfile: async (_, { updateProfileInput }, { dataSources, userId }) => {
+    updateProfile: async (
+      _,
+      { updateProfileInput },
+      { dataSources, userId },
+    ) => {
       if (!userId) throw AuthenticationError();
       try {
         const updatedUser = await dataSources.accountsAPI.updateUser({
@@ -26,7 +30,7 @@ const resolvers = {
         return {
           code: 200,
           success: true,
-          message: 'Profile successfully updated!',
+          message: "Profile successfully updated!",
           user: updatedUser,
         };
       } catch (err) {

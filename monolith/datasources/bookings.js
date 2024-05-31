@@ -1,7 +1,7 @@
-const { v4: uuidv4 } = require('uuid');
-const { format } = require('date-fns');
-const Sequelize = require('sequelize');
-const Booking = require('../../services/bookings/sequelize/models/booking');
+const { v4: uuidv4 } = require("uuid");
+const { format } = require("date-fns");
+const Sequelize = require("sequelize");
+const Booking = require("../../services/bookings/sequelize/models/booking");
 
 class BookingsDb {
   constructor() {
@@ -11,14 +11,19 @@ class BookingsDb {
 
   initializeSequelizeDb() {
     const config = {
-      username: 'root',
+      username: "root",
       password: null,
-      database: 'database_development',
-      dialect: 'sqlite',
-      storage: './../services/bookings/bookings.db', // path to the bookings database file, relative to where this datasource is initialized,
+      database: "database_development",
+      dialect: "sqlite",
+      storage: "./../services/bookings/bookings.db", // path to the bookings database file, relative to where this datasource is initialized,
       logging: false, // set this to true if you want to see logging output in the terminal console
     };
-    const sequelize = new Sequelize(config.database, config.username, config.password, config);
+    const sequelize = new Sequelize(
+      config.database,
+      config.username,
+      config.password,
+      config,
+    );
 
     const db = {};
     db.Booking = Booking(sequelize, Sequelize.DataTypes);
@@ -30,7 +35,7 @@ class BookingsDb {
 
   // helper
   getHumanReadableDate(date) {
-    return format(date, 'MMM d, yyyy');
+    return format(date, "MMM d, yyyy");
   }
 
   async getBooking(bookingId) {
@@ -43,7 +48,9 @@ class BookingsDb {
     if (status) {
       filterOptions.status = status;
     }
-    const bookings = await this.db.Booking.findAll({ where: { ...filterOptions } });
+    const bookings = await this.db.Booking.findAll({
+      where: { ...filterOptions },
+    });
     return bookings.map((b) => b.dataValues);
   }
 
@@ -52,18 +59,26 @@ class BookingsDb {
     if (status) {
       filterOptions.status = status;
     }
-    const bookings = await this.db.Booking.findAll({ where: { ...filterOptions } });
+    const bookings = await this.db.Booking.findAll({
+      where: { ...filterOptions },
+    });
     return bookings.map((b) => b.dataValues);
   }
 
   async getGuestIdForBooking(bookingId) {
-    const { guestId } = await this.db.Booking.findOne({ where: { id: bookingId }, attributes: ['guestId'] });
+    const { guestId } = await this.db.Booking.findOne({
+      where: { id: bookingId },
+      attributes: ["guestId"],
+    });
 
     return guestId;
   }
 
   async getListingIdForBooking(bookingId) {
-    const { listingId } = await this.db.Booking.findOne({ where: { id: bookingId }, attributes: ['listingId'] });
+    const { listingId } = await this.db.Booking.findOne({
+      where: { id: bookingId },
+      attributes: ["listingId"],
+    });
 
     return listingId;
   }
@@ -92,17 +107,28 @@ class BookingsDb {
     const bookings = await this.db.Booking.findAll({
       where: {
         listingId: listingId,
-        [or]: [{ status: 'UPCOMING' }, { status: 'CURRENT' }],
+        [or]: [{ status: "UPCOMING" }, { status: "CURRENT" }],
       },
-      attributes: ['checkInDate', 'checkOutDate'],
+      attributes: ["checkInDate", "checkOutDate"],
     });
 
-    const bookingsWithDates = bookings.map((b) => ({ checkInDate: b.checkInDate, checkOutDate: b.checkOutDate }));
+    const bookingsWithDates = bookings.map((b) => ({
+      checkInDate: b.checkInDate,
+      checkOutDate: b.checkOutDate,
+    }));
     return bookingsWithDates;
   }
 
-  async createBooking({ listingId, checkInDate, checkOutDate, totalCost, guestId }) {
-    if (await this.isListingAvailable({ listingId, checkInDate, checkOutDate })) {
+  async createBooking({
+    listingId,
+    checkInDate,
+    checkOutDate,
+    totalCost,
+    guestId,
+  }) {
+    if (
+      await this.isListingAvailable({ listingId, checkInDate, checkOutDate })
+    ) {
       const booking = await this.db.Booking.create({
         id: uuidv4(),
         listingId,
@@ -110,7 +136,7 @@ class BookingsDb {
         checkOutDate,
         totalCost,
         guestId,
-        status: 'UPCOMING',
+        status: "UPCOMING",
       });
 
       return {
@@ -119,7 +145,9 @@ class BookingsDb {
         checkOutDate: this.getHumanReadableDate(booking.checkOutDate),
       };
     } else {
-      throw new Error("We couldn't complete your request because the listing is unavailable for the given dates.");
+      throw new Error(
+        "We couldn't complete your request because the listing is unavailable for the given dates.",
+      );
     }
   }
 }
