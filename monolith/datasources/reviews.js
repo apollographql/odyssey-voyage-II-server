@@ -1,6 +1,6 @@
-const { v4: uuidv4 } = require('uuid');
-const Sequelize = require('sequelize');
-const Review = require('../../services/reviews/sequelize/models/review');
+const { v4: uuidv4 } = require("uuid");
+const Sequelize = require("sequelize");
+const Review = require("../../services/reviews/sequelize/models/review");
 
 class ReviewsDb {
   constructor() {
@@ -10,14 +10,19 @@ class ReviewsDb {
 
   initializeSequelizeDb() {
     const config = {
-      username: 'root',
+      username: "root",
       password: null,
-      database: 'database_development',
-      dialect: 'sqlite',
-      storage: './../services/reviews/reviews.db', // path to the reviews database file, relative to where this datasource is initialized
+      database: "database_development",
+      dialect: "sqlite",
+      storage: "./../services/reviews/reviews.db", // path to the reviews database file, relative to where this datasource is initialized
       logging: false, // set this to true if you want to see logging output in the terminal console
     };
-    const sequelize = new Sequelize(config.database, config.username, config.password, config);
+    const sequelize = new Sequelize(
+      config.database,
+      config.username,
+      config.password,
+      config,
+    );
 
     const db = {};
     db.Review = Review(sequelize, Sequelize.DataTypes);
@@ -33,25 +38,35 @@ class ReviewsDb {
 
   async getOverallRatingForListing(listingId) {
     const overallRating = await this.db.Review.findOne({
-      where: { targetType: 'LISTING', targetId: listingId },
-      attributes: [[this.db.sequelize.fn('AVG', this.db.sequelize.col('rating')), 'avg_rating']],
+      where: { targetType: "LISTING", targetId: listingId },
+      attributes: [
+        [
+          this.db.sequelize.fn("AVG", this.db.sequelize.col("rating")),
+          "avg_rating",
+        ],
+      ],
     });
 
-    return overallRating.getDataValue('avg_rating');
+    return overallRating.getDataValue("avg_rating");
   }
 
   async getOverallRatingForHost(hostId) {
     const overallRating = await this.db.Review.findOne({
-      where: { targetType: 'HOST', targetId: hostId },
-      attributes: [[this.db.sequelize.fn('AVG', this.db.sequelize.col('rating')), 'avg_rating']],
+      where: { targetType: "HOST", targetId: hostId },
+      attributes: [
+        [
+          this.db.sequelize.fn("AVG", this.db.sequelize.col("rating")),
+          "avg_rating",
+        ],
+      ],
     });
 
-    return overallRating.getDataValue('avg_rating');
+    return overallRating.getDataValue("avg_rating");
   }
 
   async getReviewsForListing(listingId) {
     const reviews = await this.db.Review.findAll({
-      where: { targetType: 'LISTING', targetId: listingId },
+      where: { targetType: "LISTING", targetId: listingId },
     });
     return reviews;
   }
@@ -69,7 +84,7 @@ class ReviewsDb {
       id: uuidv4(),
       bookingId,
       targetId: guestId,
-      targetType: 'GUEST',
+      targetType: "GUEST",
       authorId,
       rating,
       text,
@@ -83,7 +98,7 @@ class ReviewsDb {
       id: uuidv4(),
       bookingId,
       targetId: hostId,
-      targetType: 'HOST',
+      targetType: "HOST",
       authorId,
       text,
       rating,
@@ -92,12 +107,18 @@ class ReviewsDb {
     return review;
   }
 
-  async createReviewForListing({ bookingId, listingId, authorId, text, rating }) {
+  async createReviewForListing({
+    bookingId,
+    listingId,
+    authorId,
+    text,
+    rating,
+  }) {
     const review = await this.db.Review.create({
       id: uuidv4(),
       bookingId,
       targetId: listingId,
-      targetType: 'LISTING',
+      targetType: "LISTING",
       authorId,
       text,
       rating,

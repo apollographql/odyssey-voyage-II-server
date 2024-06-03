@@ -1,14 +1,16 @@
-const { RESTDataSource } = require('@apollo/datasource-rest');
+const { RESTDataSource } = require("@apollo/datasource-rest");
 
 class ListingsAPI extends RESTDataSource {
-  baseURL = 'http://localhost:4010/';
+  baseURL = "http://localhost:4010/";
 
   getListingsForUser(userId) {
     return this.get(`user/${userId}/listings`);
   }
 
   getListings({ numOfBeds, page, limit, sortBy }) {
-    return this.get(`listings?numOfBeds=${numOfBeds}&page=${page}&limit=${limit}&sortBy=${sortBy}`);
+    return this.get(
+      `listings?numOfBeds=${numOfBeds}&page=${page}&limit=${limit}&sortBy=${sortBy}`,
+    );
   }
 
   getFeaturedListings(limit = 1) {
@@ -24,7 +26,9 @@ class ListingsAPI extends RESTDataSource {
   }
 
   getTotalCost({ id, checkInDate, checkOutDate }) {
-    return this.get(`listings/${id}/totalCost?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`);
+    return this.get(
+      `listings/${id}/totalCost?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`,
+    );
   }
 
   createListing(listing) {

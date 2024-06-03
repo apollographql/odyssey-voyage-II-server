@@ -1,12 +1,12 @@
-'use strict';
-const reviewsData = require('./reviews.json');
+"use strict";
+const reviewsData = require("./reviews.json");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Reviews', reviewsData, {});
+    await queryInterface.bulkInsert("Reviews", reviewsData, {});
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Reviews', null, {});
+    await queryInterface.bulkDelete("Reviews", null, {});
   },
 };
