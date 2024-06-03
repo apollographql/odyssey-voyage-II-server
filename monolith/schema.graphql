@@ -1,3 +1,6 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.7", import: ["@key"])
+
 type Query {
   ### User accounts
   user(id: ID!): User
@@ -38,7 +41,10 @@ type Mutation {
   "Creates a new listing for the currently authenticated host"
   createListing(listing: CreateListingInput!): CreateListingResponse!
   "Updates an existing listing"
-  updateListing(listingId: ID!, listing: UpdateListingInput!): UpdateListingResponse!
+  updateListing(
+    listingId: ID!
+    listing: UpdateListingInput!
+  ): UpdateListingResponse!
 
   ### Bookings
   createBooking(createBookingInput: CreateBookingInput): CreateBookingResponse!
@@ -51,7 +57,10 @@ type Mutation {
     locationReview: ReviewInput!
   ): SubmitHostAndLocationReviewsResponse!
   "Creates a review for the guest - must be authored by host of past booking"
-  submitGuestReview(bookingId: ID!, guestReview: ReviewInput!): SubmitGuestReviewResponse!
+  submitGuestReview(
+    bookingId: ID!
+    guestReview: ReviewInput!
+  ): SubmitGuestReviewResponse!
 
   ### Wallet
   addFundsToWallet(amount: Float!): AddFundsToWalletResponse!
