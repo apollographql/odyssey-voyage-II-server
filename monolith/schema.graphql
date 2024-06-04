@@ -87,7 +87,7 @@ interface User {
 }
 
 "A host is a type of Airlock user. They own listings."
-type Host implements User {
+type Host implements User @key(fields: "id") {
   id: ID!
   "The user's first and last name"
   name: String!
@@ -100,7 +100,7 @@ type Host implements User {
 }
 
 "A guest is a type of Airlock user. They book places to stay."
-type Guest implements User {
+type Guest implements User @key(fields: "id") {
   id: ID!
   "The user's first and last name"
   name: String!
@@ -135,7 +135,7 @@ type UpdateProfileResponse implements MutationResponse {
 ### Listings
 
 "A listing is a location owned by a host. A listing has a list of amenities it offers. Listings have a fixed cost per night value."
-type Listing {
+type Listing @key(fields: "id") {
   id: ID!
   "The listing's title"
   title: String!
@@ -282,7 +282,7 @@ type UpdateListingResponse implements MutationResponse {
 ### Bookings
 
 "A booking is a reservation for a specific listing"
-type Booking {
+type Booking @key(fields: "id") {
   id: ID!
   "The listing associated with the reservation"
   listing: Listing!
@@ -343,7 +343,7 @@ type CreateBookingResponse implements MutationResponse {
 ### Reviews
 
 "A review consists of a numerical rating and written text. It can be written by a host or a guest."
-type Review {
+type Review @key(fields: "id") {
   id: ID!
   "Written comment the author has written about the review target"
   text: String!
