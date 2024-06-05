@@ -1,4 +1,4 @@
-const { AuthenticationError } = require("./utils/errors");
+const { AuthenticationError, ForbiddenError } = require("./utils/errors");
 
 const resolvers = {
   Query: {
@@ -10,7 +10,7 @@ const resolvers = {
       return user;
     },
     me: async (_, __, { dataSources, userId }) => {
-      if (!userId) throw AuthenticationError();
+      if (!userId) throw new AuthenticationError(authErrMessage);
       const user = await dataSources.accountsAPI.getUser(userId);
       return user;
     },
@@ -19,9 +19,9 @@ const resolvers = {
     updateProfile: async (
       _,
       { updateProfileInput },
-      { dataSources, userId },
+      { dataSources, userId }
     ) => {
-      if (!userId) throw AuthenticationError();
+      if (!userId) throw new AuthenticationError(authErrMessage);
       try {
         const updatedUser = await dataSources.accountsAPI.updateUser({
           userId,
@@ -42,11 +42,6 @@ const resolvers = {
       }
     },
   },
-  User: {
-    __resolveType(user) {
-      return user.role;
-    },
-  },
   Host: {
     __resolveReference: (user, { dataSources }) => {
       return dataSources.accountsAPI.getUser(user.id);
@@ -55,6 +50,11 @@ const resolvers = {
   Guest: {
     __resolveReference: (user, { dataSources }) => {
       return dataSources.accountsAPI.getUser(user.id);
+    },
+  },
+  User: {
+    __resolveType(user) {
+      return user.role;
     },
   },
 };

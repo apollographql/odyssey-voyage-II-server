@@ -1,10 +1,10 @@
+include_subgraph_errors:
+  all: true # Propagate errors from all subgraphs
 headers:
   all:
     request:
       - propagate:
-          named: 'Authorization'
-include_subgraph_errors:
-  all: true # Propagate errors from all subgraphs
+          named: "Authorization"
 cors:
   origins:
     - http://localhost:3000 # Allows any locally-running client to run against your Router
