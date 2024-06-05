@@ -1,9 +1,34 @@
 extend schema
   @link(
     url: "https://specs.apollo.dev/federation/v2.7"
-    import: ["@key", "@shareable", "@inaccessible"]
+    import: ["@key", "@shareable", "@inaccessible", "@override"]
   )
 
-type Query {
-  _todo: String @shareable @inaccessible
+"Represents an Airlock user's common properties"
+interface User {
+  id: ID!
+  "The user's first and last name"
+  name: String!
+  "The user's profile photo URL"
+  profilePicture: String!
+}
+
+"A host is a type of Airlock user. They own listings."
+type Host implements User @key(fields: "id") {
+  id: ID!
+  "The user's first and last name"
+  name: String! @override(from: "monolith")
+  "The user's profile photo URL"
+  profilePicture: String! @override(from: "monolith")
+  "The host's profile bio description, will be shown in the listing"
+  profileDescription: String! @override(from: "monolith")
+}
+
+"A guest is a type of Airlock user. They book places to stay."
+type Guest implements User @key(fields: "id") {
+  id: ID!
+  "The user's first and last name"
+  name: String! @override(from: "monolith")
+  "The user's profile photo URL"
+  profilePicture: String! @override(from: "monolith")
 }
