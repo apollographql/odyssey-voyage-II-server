@@ -10,6 +10,7 @@ const { AuthenticationError } = require("./utils/errors");
 
 const typeDefs = gql(readFileSync("./schema.graphql", { encoding: "utf-8" }));
 const resolvers = require("./resolvers");
+
 const AccountsAPI = require("./datasources/accounts");
 
 async function startApolloServer() {
