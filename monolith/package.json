@@ -21,7 +21,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/datasource-rest": "^4.3.2",
+    "@apollo/datasource-rest": "^6.0.0",
     "@apollo/server": "^4.0.1",
     "axios": "^1.6.2",
     "concurrently": "^6.3.0",
