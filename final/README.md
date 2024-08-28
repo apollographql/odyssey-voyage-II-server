@@ -47,7 +47,7 @@ Finally, let's run some local services.
 
 ## Installing the router
 
-We have removed the router binary from this course, so when running the `final` code please re-download the router into the `router` directory.
+When running the `final` code please be sure to download the router into the `router` directory.
 
 ```
 curl -sSL https://router.apollo.dev/download/nix/v1.46.0 | sh
