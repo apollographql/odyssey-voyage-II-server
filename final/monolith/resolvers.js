@@ -65,7 +65,8 @@ const resolvers = {
       if (!userId) throw AuthenticationError();
 
       if (userRole === "Guest") {
-        const bookings = await dataSources.bookingsDb.getBookingsForUser(userId);
+        const bookings =
+          await dataSources.bookingsDb.getBookingsForUser(userId);
         return bookings;
       } else {
         throw ForbiddenError("Only guests have access to trips");
@@ -106,7 +107,8 @@ const resolvers = {
 
       if (userRole === "Host") {
         // need to check if listing belongs to host
-        const listings = await dataSources.listingsAPI.getListingsForUser(userId);
+        const listings =
+          await dataSources.listingsAPI.getListingsForUser(userId);
         if (listings.find((listing) => listing.id === listingId)) {
           const bookings =
             (await dataSources.bookingsDb.getBookingsForListing(
@@ -285,7 +287,8 @@ const resolvers = {
       if (!userId) throw AuthenticationError();
 
       const { rating, text } = guestReview;
-      const guestId = await dataSources.bookingsDb.getGuestIdForBooking(bookingId);
+      const guestId =
+        await dataSources.bookingsDb.getGuestIdForBooking(bookingId);
 
       const createdReview = await dataSources.reviewsDb.createReviewForGuest({
         bookingId,
@@ -308,7 +311,8 @@ const resolvers = {
     ) => {
       if (!userId) throw AuthenticationError();
 
-      const listingId = await dataSources.bookingsDb.getListingIdForBooking(bookingId);
+      const listingId =
+        await dataSources.bookingsDb.getListingIdForBooking(bookingId);
       const createdLocationReview =
         await dataSources.reviewsDb.createReviewForListing({
           bookingId,
@@ -326,7 +330,7 @@ const resolvers = {
           authorId: userId,
           text: hostReview.text,
           rating: hostReview.rating,
-        }
+        },
       );
 
       return {
@@ -371,9 +375,8 @@ const resolvers = {
   },
   Guest: {
     funds: async (_, __, { dataSources, userId }) => {
-      const { amount } = await dataSources.paymentsAPI.getUserWalletAmount(
-        userId
-      );
+      const { amount } =
+        await dataSources.paymentsAPI.getUserWalletAmount(userId);
       return amount;
     },
   },
@@ -390,7 +393,7 @@ const resolvers = {
     totalCost: async (
       { id },
       { checkInDate, checkOutDate },
-      { dataSources }
+      { dataSources },
     ) => {
       const { totalCost } = await dataSources.listingsAPI.getTotalCost({
         id,
@@ -428,7 +431,7 @@ const resolvers = {
     totalPrice: async (
       { listingId, checkInDate, checkOutDate },
       _,
-      { dataSources }
+      { dataSources },
     ) => {
       const { totalCost } = await dataSources.listingsAPI.getTotalCost({
         id: listingId,
