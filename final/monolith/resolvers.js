@@ -31,13 +31,13 @@ const resolvers = {
             listingId: listing.id,
             checkInDate,
             checkOutDate,
-          })
-        )
+          }),
+        ),
       );
 
       // filter listings data based on availability
       const availableListings = listings.filter(
-        (listing, index) => listingAvailability[index]
+        (listing, index) => listingAvailability[index],
       );
 
       return availableListings;
@@ -65,9 +65,7 @@ const resolvers = {
       if (!userId) throw AuthenticationError();
 
       if (userRole === "Guest") {
-        const bookings = await dataSources.bookingsDb.getBookingsForUser(
-          userId
-        );
+        const bookings = await dataSources.bookingsDb.getBookingsForUser(userId);
         return bookings;
       } else {
         throw ForbiddenError("Only guests have access to trips");
@@ -79,7 +77,7 @@ const resolvers = {
       if (userRole === "Guest") {
         const bookings = await dataSources.bookingsDb.getBookingsForUser(
           userId,
-          "UPCOMING"
+          "UPCOMING",
         );
         return bookings;
       } else {
@@ -92,7 +90,7 @@ const resolvers = {
       if (userRole === "Guest") {
         const bookings = await dataSources.bookingsDb.getBookingsForUser(
           userId,
-          "COMPLETED"
+          "COMPLETED",
         );
         return bookings;
       } else {
@@ -102,20 +100,18 @@ const resolvers = {
     bookingsForListing: async (
       _,
       { listingId, status },
-      { dataSources, userId, userRole }
+      { dataSources, userId, userRole },
     ) => {
       if (!userId) throw AuthenticationError();
 
       if (userRole === "Host") {
         // need to check if listing belongs to host
-        const listings = await dataSources.listingsAPI.getListingsForUser(
-          userId
-        );
+        const listings = await dataSources.listingsAPI.getListingsForUser(userId);
         if (listings.find((listing) => listing.id === listingId)) {
           const bookings =
             (await dataSources.bookingsDb.getBookingsForListing(
               listingId,
-              status
+              status,
             )) || [];
           return bookings;
         } else {
@@ -130,7 +126,7 @@ const resolvers = {
     updateProfile: async (
       _,
       { updateProfileInput },
-      { dataSources, userId }
+      { dataSources, userId },
     ) => {
       if (!userId) throw AuthenticationError();
       try {
@@ -155,7 +151,7 @@ const resolvers = {
     createBooking: async (
       _,
       { createBookingInput },
-      { dataSources, userId }
+      { dataSources, userId },
     ) => {
       if (!userId) throw AuthenticationError();
 
@@ -206,7 +202,7 @@ const resolvers = {
     createListing: async (
       _,
       { listing },
-      { dataSources, userId, userRole }
+      { dataSources, userId, userRole },
     ) => {
       if (!userId) throw AuthenticationError();
 
@@ -257,7 +253,7 @@ const resolvers = {
     updateListing: async (
       _,
       { listingId, listing },
-      { dataSources, userId }
+      { dataSources, userId },
     ) => {
       if (!userId) throw AuthenticationError();
 
@@ -284,14 +280,12 @@ const resolvers = {
     submitGuestReview: async (
       _,
       { bookingId, guestReview },
-      { dataSources, userId }
+      { dataSources, userId },
     ) => {
       if (!userId) throw AuthenticationError();
 
       const { rating, text } = guestReview;
-      const guestId = await dataSources.bookingsDb.getGuestIdForBooking(
-        bookingId
-      );
+      const guestId = await dataSources.bookingsDb.getGuestIdForBooking(bookingId);
 
       const createdReview = await dataSources.reviewsDb.createReviewForGuest({
         bookingId,
@@ -310,13 +304,11 @@ const resolvers = {
     submitHostAndLocationReviews: async (
       _,
       { bookingId, hostReview, locationReview },
-      { dataSources, userId }
+      { dataSources, userId },
     ) => {
       if (!userId) throw AuthenticationError();
 
-      const listingId = await dataSources.bookingsDb.getListingIdForBooking(
-        bookingId
-      );
+      const listingId = await dataSources.bookingsDb.getListingIdForBooking(bookingId);
       const createdLocationReview =
         await dataSources.reviewsDb.createReviewForListing({
           bookingId,
