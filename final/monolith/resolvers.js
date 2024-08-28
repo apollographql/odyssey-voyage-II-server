@@ -458,7 +458,7 @@ const resolvers = {
       } else {
         role = "Host";
       }
-      return { __typename: role, id: review.authorId };
+      return { id: review.authorId, role };
     },
   },
   AmenityCategory: {

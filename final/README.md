@@ -45,6 +45,14 @@ Finally, let's run some local services.
 
 1. In a new terminal window, navigate to the `final` directory, then run `npm run launch`. This will run 4 local services, which you can learn about in the accompanying Odyssey course.
 
+## Installing the router
+
+When running the `final` code please be sure to download the router into the `router` directory.
+
+```
+curl -sSL https://router.apollo.dev/download/nix/v1.46.0 | sh
+```
+
 ## Getting Help
 
 For any issues or problems concerning the course content, please [refer to the Odyssey topic in our community forums](https://community.apollographql.com/tags/c/help/6/odyssey).
