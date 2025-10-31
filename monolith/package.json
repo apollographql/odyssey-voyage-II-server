@@ -5,7 +5,7 @@
   "main": "index.js",
   "engines": {
     "npm": ">=6.0.0",
-    "node": ">=14.0.0 <=20"
+    "node": "<=24"
   },
   "scripts": {
     "start": "nodemon index.js",
@@ -33,7 +33,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@types/node": "^16.9.1",
+    "@types/node": "^24.0.0",
     "nodemon": "^3.0.2",
     "prisma": "^3.0.2",
     "ts-node": "^10.2.1",
