@@ -1,0 +1,23 @@
+name: Run schema checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, edited]
+
+jobs:
+  schema_checks:
+    runs-on: ubuntu-latest
+    env:
+      APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
+      APOLLO_VCS_COMMIT: ${{ github.event.pull_request.head.sha }}
+      GRAPH_ID: odissey-58w7oh
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rover
+        run: |
+          curl -sSL https://rover.apollo.dev/nix/latest | sh
+          echo "$HOME/.rover/bin" >> $GITHUB_PATH
+      - name: Check monolith
+        run: rover subgraph check ${GRAPH_ID}@staging --schema ./monolith/schema.graphql --name monolith
+      - name: Check accounts
+        run: rover subgraph check ${GRAPH_ID}@staging --schema ./final/subgraph-accounts/schema.graphql --name accounts
