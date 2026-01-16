@@ -4,6 +4,14 @@ extend schema
     import: ["@key", "@shareable", "@inaccessible", "@override"]
   )
 
+"Coordinates in the galaxy"
+type GalacticCoordinates @shareable {
+  "Latitude coordinate"
+  latitude: Float!
+  "Longitude coordinate"
+  longitude: Float!
+}
+
 type Query {
   user(id: ID!): User @override(from: "monolith")
   "Currently logged-in user"
@@ -34,6 +42,9 @@ type Host implements User @key(fields: "id") {
   profilePicture: String! @override(from: "monolith")
   "The host's profile bio description, will be shown in the listing"
   profileDescription: String! @override(from: "monolith")
+
+  "Where this host is located in the galaxy"
+  coordinates: GalacticCoordinates
 }
 
 "A guest is a type of Airlock user. They book places to stay."
