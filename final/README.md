@@ -1,4 +1,4 @@
-# Odyssey Voyage II - Server (Airlock)
+# Odyssey Voyage II - Server (Airlock) — Final Version
 
 Welcome to the companion app of Odyssey's Voyage II: Federating the Monolith! This is the `server` backend of the Airlock app. You can [find the course lessons and instructions on Odyssey](http://apollographql.com/tutorials/voyage-part2), Apollo's learning platform.
 
@@ -10,20 +10,37 @@ You can [find the client counterpart here](https://github.com/apollographql/odys
 
 The course will walk you through step by step how to turn this monolithic graph into a federated graph. This codebase is the starting point of your journey!
 
-To get started:
+To get started (from the `final/monolith` directory):
 
-1. Run `npm install`.
-1. Run `npm start`.
+**Using pnpm (recommended):**
 
-This will start the GraphQL API server on [http://localhost:4000](http://localhost:4000)
+```sh
+pnpm install
+pnpm start
+```
 
-Next, let's run some local services.
+**Using npm:**
 
-1. In a new terminal window, run `npm run launch`. This will run 4 local services, which you can learn about in the accompanying Odyssey course.
+```sh
+npm install
+npm start
+```
+
+This will start the GraphQL API server on [http://localhost:4000](http://localhost:4000).
+
+Next, let's run some local services. In a new terminal window, run:
+
+```sh
+pnpm run launch   # or: npm run launch
+```
 
 ### Resetting the database
 
-After playing around with the data, you may want to reset to its initial state. To do this, run `npm run db:reset`.
+After playing around with the data, you may want to reset to its initial state:
+
+```sh
+pnpm run db:reset   # or: npm run db:reset
+```
 
 ## How to run the `final` version of the code
 
@@ -31,19 +48,21 @@ You can take a peek at what the final version of the code should look like (afte
 
 To run the `final` version:
 
-1. Run `npm install` in the `final` directory.
-1. Run `npm start` in the `final` directory.
+1. Run `pnpm install` (or `npm install`) in the `final` directory.
+1. Run `pnpm start` (or `npm start`) in the `final` directory.
 
-This will start the GraphQL API gateway on [http://localhost:4000](http://localhost:4000)
+This will start the GraphQL API gateway on [http://localhost:4000](http://localhost:4000).
 
-Next, let's run the subgraphs we split off according to the course instructions: the monolith subgraph (what's left of it), the accounts subgraph and the listings subgraph.
+Next, let's run the subgraphs: the monolith subgraph, the accounts subgraph, and the listings subgraph.
 
-1. In a new terminal window, navigate to the root of the `final` directory, run `npm run start:monolith-subgraph`.
-1. In a new terminal window, navigate to the `final/subgraph-accounts` directory, run `npm install` then `npm start`.
+1. In a new terminal, navigate to `final` and run `pnpm run start:monolith-subgraph` (or `npm run start:monolith-subgraph`).
+1. In a new terminal, navigate to `final/subgraph-accounts` and run `pnpm install && pnpm start` (or `npm install && npm start`).
 
-Finally, let's run some local services.
+Finally, in a new terminal in the `final` directory, run:
 
-1. In a new terminal window, navigate to the `final` directory, then run `npm run launch`. This will run 4 local services, which you can learn about in the accompanying Odyssey course.
+```sh
+pnpm run launch   # or: npm run launch
+```
 
 ## Installing the router
 
@@ -52,6 +71,8 @@ When running the `final` code please be sure to download the router into the `ro
 ```
 curl -sSL https://router.apollo.dev/download/nix/v1.46.0 | sh
 ```
+
+> **Note:** Each sub-package includes an `.npmrc` with `shamefully-hoist=true` so that nodemon and other tools resolve correctly under pnpm's non-flat `node_modules` layout.
 
 ## Getting Help
 

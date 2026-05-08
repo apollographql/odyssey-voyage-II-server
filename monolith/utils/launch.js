@@ -1,21 +1,25 @@
 const concurrently = require("concurrently");
 const path = require("path");
+const { getPackageManager } = require("./package-manager");
+
+const packageManager = getPackageManager();
+
 concurrently(
   [
     {
-      command: "npm start",
+      command: `${packageManager} start`,
       name: "accounts",
       cwd: path.resolve(__dirname, "../../services/accounts"),
       prefixColor: "blue",
     },
     {
-      command: "npm start",
+      command: `${packageManager} start`,
       name: "listings",
       cwd: path.resolve(__dirname, "../../services/listings"),
       prefixColor: "magenta",
     },
     {
-      command: "npm run booking:update",
+      command: `${packageManager} run booking:update`,
       name: "bookings",
       cwd: path.resolve(__dirname, "../../services/bookings"),
       prefixColor: "green",

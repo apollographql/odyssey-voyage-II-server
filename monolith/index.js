@@ -1,5 +1,6 @@
 const { ApolloServer } = require("@apollo/server");
 const { startStandaloneServer } = require("@apollo/server/standalone");
+const { buildSubgraphSchema } = require("@apollo/subgraph");
 
 const { readFileSync } = require("fs");
 const axios = require("axios");
@@ -16,13 +17,14 @@ const ListingsAPI = require("./datasources/listings");
 const AccountsAPI = require("./datasources/accounts");
 const PaymentsAPI = require("./datasources/payments");
 
+
 async function startApolloServer() {
   const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema: buildSubgraphSchema( { typeDefs, resolvers } ),
+    introspection: true,
   });
 
-  const port = 4000;
+  const port = 4001;
 
   try {
     const { url } = await startStandaloneServer(server, {
@@ -33,7 +35,7 @@ async function startApolloServer() {
         let userInfo = {};
         if (userId) {
           const { data } = await axios
-            .get(`http://localhost:4011/login/${userId}`)
+            .get(`http://127.0.0.1:4011/login/${userId}`)
             .catch((error) => {
               throw AuthenticationError();
             });
@@ -47,7 +49,7 @@ async function startApolloServer() {
           ...userInfo,
           dataSources: {
             bookingsDb: new BookingsDataSource(),
-            reviewsDb: new ReviewsDataSource(),
+            reviewsAPI: new ReviewsDataSource(),
             listingsAPI: new ListingsAPI({ cache }),
             accountsAPI: new AccountsAPI({ cache }),
             paymentsAPI: new PaymentsAPI({ cache }),

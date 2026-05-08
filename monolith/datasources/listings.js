@@ -1,7 +1,11 @@
 const { RESTDataSource } = require("@apollo/datasource-rest");
 
 class ListingsAPI extends RESTDataSource {
-  baseURL = "http://localhost:4010/";
+  baseURL = "http://127.0.0.1:4010/";
+
+  constructor(config) {
+    super({ ...config, fetch: globalThis.fetch });
+  }
 
   getListingsForUser(userId) {
     return this.get(`user/${userId}/listings`);

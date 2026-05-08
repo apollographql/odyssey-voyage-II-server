@@ -1,0 +1,108 @@
+extend schema
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.7"
+    import: ["@key", "@shareable", "@inaccessible", "@override", "@external"]
+  )
+
+type Query {
+  ### Bookings
+  "All bookings for the given listing, optionally filtered by a BookingStatus"
+  bookingsForListing(listingId: ID!, status: BookingStatus): [Booking]! @override(from: "monolith")
+  "A list of bookings for the guest - must be authenticated as guest"
+  guestBookings: [Booking]! @override(from: "monolith")
+  "Past bookings for guest based on current date"
+  pastGuestBookings: [Booking]! @override(from: "monolith")
+  "Upcoming and current bookings for guest based on current date"
+  upcomingGuestBookings: [Booking]! @override(from: "monolith")
+  "Current booking for guest based on current date"
+  currentGuestBooking: Booking @override(from: "monolith")
+}
+
+
+type Mutation {
+  ### Bookings
+  createBooking(createBookingInput: CreateBookingInput): CreateBookingResponse! @override(from: "monolith")
+}
+
+
+### Bookings
+
+"A booking is a reservation for a specific listing"
+type Booking @key(fields: "id") {
+  id: ID!
+  "The listing associated with the reservation"
+  listing: Listing! @override(from: "monolith")
+  "The guest that reserved the location"
+  guest: Guest! @override(from: "monolith")
+  "Check-in date for the reservation"
+  checkInDate: String! @override(from: "monolith")
+  "Check-out date for the reservation"
+  checkOutDate: String! @override(from: "monolith")
+  "Total price paid, calculated using the listing's costPerNight and the check-in check-out dates"
+  totalPrice: Float! @override(from: "monolith")
+  "The status of the booking - check BookingStatus type for all possibilities"
+  status: BookingStatus! @override(from: "monolith")
+  "The guest's review of the location"
+  locationReview: Review @override(from: "monolith")
+  "The guest's review about the host"
+  hostReview: Review @override(from: "monolith")
+  "The host's review about the guest"
+  guestReview: Review @override(from: "monolith")
+}
+
+"The status of a booking"
+enum BookingStatus {
+  CURRENT
+  COMPLETED
+  UPCOMING
+}
+
+"Fields for creating a booking"
+input CreateBookingInput {
+  "ID of the listing associated with the booking"
+  listingId: ID!
+  "Date of check-in"
+  checkInDate: ID!
+  "Date of check-out"
+  checkOutDate: ID!
+}
+
+"Minimum details needed for a newly created booking"
+type NewBookingResponse {
+  id: ID! @override(from: "monolith")
+  checkInDate: String! @override(from: "monolith")
+  checkOutDate: String! @override(from: "monolith")
+}
+
+"The response after creating a booking."
+type CreateBookingResponse implements MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int! @override(from: "monolith")
+  "Indicates whether the mutation was successful"
+  success: Boolean! @override(from: "monolith")
+  "Human-readable message for the UI"
+  message: String! @override(from: "monolith")
+  "The newly-created booking"
+  booking: NewBookingResponse @override(from: "monolith") @shareable
+}
+
+type Listing @key(fields: "id") {
+  id: ID! 
+}
+
+type Guest @key(fields: "id") {
+  id: ID!
+}
+
+type Review @key(fields: "id") {
+  id: ID!
+}
+
+interface MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int!
+  "Indicates whether the mutation was successful"
+  success: Boolean!
+  "Human-readable message for the UI"
+  message: String!
+}

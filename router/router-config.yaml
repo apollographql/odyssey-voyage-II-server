@@ -1,2 +1,17 @@
 include_subgraph_errors:
-  all: true # Propagate errors from all subgraphs
+  all: true
+cors:
+  policies:
+    - origins:
+        - http://localhost:3000
+        - https://studio.apollographql.com
+headers:
+  all:
+    request:
+      - propagate:
+          named: Authorization
+# Enable query plan tracing
+sandbox:
+  enabled: true
+homepage:
+  enabled: false

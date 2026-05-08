@@ -6,9 +6,12 @@
     "npm": ">=6.0.0",
     "node": ">=14.0.0 <=20"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": ["sqlite3"]
+  },
   "scripts": {
     "db:init": "sequelize-cli db:migrate && sequelize-cli db:seed:all",
-    "db:reset": "sequelize-cli db:migrate:undo:all && npm run db:init",
+    "db:reset": "sequelize-cli db:migrate:undo:all && sequelize-cli db:migrate && sequelize-cli db:seed:all",
     "booking:update": "node -r dotenv/config update_booking_status.js "
   },
   "keywords": [],

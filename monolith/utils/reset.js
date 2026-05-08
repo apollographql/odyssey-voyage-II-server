@@ -1,27 +1,31 @@
 const concurrently = require("concurrently");
 const path = require("path");
+const { getPackageManager } = require("./package-manager");
+
+const packageManager = getPackageManager();
+
 concurrently(
   [
     {
-      command: "npm run db:reset",
+      command: `${packageManager} run db:reset`,
       name: "accounts",
       cwd: path.resolve(__dirname, "../../services/accounts"),
       prefixColor: "blue",
     },
     {
-      command: "npm run db:reset",
+      command: `${packageManager} run db:reset`,
       name: "listings",
       cwd: path.resolve(__dirname, "../../services/listings"),
       prefixColor: "magenta",
     },
     {
-      command: "npm run db:reset",
+      command: `${packageManager} run db:reset`,
       name: "bookings",
       cwd: path.resolve(__dirname, "../../services/bookings"),
       prefixColor: "green",
     },
     {
-      command: "npm run db:reset",
+      command: `${packageManager} run db:reset`,
       name: "reviews",
       cwd: path.resolve(__dirname, "../../services/reviews"),
       prefixColor: "yellow",

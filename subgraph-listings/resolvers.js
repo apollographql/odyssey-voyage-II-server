@@ -1,0 +1,193 @@
+const { AuthenticationError, ForbiddenError } = require("./utils/errors");
+
+const resolvers = {
+  Query: {
+    searchListings: async (_, { criteria }, { dataSources }) => {
+      console.log('📦 [subgraph-listings] handling searchListings');
+      const { numOfBeds, checkInDate, checkOutDate, page, limit, sortBy } =
+        criteria;
+      const listings = await dataSources.listingsAPI.getListings({
+        numOfBeds,
+        page,
+        limit,
+        sortBy,
+      });
+
+      // check availability for each listing
+      const listingAvailability = await Promise.all(
+        listings.map((listing) =>
+          dataSources.bookingsDb.isListingAvailable({
+            listingId: listing.id,
+            checkInDate,
+            checkOutDate,
+          })
+        )
+      );
+
+      // filter listings data based on availability
+      const availableListings = listings.filter(
+        (listing, index) => listingAvailability[index]
+      );
+
+      return availableListings;
+    },
+    hostListings: async (_, __, { dataSources, userId, userRole }) => {
+      console.log('📦 [subgraph-listings] handling hostListings', { userId, userRole });
+      if (!userId) throw AuthenticationError();
+
+      if (userRole === 'Host') {
+        return dataSources.listingsAPI.getListingsForUser(userId);
+      } else {
+        throw ForbiddenError('Only hosts have access to listings.');
+      }
+    },
+    listing: (_, { id }, { dataSources }) => {
+      console.log('📦 [subgraph-listings] handling listing');
+      return dataSources.listingsAPI.getListing(id);
+    },
+    featuredListings: (_, __, { dataSources }) => {
+      console.log('📦 [subgraph-listings] handling featuredListings');
+      const limit = 3;
+      return dataSources.listingsAPI.getFeaturedListings(limit);
+    },
+    listingAmenities: (_, __, { dataSources }) => {
+      console.log('📦 [subgraph-listings] handling listingAmenities');
+      return dataSources.listingsAPI.getAllAmenities();
+    },
+  },
+  Mutation: {
+    createListing: async (
+      _,
+      { listing },
+      { dataSources, userId, userRole }
+    ) => {
+      console.log('📦 [subgraph-listings] handling createListing', { userId, userRole });
+      if (!userId) throw AuthenticationError();
+
+      const {
+        title,
+        description,
+        photoThumbnail,
+        numOfBeds,
+        costPerNight,
+        locationType,
+        amenities,
+      } = listing;
+
+      if (userRole === 'Host') {
+        try {
+          const newListing = await dataSources.listingsAPI.createListing({
+            title,
+            description,
+            photoThumbnail,
+            numOfBeds,
+            costPerNight,
+            hostId: userId,
+            locationType,
+            amenities,
+          });
+
+          return {
+            code: 200,
+            success: true,
+            message: 'Listing successfully created!',
+            listing: newListing,
+          };
+        } catch (err) {
+          return {
+            code: 400,
+            success: false,
+            message: err.message,
+          };
+        }
+      } else {
+        return {
+          code: 400,
+          success: false,
+          message: 'Only hosts can create new listings',
+        };
+      }
+    },
+    updateListing: async (
+      _,
+      { listingId, listing },
+      { dataSources, userId }
+    ) => {
+      console.log('📦 [subgraph-listings] handling updateListing', { userId });
+      if (!userId) throw AuthenticationError();
+
+      try {
+        const updatedListing = await dataSources.listingsAPI.updateListing({
+          listingId,
+          listing,
+        });
+
+        return {
+          code: 200,
+          success: true,
+          message: 'Listing successfully updated!',
+          listing: updatedListing,
+        };
+      } catch (err) {
+        return {
+          code: 400,
+          success: false,
+          message: err.message,
+        };
+      }
+    },
+  },
+  Listing: {
+    __resolveReference: ({ id }, { dataSources }) => {
+      console.log('📦 [subgraph-listings] resolving reference for Listing', { id });
+      return dataSources.listingsAPI.getListing(id);
+    },
+    host: ({ hostId }) => {
+      console.log('📦 [subgraph-listings] handling host', { hostId });
+      return { id: hostId };
+    },
+    overallRating: ({ id }, _, { dataSources }) => {
+      console.log('📦 [subgraph-listings] handling overallRating', { id });
+      return dataSources.reviewsDb.getOverallRatingForListing(id);
+    },
+    reviews: ({ id }, _, { dataSources }) => {
+      console.log('📦 [subgraph-listings] handling reviews', { id });
+      return dataSources.reviewsDb.getReviewsForListing(id);
+    },
+    totalCost: async (
+      { id },
+      { checkInDate, checkOutDate },
+      { dataSources }
+    ) => {
+      console.log('📦 [subgraph-listings] handling totalCost', { id, checkInDate, checkOutDate });
+      const { totalCost } = await dataSources.listingsAPI.getTotalCost({
+        id,
+        checkInDate,
+        checkOutDate,
+      });
+      return totalCost;
+    },
+    currentlyBookedDates: ({ id }, _, { dataSources }) => {
+      console.log('📦 [subgraph-listings] handling currentlyBookedDates', { id });
+      return dataSources.bookingsDb.getCurrentlyBookedDateRangesForListing(id);
+    },
+    bookings: ({ id }, _, { dataSources }) => {
+      console.log('📦 [subgraph-listings] handling bookings', { id });
+      return dataSources.bookingsDb.getBookingsForListing(id);
+    },
+    numberOfUpcomingBookings: async ({ id }, _, { dataSources }) => {
+      console.log('📦 [subgraph-listings] handling numberOfUpcomingBookings', { id });
+      const bookings =
+        (await dataSources.bookingsDb.getBookingsForListing(id, 'UPCOMING')) ||
+        [];
+      return bookings.length;
+    },
+  },
+  AmenityCategory: {
+    ACCOMMODATION_DETAILS: 'Accommodation Details',
+    SPACE_SURVIVAL: 'Space Survival',
+    OUTDOORS: 'Outdoors',
+  },
+};
+
+module.exports = resolvers;

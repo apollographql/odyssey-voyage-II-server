@@ -1,0 +1,40 @@
+extend schema
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.7"
+    import: ["@key", "@shareable", "@inaccessible", "@override"]
+  )
+
+type Query {
+  guest(id: ID!): Guest
+}
+
+type Mutation {
+  addFundsToWallet(amount: Float!): AddFundsToWalletResponse @override(from: "monolith")
+}
+
+type AddFundsToWalletResponse implements MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int! @override(from: "monolith")
+  "Indicates whether the mutation was successful"
+  success: Boolean! @override(from: "monolith")
+  "Human-readable message for the UI"
+  message: String! @override(from: "monolith")
+  "Updated wallet amount"
+  amount: Float @override(from: "monolith")
+}
+
+interface MutationResponse {
+  "Similar to HTTP status code, represents the status of the mutation"
+  code: Int! 
+  "Indicates whether the mutation was successful"
+  success: Boolean! 
+  "Human-readable message for the UI"
+  message: String! 
+}
+
+"A guest is a type of Airlock user. They book places to stay."
+type Guest @key(fields: "id") {
+  id: ID! # the key field, a unique identifier for a particular instance of a Guest
+  "Amount of money in the guest's wallet"
+  funds: Float! @override(from: "monolith")
+}

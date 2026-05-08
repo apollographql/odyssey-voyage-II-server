@@ -1,0 +1,1 @@
+rover dev --supergraph-config .\router\supergraph-config.yaml --router-config .\router\router-config.yaml

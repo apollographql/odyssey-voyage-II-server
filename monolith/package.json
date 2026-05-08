@@ -5,14 +5,22 @@
   "main": "index.js",
   "engines": {
     "npm": ">=6.0.0",
-    "node": ">=14.0.0 <=20"
+    "node": ">=14.0.0 <=20",
+    "pnpm": ">=8.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sqlite3"
+    ]
   },
   "scripts": {
     "start": "nodemon index.js",
     "launch": "node utils/launch.js",
-    "postinstall": "npm run install-services",
+    "postinstall": "node utils/install.js",
     "install-services": "node utils/install.js",
-    "db:reset": "node utils/reset.js"
+    "db:reset": "node utils/reset.js",
+    "republish": "rover subgraph publish My-Graph-9d4w0e@current --schema ./schema.graphql --name monolith --routing-url http://localhost:4001",
+    "check": "rover subgraph check My-Graph-9d4w0e@current --schema ./schema.graphql --name monolith"
   },
   "nodemonConfig": {
     "ext": "*.js, *.graphql"
@@ -23,6 +31,7 @@
   "dependencies": {
     "@apollo/datasource-rest": "^4.3.2",
     "@apollo/server": "^4.0.1",
+    "@apollo/subgraph": "^2.14.0",
     "axios": "^1.6.2",
     "concurrently": "^6.3.0",
     "date-fns": "^2.25.0",

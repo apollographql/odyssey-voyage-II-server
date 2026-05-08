@@ -36,6 +36,11 @@ class ReviewsDb {
     return this.db.Review.findAll({ where: { authorId: userId } });
   }
 
+  async getReview(id) {
+    return this.db.Review.findByPk(id);
+  }
+
+
   async getOverallRatingForListing(listingId) {
     const overallRating = await this.db.Review.findOne({
       where: { targetType: "LISTING", targetId: listingId },

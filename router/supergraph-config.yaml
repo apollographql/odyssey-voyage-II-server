@@ -3,8 +3,24 @@ subgraphs:
   monolith:
     routing_url: http://localhost:4001
     schema:
-      file: ./monolith/schema.graphql
+      file: ..\monolith\schema.graphql
   accounts:
     routing_url: http://localhost:4002
     schema:
-      file: ./subgraph-accounts/schema.graphql
+      file: ..\subgraph-accounts\schema.graphql
+  listings:
+    routing_url: http://localhost:4003
+    schema:
+      file: ..\subgraph-listings\schema.graphql
+  payments:
+    routing_url: http://localhost:4004
+    schema:
+      file: ..\subgraph-payments\schema.graphql
+  reviews:
+    routing_url: http://localhost:4005
+    schema:
+      file: ..\subgraph-reviews\schema.graphql
+  bookings:
+    routing_url: http://localhost:4006
+    schema:
+      file: ..\subgraph-bookings\schema.graphql

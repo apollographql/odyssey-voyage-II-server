@@ -1,0 +1,11 @@
+include_subgraph_errors:
+  all: true # Propagate errors from all subgraphs
+cors:
+  # CORS headers apply to all origins for this router
+  headers: 
+    - "Authorization"
+headers:
+  all:
+    request:
+      - propagate:
+          named: "Authorization"

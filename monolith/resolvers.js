@@ -5,7 +5,7 @@ const resolvers = {
     user: async (_, { id }, { dataSources }) => {
       const user = await dataSources.accountsAPI.getUser(id);
       if (!user) {
-        throw new Error("No user found for this Id");
+        throw new Error('No user found for this Id');
       }
       return user;
     },
@@ -31,13 +31,13 @@ const resolvers = {
             listingId: listing.id,
             checkInDate,
             checkOutDate,
-          }),
-        ),
+          })
+        )
       );
 
       // filter listings data based on availability
       const availableListings = listings.filter(
-        (listing, index) => listingAvailability[index],
+        (listing, index) => listingAvailability[index]
       );
 
       return availableListings;
@@ -45,10 +45,10 @@ const resolvers = {
     hostListings: async (_, __, { dataSources, userId, userRole }) => {
       if (!userId) throw AuthenticationError();
 
-      if (userRole === "Host") {
+      if (userRole === 'Host') {
         return dataSources.listingsAPI.getListingsForUser(userId);
       } else {
-        throw ForbiddenError("Only hosts have access to listings.");
+        throw ForbiddenError('Only hosts have access to listings.');
       }
     },
     listing: (_, { id }, { dataSources }) => {
@@ -64,48 +64,48 @@ const resolvers = {
     guestBookings: async (_, __, { dataSources, userId, userRole }) => {
       if (!userId) throw AuthenticationError();
 
-      if (userRole === "Guest") {
+      if (userRole === 'Guest') {
         const bookings =
           await dataSources.bookingsDb.getBookingsForUser(userId);
         return bookings;
       } else {
-        throw ForbiddenError("Only guests have access to trips");
+        throw ForbiddenError('Only guests have access to trips');
       }
     },
     upcomingGuestBookings: async (_, __, { dataSources, userId, userRole }) => {
       if (!userId) throw AuthenticationError();
 
-      if (userRole === "Guest") {
+      if (userRole === 'Guest') {
         const bookings = await dataSources.bookingsDb.getBookingsForUser(
           userId,
-          "UPCOMING",
+          'UPCOMING'
         );
         return bookings;
       } else {
-        throw ForbiddenError("Only guests have access to trips");
+        throw ForbiddenError('Only guests have access to trips');
       }
     },
     pastGuestBookings: async (_, __, { dataSources, userId, userRole }) => {
       if (!userId) throw AuthenticationError();
 
-      if (userRole === "Guest") {
+      if (userRole === 'Guest') {
         const bookings = await dataSources.bookingsDb.getBookingsForUser(
           userId,
-          "COMPLETED",
+          'COMPLETED'
         );
         return bookings;
       } else {
-        throw ForbiddenError("Only guests have access to trips");
+        throw ForbiddenError('Only guests have access to trips');
       }
     },
     bookingsForListing: async (
       _,
       { listingId, status },
-      { dataSources, userId, userRole },
+      { dataSources, userId, userRole }
     ) => {
       if (!userId) throw AuthenticationError();
 
-      if (userRole === "Host") {
+      if (userRole === 'Host') {
         // need to check if listing belongs to host
         const listings =
           await dataSources.listingsAPI.getListingsForUser(userId);
@@ -113,14 +113,14 @@ const resolvers = {
           const bookings =
             (await dataSources.bookingsDb.getBookingsForListing(
               listingId,
-              status,
+              status
             )) || [];
           return bookings;
         } else {
-          throw new Error("Listing does not belong to host");
+          throw new Error('Listing does not belong to host');
         }
       } else {
-        throw ForbiddenError("Only hosts have access to listing bookings");
+        throw ForbiddenError('Only hosts have access to listing bookings');
       }
     },
   },
@@ -128,7 +128,7 @@ const resolvers = {
     updateProfile: async (
       _,
       { updateProfileInput },
-      { dataSources, userId },
+      { dataSources, userId }
     ) => {
       if (!userId) throw AuthenticationError();
       try {
@@ -139,7 +139,7 @@ const resolvers = {
         return {
           code: 200,
           success: true,
-          message: "Profile successfully updated!",
+          message: 'Profile successfully updated!',
           user: updatedUser,
         };
       } catch (err) {
@@ -153,7 +153,7 @@ const resolvers = {
     createBooking: async (
       _,
       { createBookingInput },
-      { dataSources, userId },
+      { dataSources, userId }
     ) => {
       if (!userId) throw AuthenticationError();
 
@@ -170,11 +170,12 @@ const resolvers = {
           amount: totalCost,
         });
       } catch (e) {
+        console.error("[createBooking Error] ", e);
         return {
           code: 400,
           success: false,
           message:
-            "We couldn’t complete your request because your funds are insufficient.",
+            'We couldn’t complete your request because your funds are insufficient.',
         };
       }
 
@@ -190,7 +191,7 @@ const resolvers = {
         return {
           code: 200,
           success: true,
-          message: "Successfully booked!",
+          message: 'Successfully booked!',
           booking,
         };
       } catch (err) {
@@ -204,7 +205,7 @@ const resolvers = {
     createListing: async (
       _,
       { listing },
-      { dataSources, userId, userRole },
+      { dataSources, userId, userRole }
     ) => {
       if (!userId) throw AuthenticationError();
 
@@ -218,7 +219,7 @@ const resolvers = {
         amenities,
       } = listing;
 
-      if (userRole === "Host") {
+      if (userRole === 'Host') {
         try {
           const newListing = await dataSources.listingsAPI.createListing({
             title,
@@ -234,7 +235,7 @@ const resolvers = {
           return {
             code: 200,
             success: true,
-            message: "Listing successfully created!",
+            message: 'Listing successfully created!',
             listing: newListing,
           };
         } catch (err) {
@@ -248,14 +249,14 @@ const resolvers = {
         return {
           code: 400,
           success: false,
-          message: "Only hosts can create new listings",
+          message: 'Only hosts can create new listings',
         };
       }
     },
     updateListing: async (
       _,
       { listingId, listing },
-      { dataSources, userId },
+      { dataSources, userId }
     ) => {
       if (!userId) throw AuthenticationError();
 
@@ -268,7 +269,7 @@ const resolvers = {
         return {
           code: 200,
           success: true,
-          message: "Listing successfully updated!",
+          message: 'Listing successfully updated!',
           listing: updatedListing,
         };
       } catch (err) {
@@ -282,7 +283,7 @@ const resolvers = {
     submitGuestReview: async (
       _,
       { bookingId, guestReview },
-      { dataSources, userId },
+      { dataSources, userId }
     ) => {
       if (!userId) throw AuthenticationError();
 
@@ -290,7 +291,7 @@ const resolvers = {
       const guestId =
         await dataSources.bookingsDb.getGuestIdForBooking(bookingId);
 
-      const createdReview = await dataSources.reviewsDb.createReviewForGuest({
+      const createdReview = await dataSources.reviewsAPI.createReviewForGuest({
         bookingId,
         guestId,
         authorId: userId,
@@ -300,21 +301,21 @@ const resolvers = {
       return {
         code: 200,
         success: true,
-        message: "Successfully submitted review for guest",
+        message: 'Successfully submitted review for guest',
         guestReview: createdReview,
       };
     },
     submitHostAndLocationReviews: async (
       _,
       { bookingId, hostReview, locationReview },
-      { dataSources, userId },
+      { dataSources, userId }
     ) => {
       if (!userId) throw AuthenticationError();
 
       const listingId =
         await dataSources.bookingsDb.getListingIdForBooking(bookingId);
       const createdLocationReview =
-        await dataSources.reviewsDb.createReviewForListing({
+        await dataSources.reviewsAPI.createReviewForListing({
           bookingId,
           listingId,
           authorId: userId,
@@ -323,20 +324,20 @@ const resolvers = {
         });
 
       const { hostId } = await dataSources.listingsAPI.getListing(listingId);
-      const createdHostReview = await dataSources.reviewsDb.createReviewForHost(
+      const createdHostReview = await dataSources.reviewsAPI.createReviewForHost(
         {
           bookingId,
           hostId,
           authorId: userId,
           text: hostReview.text,
           rating: hostReview.rating,
-        },
+        }
       );
 
       return {
         code: 200,
         success: true,
-        message: "Successfully submitted review for host and location",
+        message: 'Successfully submitted review for host and location',
         hostReview: createdHostReview,
         locationReview: createdLocationReview,
       };
@@ -351,7 +352,7 @@ const resolvers = {
         return {
           code: 200,
           success: true,
-          message: "Successfully added funds to wallet",
+          message: 'Successfully added funds to wallet',
           amount: updatedWallet.amount,
         };
       } catch (err) {
@@ -370,7 +371,7 @@ const resolvers = {
   },
   Host: {
     overallRating: ({ id }, _, { dataSources }) => {
-      return dataSources.reviewsDb.getOverallRatingForHost(id);
+      return dataSources.reviewsAPI.getOverallRatingForHost(id);
     },
   },
   Guest: {
@@ -381,19 +382,19 @@ const resolvers = {
     },
   },
   Listing: {
-    host: ({ hostId }, _, { dataSources }) => {
-      return dataSources.accountsAPI.getUser(hostId);
+    host: ({ hostId }) => {
+      return { id: hostId };
     },
     overallRating: ({ id }, _, { dataSources }) => {
-      return dataSources.reviewsDb.getOverallRatingForListing(id);
+      return dataSources.reviewsAPI.getOverallRatingForListing(id);
     },
     reviews: ({ id }, _, { dataSources }) => {
-      return dataSources.reviewsDb.getReviewsForListing(id);
+      return dataSources.reviewsAPI.getReviewsForListing(id);
     },
     totalCost: async (
       { id },
       { checkInDate, checkOutDate },
-      { dataSources },
+      { dataSources }
     ) => {
       const { totalCost } = await dataSources.listingsAPI.getTotalCost({
         id,
@@ -410,7 +411,7 @@ const resolvers = {
     },
     numberOfUpcomingBookings: async ({ id }, _, { dataSources }) => {
       const bookings =
-        (await dataSources.bookingsDb.getBookingsForListing(id, "UPCOMING")) ||
+        (await dataSources.bookingsDb.getBookingsForListing(id, 'UPCOMING')) ||
         [];
       return bookings.length;
     },
@@ -425,13 +426,13 @@ const resolvers = {
     checkOutDate: ({ checkOutDate }, _, { dataSources }) => {
       return dataSources.bookingsDb.getHumanReadableDate(checkOutDate);
     },
-    guest: ({ guestId }, _, { dataSources }) => {
-      return dataSources.accountsAPI.getUser(guestId);
+    guest: ({ guestId }) => {
+      return { id: guestId };
     },
     totalPrice: async (
       { listingId, checkInDate, checkOutDate },
       _,
-      { dataSources },
+      { dataSources }
     ) => {
       const { totalCost } = await dataSources.listingsAPI.getTotalCost({
         id: listingId,
@@ -441,24 +442,30 @@ const resolvers = {
       return totalCost;
     },
     guestReview: ({ id }, _, { dataSources }) => {
-      return dataSources.reviewsDb.getReviewForBooking("GUEST", id);
+      return dataSources.reviewsAPI.getReviewForBooking('GUEST', id);
     },
     hostReview: ({ id }, _, { dataSources }) => {
-      return dataSources.reviewsDb.getReviewForBooking("HOST", id);
+      return dataSources.reviewsAPI.getReviewForBooking('HOST', id);
     },
     locationReview: ({ id }, _, { dataSources }) => {
-      return dataSources.reviewsDb.getReviewForBooking("LISTING", id);
+      return dataSources.reviewsAPI.getReviewForBooking('LISTING', id);
     },
   },
   Review: {
-    author: ({ authorId }, _, { dataSources }) => {
-      return dataSources.accountsAPI.getUser(authorId);
+    author: (review) => {
+      let role = '';
+      if (review.targetType === 'LISTING' || review.targetType === 'HOST') {
+        role = 'Guest';
+      } else {
+        role = 'Host';
+      }
+      return { id: review.authorId, role };
     },
   },
   AmenityCategory: {
-    ACCOMMODATION_DETAILS: "Accommodation Details",
-    SPACE_SURVIVAL: "Space Survival",
-    OUTDOORS: "Outdoors",
+    ACCOMMODATION_DETAILS: 'Accommodation Details',
+    SPACE_SURVIVAL: 'Space Survival',
+    OUTDOORS: 'Outdoors',
   },
 };
 

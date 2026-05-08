@@ -1,4 +1,9 @@
 node_modules
 .vscode
 .DS_Store
-.env
+.env*
+
+# Rover
+.rover/
+.router/
+.rovercache/
