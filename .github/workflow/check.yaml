@@ -1,7 +1,7 @@
 # This job runs a schema check for the staging variant
 name: Run schema checks
 
-# It runs for every PR opened, updated and edited
+# It runs for every PR opened, updated and edited 
 on:
   pull_request:
     types: [opened, synchronize, edited]
@@ -22,7 +22,7 @@ jobs:
       APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
       APOLLO_VCS_COMMIT: ${{ github.event.pull_request.head.sha }}
       GRAPH_ID: airlock-managed-fed
-      SUBGRAPH: listings
+      SUBGRAPH: listings 
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
