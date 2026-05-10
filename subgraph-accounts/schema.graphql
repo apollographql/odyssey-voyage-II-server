@@ -1,19 +1,19 @@
 extend schema
   @link(
     url: "https://specs.apollo.dev/federation/v2.7"
-    import: ["@key", "@shareable", "@inaccessible", "@override"]
+    import: ["@key", "@shareable", "@inaccessible"]
   )
 
 type Query {
-  user(id: ID!): User @override(from: "monolith")
+  user(id: ID!): User
   "Currently logged-in user"
-  me: User! @override(from: "monolith")
+  me: User!
 }
 
 type Mutation {
   "Updates the logged-in user's profile information"
   updateProfile(updateProfileInput: UpdateProfileInput): UpdateProfileResponse!
-    @override(from: "monolith")
+   
 }
 
 "Represents an Airlock user's common properties"
@@ -29,20 +29,20 @@ interface User {
 type Host implements User @key(fields: "id") {
   id: ID!
   "The user's first and last name"
-  name: String! @override(from: "monolith")
+  name: String!
   "The user's profile photo URL"
-  profilePicture: String! @override(from: "monolith")
+  profilePicture: String!
   "The host's profile bio description, will be shown in the listing"
-  profileDescription: String! @override(from: "monolith")
+  profileDescription: String!
 }
 
 "A guest is a type of Airlock user. They book places to stay."
 type Guest implements User @key(fields: "id") {
   id: ID!
   "The user's first and last name"
-  name: String! @override(from: "monolith")
+  name: String!
   "The user's profile photo URL"
-  profilePicture: String! @override(from: "monolith")
+  profilePicture: String!
 }
 
 interface MutationResponse {
@@ -67,11 +67,11 @@ input UpdateProfileInput {
 "The response after updating a profile"
 type UpdateProfileResponse implements MutationResponse {
   "Similar to HTTP status code, represents the status of the mutation"
-  code: Int! @override(from: "monolith")
+  code: Int!
   "Indicates whether the mutation was successful"
-  success: Boolean! @override(from: "monolith")
+  success: Boolean!
   "Human-readable message for the UI"
-  message: String! @override(from: "monolith")
+  message: String!
   "Updated user"
-  user: User @override(from: "monolith")
+  user: User
 }

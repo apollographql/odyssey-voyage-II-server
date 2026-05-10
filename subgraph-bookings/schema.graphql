@@ -1,27 +1,27 @@
 extend schema
   @link(
     url: "https://specs.apollo.dev/federation/v2.7"
-    import: ["@key", "@shareable", "@inaccessible", "@override", "@external"]
+    import: ["@key", "@shareable", "@inaccessible", "@external"]
   )
 
 type Query {
   ### Bookings
   "All bookings for the given listing, optionally filtered by a BookingStatus"
-  bookingsForListing(listingId: ID!, status: BookingStatus): [Booking]! @override(from: "monolith")
+  bookingsForListing(listingId: ID!, status: BookingStatus): [Booking]!
   "A list of bookings for the guest - must be authenticated as guest"
-  guestBookings: [Booking]! @override(from: "monolith")
+  guestBookings: [Booking]!
   "Past bookings for guest based on current date"
-  pastGuestBookings: [Booking]! @override(from: "monolith")
+  pastGuestBookings: [Booking]!
   "Upcoming and current bookings for guest based on current date"
-  upcomingGuestBookings: [Booking]! @override(from: "monolith")
+  upcomingGuestBookings: [Booking]!
   "Current booking for guest based on current date"
-  currentGuestBooking: Booking @override(from: "monolith")
+  currentGuestBooking: Booking
 }
 
 
 type Mutation {
   ### Bookings
-  createBooking(createBookingInput: CreateBookingInput): CreateBookingResponse! @override(from: "monolith")
+  createBooking(createBookingInput: CreateBookingInput): CreateBookingResponse!
 }
 
 
@@ -31,23 +31,23 @@ type Mutation {
 type Booking @key(fields: "id") {
   id: ID!
   "The listing associated with the reservation"
-  listing: Listing! @override(from: "monolith")
+  listing: Listing!
   "The guest that reserved the location"
-  guest: Guest! @override(from: "monolith")
+  guest: Guest!
   "Check-in date for the reservation"
-  checkInDate: String! @override(from: "monolith")
+  checkInDate: String!
   "Check-out date for the reservation"
-  checkOutDate: String! @override(from: "monolith")
+  checkOutDate: String!
   "Total price paid, calculated using the listing's costPerNight and the check-in check-out dates"
-  totalPrice: Float! @override(from: "monolith")
+  totalPrice: Float!
   "The status of the booking - check BookingStatus type for all possibilities"
-  status: BookingStatus! @override(from: "monolith")
+  status: BookingStatus!
   "The guest's review of the location"
-  locationReview: Review @override(from: "monolith")
+  locationReview: Review
   "The guest's review about the host"
-  hostReview: Review @override(from: "monolith")
+  hostReview: Review
   "The host's review about the guest"
-  guestReview: Review @override(from: "monolith")
+  guestReview: Review
 }
 
 "The status of a booking"
@@ -69,21 +69,21 @@ input CreateBookingInput {
 
 "Minimum details needed for a newly created booking"
 type NewBookingResponse {
-  id: ID! @override(from: "monolith")
-  checkInDate: String! @override(from: "monolith")
-  checkOutDate: String! @override(from: "monolith")
+  id: ID!
+  checkInDate: String!
+  checkOutDate: String!
 }
 
 "The response after creating a booking."
 type CreateBookingResponse implements MutationResponse {
   "Similar to HTTP status code, represents the status of the mutation"
-  code: Int! @override(from: "monolith")
+  code: Int!
   "Indicates whether the mutation was successful"
-  success: Boolean! @override(from: "monolith")
+  success: Boolean!
   "Human-readable message for the UI"
-  message: String! @override(from: "monolith")
+  message: String!
   "The newly-created booking"
-  booking: NewBookingResponse @override(from: "monolith") @shareable
+  booking: NewBookingResponse @shareable
 }
 
 type Listing @key(fields: "id") {

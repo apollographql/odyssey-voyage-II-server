@@ -49,7 +49,6 @@ if (-not $UrlType) {
 $LocalUrl = ($UrlType -eq "local")
 
 $Subgraphs = @(
-    @{ Name = "monolith"; Path = "monolith\schema.graphql"; Port = 4001 },
     @{ Name = "accounts"; Path = "subgraph-accounts\schema.graphql"; Port = 4002 },
     @{ Name = "listings"; Path = "subgraph-listings\schema.graphql"; Port = 4003 },
     @{ Name = "payments"; Path = "subgraph-payments\schema.graphql"; Port = 4004 },
@@ -67,9 +66,6 @@ foreach ($subgraph in $Subgraphs) {
         $RoutingUrl = "http://localhost:$($subgraph.Port)"
     } else {
         $RoutingUrl = "https://staging-airlock-$Name.com"
-        if ($Name -eq "monolith") {
-            $RoutingUrl = "https://staging-airlock-monolith.com"
-        }
     }
 
     Write-Host "`nPublishing $Name subgraph..." -ForegroundColor Yellow

@@ -1,7 +1,7 @@
 extend schema
   @link(
     url: "https://specs.apollo.dev/federation/v2.7"
-    import: ["@key", "@shareable", "@inaccessible", "@override"]
+    import: ["@key", "@shareable", "@inaccessible"]
   )
 
 type Mutation {
@@ -11,18 +11,18 @@ type Mutation {
     bookingId: ID! 
     hostReview: ReviewInput! 
     locationReview: ReviewInput! 
-  ): SubmitHostAndLocationReviewsResponse! @override(from: "monolith")
+  ): SubmitHostAndLocationReviewsResponse!
   "Creates a review for the guest - must be authored by host of past booking"
   submitGuestReview(
     bookingId: ID! 
     guestReview: ReviewInput! 
-  ): SubmitGuestReviewResponse! @override(from: "monolith")
+  ): SubmitGuestReviewResponse!
 }
 
 type Host implements User @key(fields: "id") {
   id: ID! 
   "The overall calculated rating for the host"
-  overallRating: Float @override(from: "monolith") @shareable
+  overallRating: Float @shareable
 }
 
 type Guest implements User @key(fields: "id") {
@@ -32,9 +32,9 @@ type Guest implements User @key(fields: "id") {
 type Listing @key(fields: "id") {
   id: ID!
   "The submitted reviews for this listing"
-  reviews: [Review]! @override(from: "monolith")
+  reviews: [Review]!
   "The overall calculated rating for a listing"
-  overallRating: Float @override(from: "monolith") @shareable
+  overallRating: Float @shareable
 }
 
 
@@ -44,12 +44,12 @@ type Listing @key(fields: "id") {
 type Review @key(fields: "id") {
   id: ID!
   "Written comment the author has written about the review target"
-  text: String! @override(from: "monolith") @shareable
+  text: String! @shareable
   "User that wrote the review"
-  author: User! @override(from: "monolith") @shareable
+  author: User! @shareable
 
   "The numerical rating for the review target, on a scale of 1-5, with 5 being excellent."
-  rating: Float! @override(from: "monolith")
+  rating: Float!
 }
 
 "ReviewInput is the bare minimum needed to submit a review, not tied to any target."
@@ -60,19 +60,19 @@ input ReviewInput {
 
 "The response after submitting reviews for both host and location together."
 type SubmitHostAndLocationReviewsResponse implements MutationResponse {
-  code: Int! @override(from: "monolith")
-  success: Boolean! @override(from: "monolith")
-  message: String! @override(from: "monolith")
-  hostReview: Review @override(from: "monolith")
-  locationReview: Review @override(from: "monolith")
+  code: Int!
+  success: Boolean!
+  message: String!
+  hostReview: Review
+  locationReview: Review
 }
 
 "The response after submitting reviews for a guest."
 type SubmitGuestReviewResponse implements MutationResponse {
-  code: Int! @override(from: "monolith")
-  success: Boolean! @override(from: "monolith")
-  message: String! @override(from: "monolith")
-  guestReview: Review @override(from: "monolith")
+  code: Int!
+  success: Boolean!
+  message: String!
+  guestReview: Review
 }
 
 interface MutationResponse {
