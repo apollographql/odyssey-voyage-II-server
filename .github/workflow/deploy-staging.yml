@@ -1,0 +1,19 @@
+# This job deploys the code to the staging Heroku app environment
+name: Staging Deploy
+
+# It runs after the PR is closed with a merge
+on:
+pull_request:
+  types: [closed]
+
+jobs:
+build:
+  runs-on: ubuntu-latest
+  if: ${{ github.event.pull_request.merged == true }}
+  steps:
+    - uses: actions/checkout@v4.1.5
+    - uses: akhileshns/heroku-deploy@v3.13.15
+      with:
+        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+        heroku_app_name: ${{ secrets.HEROKU_APP_NAME_STAGING }}
+        heroku_email: ${{ secrets.HEROKU_EMAIL }}

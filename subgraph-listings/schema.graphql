@@ -81,8 +81,12 @@ type Amenity {
 
 "Coordinates in the galaxy"
 type GalacticCoordinates @shareable {
+  "The y-axis value of this coordinate"
   latitude: Float!
+  "The x-axis value of this coordinate"
   longitude: Float!
+  "A nickname for this coordinate"
+  nickname: String 
 }
 
 "The category an amenity belongs to."

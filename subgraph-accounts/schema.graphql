@@ -36,6 +36,8 @@ type Host implements User @key(fields: "id") {
   profileDescription: String! # accounts subgraph extends this field
   "The overall calculated rating for the host"
   overallRating: Float @shareable # reviews subgraph extends this field - Eventually
+  "Where the host is primarily located"
+  coordinates: GalacticCoordinates @shareable
 }
 
 "A guest is a type of Airlock user. They book places to stay."
@@ -78,4 +80,14 @@ type UpdateProfileResponse implements MutationResponse {
   message: String!
   "Updated user"
   user: User
+}
+
+
+type GalacticCoordinates @shareable {
+  # The y-axis value of this coordinate
+  latitude: Float!
+  # The x-axis value of this coordinate
+  longitude: Float!
+  # A nickname for this coordinate
+  nickname: String 
 }

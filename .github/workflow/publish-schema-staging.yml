@@ -1,0 +1,33 @@
+# This job publishes the schema to the registry's staging variant
+name: Staging Publish Schema
+
+# this job runs after the Staging Deploy is completed
+on:
+workflow_run:
+  workflows: ['Staging Deploy']
+  types:
+    - completed
+
+jobs:
+publish_schema:
+  name: Publish schema to staging variant
+  if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  runs-on: ubuntu-latest
+  environment: apollo
+  env:
+    APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
+    APOLLO_VCS_COMMIT: ${{ github.event.pull_request.head.sha }}
+    GRAPH_ID: airlock-managed-fed
+    SUBGRAPH: listings
+  steps:
+    - uses: actions/checkout@v4.1.5
+    - name: Install Rover
+      run: |
+        curl -sSL https://rover.apollo.dev/nix/v0.1.0 | sh
+
+        # Add Rover to the $GITHUB_PATH so it can be used in another step
+        # https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#adding-a-system-path
+        echo "$HOME/.rover/bin" >> $GITHUB_PATH
+    - name: Publish subgraph to staging registry
+      run: |
+        rover subgraph publish ${GRAPH_ID}@staging --schema ./${SUBGRAPH}.graphql --name $SUBGRAPH

@@ -1,0 +1,17 @@
+# This job deploys the code to the production Heroku app environment
+name: Production Deploy 
+
+# This job is triggered manually in the GitHub UI
+on: workflow_dispatch 
+
+jobs:
+  deploy:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.5
+      - uses: akhileshns/heroku-deploy@v3.13.15
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
