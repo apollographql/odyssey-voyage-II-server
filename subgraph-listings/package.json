@@ -9,12 +9,15 @@
     "pnpm": ">=8.0.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["sqlite3"]
+    "onlyBuiltDependencies": [
+      "sqlite3"
+    ]
   },
   "scripts": {
     "start": "nodemon index.js",
-    "republish": "rover subgraph publish My-Graph-9d4w0e@current --schema ./schema.graphql --name listings --routing-url http://localhost:4003",
-    "check": "rover subgraph check My-Graph-9d4w0e@current --schema ./schema.graphql --name listings"
+    "republish": "rover subgraph publish My-Graph-9d4w0e@staging --schema ./schema.graphql --name listings --routing-url http://localhost:4003",
+    "check": "rover subgraph check My-Graph-9d4w0e@staging --schema ./schema.graphql --name listings",
+    "generate": "graphql-codegen"
   },
   "nodemonConfig": {
     "ext": "*.js, *.graphql"
@@ -33,6 +36,7 @@
     "sqlite3": "^5.1.6"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2"
+    "nodemon": "^3.0.2",
+    "typescript": "^6.0.3"
   }
 }

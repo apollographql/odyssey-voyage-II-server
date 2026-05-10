@@ -1,10 +1,20 @@
-const { AuthenticationError, ForbiddenError } = require('./utils/errors');
+//import { readFileSync } from 'node:fs'
+//import { ApolloServer } from 'apollo-server'
+//import { Resolvers } from './resolvers-types'  // The file created by codegen
+
+const { readFileSync } = require('node:fs');
+
+const typeDefs = readFileSync('./schema.graphql', 'utf8') 
+
+const { AuthenticationError, ForbiddenError } = require( './utils/errors' );
 
 const resolvers = {
   Query: {
     searchListings: async (
       /** @type {any} */ _,
+      // @ts-ignore
       { criteria },
+      // @ts-ignore
       { dataSources }
     ) => {
       console.log('📦 [subgraph-listings] handling searchListings');
@@ -30,6 +40,7 @@ const resolvers = {
 
       // filter listings data based on availability
       const availableListings = listings.filter(
+        // @ts-ignore
         (/** @type {any} */ listing, /** @type {number} */ index) =>
           listingAvailability[index]
       );
@@ -39,6 +50,7 @@ const resolvers = {
     hostListings: async (
       /** @type {any} */ _,
       /** @type {any} */ __,
+      // @ts-ignore
       { dataSources, userId, userRole }
     ) => {
       console.log('📦 [subgraph-listings] handling hostListings', {
@@ -53,22 +65,29 @@ const resolvers = {
         throw ForbiddenError('Only hosts have access to listings.');
       }
     },
+    // @ts-ignore
     listing: (/** @type {any} */ _, { id }, { dataSources }) => {
       console.log('📦 [subgraph-listings] handling listing');
       return dataSources.listingsAPI.getListing(id);
     },
     featuredListings: (
       /** @type {any} */ _,
-      /** @type {any} */ __,
+      // @ts-ignore 
+      { limit },
+      // @ts-ignore
       { dataSources }
     ) => {
       console.log('📦 [subgraph-listings] handling featuredListings');
-      const limit = 3;
-      return dataSources.listingsAPI.getFeaturedListings(limit);
+      // @ts-ignore
+      const featuredListings = dataSources.listingsAPI.getFeaturedListings(
+        limit
+      );
+      return featuredListings;
     },
     listingAmenities: (
       /** @type {any} */ _,
       /** @type {any} */ __,
+      // @ts-ignore
       { dataSources }
     ) => {
       console.log('📦 [subgraph-listings] handling listingAmenities');
@@ -78,7 +97,9 @@ const resolvers = {
   Mutation: {
     createListing: async (
       /** @type {any} */ _,
+      // @ts-ignore
       { listing },
+      // @ts-ignore
       { dataSources, userId, userRole }
     ) => {
       console.log('📦 [subgraph-listings] handling createListing', {
@@ -133,7 +154,9 @@ const resolvers = {
     },
     updateListing: async (
       /** @type {any} */ _,
+      // @ts-ignore
       { listingId, listing },
+      // @ts-ignore
       { dataSources, userId }
     ) => {
       console.log('📦 [subgraph-listings] handling updateListing', { userId });
@@ -161,6 +184,7 @@ const resolvers = {
     },
   },
   Listing: {
+    // @ts-ignore
     __resolveReference: ({ id }, /** @type {any} */ { dataSources }) => {
       console.log('📦 [subgraph-listings] resolving reference for Listing', {
         id,
@@ -174,6 +198,7 @@ const resolvers = {
     overallRating: (
       /** @type {any} */ { id },
       /** @type {any} */ _,
+      // @ts-ignore
       { dataSources }
     ) => {
       console.log('📦 [subgraph-listings] handling overallRating', { id });
@@ -182,6 +207,7 @@ const resolvers = {
     reviews: (
       /** @type {any} */ { id },
       /** @type {any} */ _,
+      // @ts-ignore
       { dataSources }
     ) => {
       console.log('📦 [subgraph-listings] handling reviews', { id });
@@ -189,7 +215,9 @@ const resolvers = {
     },
     totalCost: async (
       /** @type {any} */ { id },
+      // @ts-ignore
       { checkInDate, checkOutDate },
+      // @ts-ignore
       { dataSources }
     ) => {
       console.log('📦 [subgraph-listings] handling totalCost', {
@@ -207,6 +235,7 @@ const resolvers = {
     currentlyBookedDates: (
       /** @type {any} */ { id },
       /** @type {any} */ _,
+      // @ts-ignore
       { dataSources }
     ) => {
       console.log('📦 [subgraph-listings] handling currentlyBookedDates', {
@@ -217,6 +246,7 @@ const resolvers = {
     bookings: (
       /** @type {any} */ { id },
       /** @type {any} */ _,
+      // @ts-ignore
       { dataSources }
     ) => {
       console.log('📦 [subgraph-listings] handling bookings', { id });
@@ -225,6 +255,7 @@ const resolvers = {
     numberOfUpcomingBookings: async (
       /** @type {any} */ { id },
       /** @type {any} */ _,
+      // @ts-ignore
       { dataSources }
     ) => {
       console.log('📦 [subgraph-listings] handling numberOfUpcomingBookings', {
@@ -235,6 +266,7 @@ const resolvers = {
         [];
       return bookings.length;
     },
+    // @ts-ignore
     coordinates: (listing, { dataSources }) => {
       console.log('📦 [subgraph-listings] handling coordinates', {
         id: listing.id,

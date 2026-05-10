@@ -10,7 +10,9 @@
   },
   "scripts": {
     "start": "nodemon index.js",
-    "republish": "rover subgraph publish My-Graph-9d4w0e@current --schema ./schema.graphql --name payments --routing-url http://localhost:4004"
+    "republish": "rover subgraph publish My-Graph-9d4w0e@current --schema ./schema.graphql --name payments --routing-url http://localhost:4004",
+    "check": "rover subgraph check My-Graph-9d4w0e@current --schema ./schema.graphql --name payments",
+    "generate": "graphql-codegen"
   },
   "nodemonConfig": {
     "ext": "*.js, *.graphql"

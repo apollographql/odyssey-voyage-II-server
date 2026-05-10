@@ -14,7 +14,8 @@
   "scripts": {
     "start": "nodemon index.js",
     "republish": "rover subgraph publish My-Graph-9d4w0e@current --schema ./schema.graphql --name bookings --routing-url http://localhost:4006",
-    "check": "rover subgraph check My-Graph-9d4w0e@current --schema ./schema.graphql --name bookings"
+    "check": "rover subgraph check My-Graph-9d4w0e@current --schema ./schema.graphql --name bookings",
+    "generate": "graphql-codegen"
   },
   "nodemonConfig": {
     "ext": "*.js, *.graphql"

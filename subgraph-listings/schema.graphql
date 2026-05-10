@@ -6,8 +6,8 @@ extend schema
 
 type Query {
   ### Listings
-  "A curated array of listings to feature on the homepage"
-  featuredListings: [Listing!]!
+"A curated array of listings to feature on the homepage"
+featuredListings(limit: Int = 8): [Listing!]!
   "Search results for listings that fit the criteria provided"
   searchListings(criteria: SearchListingsInput): [Listing]!
   "Return the listings that belong to the currently logged-in host"
@@ -47,6 +47,8 @@ type Listing @key(fields: "id") {
   description: String!
   "The thumbnail image for the listing"
   photoThumbnail: String!
+  "The listing's photo in a hexagon shape. This field is deprecated, use photoThumbnail instead."
+  photoInHexagonShape: String @deprecated(reason: "Use photo instead.")
   "The number of beds available"
   numOfBeds: Int!
   "The cost per night"
