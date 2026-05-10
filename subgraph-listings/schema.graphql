@@ -61,6 +61,8 @@ type Listing @key(fields: "id") {
   totalCost(checkInDate: String!, checkOutDate: String!): Float!
   "The number of upcoming bookings for this listing"
   numberOfUpcomingBookings: Int!
+  "Where this listing is located in the galaxy"
+  coordinates: GalacticCoordinates
 }
 
 "A host is a type of Airlock user. They own listings."
@@ -75,6 +77,12 @@ type Amenity {
   category: AmenityCategory!
   "The name of the amenity. Should be short."
   name: String!
+}
+
+"Coordinates in the galaxy"
+type GalacticCoordinates @shareable {
+  latitude: Float!
+  longitude: Float!
 }
 
 "The category an amenity belongs to."

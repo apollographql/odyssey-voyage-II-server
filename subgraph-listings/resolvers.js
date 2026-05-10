@@ -235,6 +235,12 @@ const resolvers = {
         [];
       return bookings.length;
     },
+    coordinates: (listing, { dataSources }) => {
+      console.log('📦 [subgraph-listings] handling coordinates', {
+        id: listing.id,
+      });
+      return dataSources.listingsAPI.getListingCoordinates(listing.id);
+    },
   },
   AmenityCategory: {
     ACCOMMODATION_DETAILS: 'Accommodation Details',
