@@ -46,7 +46,7 @@ Start-Sleep -Seconds 3
 Write-Host "[4/5] Starting rover dev / Router (port 4000)..." -ForegroundColor Yellow
 Start-ServiceWindow -Title "Rover Dev / Router (4000)" `
   -WorkingDir "$RootServer" `
-  -Command "rover dev --supergraph-config .\router\supergraph-config.yaml --router-config .\router\router-config.yaml"
+  -Command "rover dev --supergraph-config .\router\supergraph-config.yaml --router-config .\router\router-config.yaml --router-version 2.14.0"
 
 Start-Sleep -Seconds 2
 
