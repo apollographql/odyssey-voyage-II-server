@@ -4,11 +4,15 @@ extend schema
     import: ["@key", "@shareable", "@inaccessible"]
   )
 
+"The root query type"
 type Query {
+  "Get a guest by ID"
   guest(id: ID!): Guest
 }
 
+"The root mutation type"
 type Mutation {
+  "Add funds to a guest's wallet"
   addFundsToWallet(amount: Float!): AddFundsToWalletResponse
 }
 
@@ -23,6 +27,7 @@ type AddFundsToWalletResponse implements MutationResponse {
   amount: Float
 }
 
+"A standard mutation response interface"
 interface MutationResponse {
   "Similar to HTTP status code, represents the status of the mutation"
   code: Int! 
@@ -34,6 +39,7 @@ interface MutationResponse {
 
 "A guest is a type of Airlock user. They book places to stay."
 type Guest @key(fields: "id") {
+  "The unique identifier of the guest"
   id: ID! # the key field, a unique identifier for a particular instance of a Guest
   "Amount of money in the guest's wallet"
   funds: Float!

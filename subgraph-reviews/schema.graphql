@@ -1,7 +1,7 @@
 extend schema
   @link(
     url: "https://specs.apollo.dev/federation/v2.7"
-    import: ["@key", "@shareable", "@inaccessible"]
+    import: ["@key", "@shareable", "@inaccessible", "@external"]
   )
 
 type Mutation {
@@ -21,12 +21,16 @@ type Mutation {
 
 type Host implements User @key(fields: "id") {
   id: ID! 
+  name: String! @external
+  profilePicture: String! @external
   "The overall calculated rating for the host"
   overallRating: Float @shareable
 }
 
 type Guest implements User @key(fields: "id") {
   id: ID!
+  name: String! @external
+  profilePicture: String! @external
 }
 
 type Listing @key(fields: "id") {
@@ -83,4 +87,6 @@ interface MutationResponse {
 
 interface User {
   id: ID!
+  name: String!
+  profilePicture: String!
 }
