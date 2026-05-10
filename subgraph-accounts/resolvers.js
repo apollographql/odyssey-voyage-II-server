@@ -1,3 +1,4 @@
+// @ts-nocheck
 const { AuthenticationError, ForbiddenError } = require('./utils/errors');
 const resolvers = {
   Query: {

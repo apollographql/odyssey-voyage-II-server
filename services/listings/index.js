@@ -5,7 +5,7 @@ const {
 } = require("./helpers");
 const { v4: uuidv4 } = require("uuid");
 const app = express();
-const port = 4010 || process.env.PORT;
+const port = 4011 || process.env.PORT;
 
 const listingsDb = require("./sequelize/models");
 app.use(express.json());

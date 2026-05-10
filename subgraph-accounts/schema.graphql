@@ -1,7 +1,7 @@
 extend schema
   @link(
     url: "https://specs.apollo.dev/federation/v2.7"
-    import: ["@key", "@shareable", "@inaccessible"]
+    import: ["@key", "@shareable", "@inaccessible", "@override"]
   )
 
 type Query {
@@ -27,22 +27,26 @@ interface User {
 
 "A host is a type of Airlock user. They own listings."
 type Host implements User @key(fields: "id") {
-  id: ID!
+  id: ID! # the key field, a unique identifier for a particular instance of a Host
   "The user's first and last name"
-  name: String!
+  name: String! # accounts subgraph extends this field
   "The user's profile photo URL"
-  profilePicture: String!
+  profilePicture: String! # accounts subgraph extends this field
   "The host's profile bio description, will be shown in the listing"
-  profileDescription: String!
+  profileDescription: String! # accounts subgraph extends this field
+  "The overall calculated rating for the host"
+  overallRating: Float @shareable # reviews subgraph extends this field - Eventually
 }
 
 "A guest is a type of Airlock user. They book places to stay."
 type Guest implements User @key(fields: "id") {
-  id: ID!
+  id: ID! # the key field, a unique identifier for a particular instance of a Guest
   "The user's first and last name"
-  name: String!
+  name: String! # accounts subgraph
   "The user's profile photo URL"
-  profilePicture: String!
+  profilePicture: String! # accounts subgraph
+  "Amount of money in the guest's wallet"
+  funds: Float! @override(from: "payments") # payments subgraph will extend this field
 }
 
 interface MutationResponse {

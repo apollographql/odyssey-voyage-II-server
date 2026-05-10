@@ -1,0 +1,142 @@
+{
+  "version": "2.0.0",
+  // This tasks.json allows you to start all services and subgraphs in VS Code simultaneously
+  // It opens separate terminal tabs for each service so you can monitor them easily.
+  // To run this: Terminal -> Run Build Task (or Ctrl+Shift+B) -> "Apollo Voyage: Start All Services"
+  "tasks": [
+    {
+      "label": "Apollo Voyage: Start All Services",
+      "dependsOn": [
+        "1. REST Services",
+        "3. Accounts Subgraph",
+        "4. Listings Subgraph",
+        "5. Reviews Subgraph",
+        "6. Payments Subgraph",
+        "7. Bookings Subgraph",
+        "8. Router",
+        "9. Client"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Apollo Voyage: Kill All Services",
+      "type": "shell",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${workspaceFolder}/scripts/kill-all-services.ps1\"",
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": {
+        "panel": "new",
+        "close": true,
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "1. REST Services",
+      // Starts the underlying REST APIs (port 4010 and 4011) that the subgraphs fetch data from.
+      "type": "shell",
+      "command": "pnpm launch",
+      "options": { "cwd": "${workspaceFolder}/" },
+      "presentation": {
+        "panel": "new",
+        "close": true,
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "3. Accounts Subgraph",
+      // Starts the Accounts subgraph on port 4002.
+      "type": "shell",
+      "command": "Start-Sleep -Seconds 6; pnpm start",
+      "options": { "cwd": "${workspaceFolder}/subgraph-accounts" },
+      "presentation": {
+        "panel": "new",
+        "close": true,
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "4. Listings Subgraph",
+      // Starts the Listings subgraph on port 4003.
+      "type": "shell",
+      "command": "Start-Sleep -Seconds 6; pnpm start",
+      "options": { "cwd": "${workspaceFolder}/subgraph-listings" },
+      "presentation": {
+        "panel": "new",
+        "close": true,
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "5. Reviews Subgraph",
+      // Starts the newly extracted Reviews subgraph on port 4005.
+      "type": "shell",
+      "command": "Start-Sleep -Seconds 6; pnpm start",
+      "options": { "cwd": "${workspaceFolder}/subgraph-reviews" },
+      "presentation": {
+        "panel": "new",
+        "close": true,
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "6. Payments Subgraph",
+      // Starts the Payments subgraph on port 4004.
+      "type": "shell",
+      "command": "Start-Sleep -Seconds 6; pnpm start",
+      "options": { "cwd": "${workspaceFolder}/subgraph-payments" },
+      "presentation": {
+        "panel": "new",
+        "close": true,
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "7. Bookings Subgraph",
+      // Starts the Payments subgraph on port 4006.
+      "type": "shell",
+      "command": "Start-Sleep -Seconds 6; pnpm start",
+      "options": { "cwd": "${workspaceFolder}/subgraph-bookings" },
+      "presentation": {
+        "panel": "new",
+        "close": true,
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "8. Router",
+      // Starts Apollo Router (port 4000) using Rover, which orchestrates requests across all subgraphs.
+      "type": "shell",
+      "command": "Start-Sleep -Seconds 13; rover dev --supergraph-config ./router/supergraph-config.yaml --router-config ./router/router-config.yaml",
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": {
+        "panel": "new",
+        "close": true,
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "9. Client",
+      // Starts the React frontend on port 3000. It points to the parent directory to find the client repo.
+      "type": "shell",
+      "command": "Start-Sleep -Seconds 15; pnpm start",
+      "options": { "cwd": "${workspaceFolder}/../odyssey-voyage-II-client" },
+      "presentation": {
+        "panel": "new",
+        "close": true,
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    }
+  ]
+}

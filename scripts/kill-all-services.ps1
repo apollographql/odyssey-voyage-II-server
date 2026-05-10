@@ -188,23 +188,16 @@ $targets = @(
     Paths = @((Get-ExistingPath (Join-Path $root "subgraph-accounts")))
   },
   @{
-    Name = "2. Monolith Subgraph"
-    Ports = @(4001)
-    Paths = @((Get-ExistingPath (Join-Path $root "monolith")))
-  },
-  @{
     Name = "1. REST Services"
     Ports = @(4010, 4011)
     Paths = @(
       (Get-ExistingPath (Join-Path $root "services\accounts")),
-      (Get-ExistingPath (Join-Path $root "services\listings")),
-      (Get-ExistingPath (Join-Path $root "monolith"))
+      (Get-ExistingPath (Join-Path $root "services\listings"))
     )
     Extra = {
       param($process)
       $process.CommandLine -like "*$root*services\accounts*" -or
-        $process.CommandLine -like "*$root*services\listings*" -or
-        $process.CommandLine -like "*$root*monolith*utils\launch.js*"
+        $process.CommandLine -like "*$root*services\listings*"
     }
   }
 )
