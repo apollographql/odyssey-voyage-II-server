@@ -1,10 +1,13 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../odyssey-voyage-II-client"
-		}
-	]
+  "folders": [
+    {
+      "path": ".",
+    },
+    {
+      "path": "../odyssey-voyage-II-client",
+    },
+  ],
+  "settings": {
+    "powershell.cwd": "odyssey-voyage-II-server",
+  },
 }
