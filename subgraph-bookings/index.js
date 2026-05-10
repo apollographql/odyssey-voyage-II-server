@@ -4,7 +4,7 @@ const { buildSubgraphSchema } = require("@apollo/subgraph");
 
 const { readFileSync } = require("fs");
 const axios = require("axios");
-const gql = require("graphql-tag");
+const { default: gql } = require("graphql-tag");
 
 const { AuthenticationError } = require("./utils/errors");
 
@@ -35,7 +35,7 @@ async function startApolloServer() {
         let userInfo = {};
         if (userId) {
           const { data } = await axios
-            .get(`http://127.0.0.1:4011/login/${userId}`)
+            .get(`http://127.0.0.1:4010/login/${userId}`)
             .catch((error) => {
               throw AuthenticationError();
             });

@@ -56,6 +56,7 @@ const resolvers = {
       console.log('📦 [subgraph-accounts] handling Guest');
       return dataSources.accountsAPI.getUser(user.id);
     },
+    funds: () => 100.0, // Default funds value
   },
   User: {
     __resolveType(user) {

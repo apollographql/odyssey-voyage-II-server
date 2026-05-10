@@ -59,6 +59,8 @@ type Listing @key(fields: "id") {
   amenities: [Amenity]!
   "Calculated total cost of the listing with the given arguments"
   totalCost(checkInDate: String!, checkOutDate: String!): Float!
+  "The number of upcoming bookings for this listing"
+  numberOfUpcomingBookings: Int!
 }
 
 "A host is a type of Airlock user. They own listings."

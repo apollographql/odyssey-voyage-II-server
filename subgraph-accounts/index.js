@@ -4,20 +4,20 @@ const { buildSubgraphSchema } = require('@apollo/subgraph');
 
 const { readFileSync } = require('fs');
 const axios = require('axios');
-const gql = require('graphql-tag');
+const { default: gql } = require('graphql-tag');
 
 const { AuthenticationError } = require('./utils/errors');
 
 const typeDefs = gql(readFileSync('./schema.graphql', { encoding: 'utf-8' }));
 const resolvers = require('./resolvers');
-const AccountsAPI = require( './datasources/accounts' );
+const AccountsAPI = require('./datasources/accounts');
 const ListingsAPI = require('./datasources/listings');
 
 async function startApolloServer() {
   const server = new ApolloServer({
     schema: buildSubgraphSchema({
       typeDefs,
-      resolvers,
+      resolvers: /** @type {any} */ (resolvers),
     }),
   });
 
@@ -33,7 +33,7 @@ async function startApolloServer() {
         let userInfo = {};
         if (userId) {
           const { data } = await axios
-            .get(`http://127.0.0.1:4011/login/${userId}`)
+            .get(`http://127.0.0.1:4010/login/${userId}`)
             .catch((error) => {
               throw AuthenticationError();
             });

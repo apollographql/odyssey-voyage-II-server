@@ -16,7 +16,7 @@ Write-Host "   Apollo Voyage II - Starting Up..."    -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 
-# Step 1: REST backing services (accounts @ 4011, listings @ 4010)
+# Step 1: REST backing services (accounts @ 4010, listings @ 4011)
 Write-Host "[1/5] Starting REST services (ports 4010, 4011)..." -ForegroundColor Yellow
 Start-ServiceWindow -Title "REST Services" `
   -WorkingDir "$RootServer" `
@@ -61,8 +61,8 @@ Write-Host "========================================" -ForegroundColor Green
 Write-Host "   All services starting!"               -ForegroundColor Green
 Write-Host "========================================" -ForegroundColor Green
 Write-Host ""
-Write-Host "  REST services : http://127.0.0.1:4010 (listings)"  -ForegroundColor White
-Write-Host "                  http://127.0.0.1:4011 (accounts)"  -ForegroundColor White
+Write-Host "  REST services : http://127.0.0.1:4010 (accounts)"  -ForegroundColor White
+Write-Host "                  http://127.0.0.1:4011 (listings)"  -ForegroundColor White
 Write-Host "  Accounts GQL  : http://localhost:4002"             -ForegroundColor White
 Write-Host "  Listings GQL  : http://localhost:4003"             -ForegroundColor White
 Write-Host "  Router        : http://localhost:4000  <-- query here" -ForegroundColor Cyan

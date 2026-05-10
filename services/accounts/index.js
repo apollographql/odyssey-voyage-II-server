@@ -2,7 +2,9 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 4010;
 
-const { User } = require('./sequelize/models');
+/** @type {any} */
+const db = require('./sequelize/models');
+const { User } = db;
 
 app.use(express.json());
 
