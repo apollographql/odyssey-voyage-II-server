@@ -22,7 +22,7 @@
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.6.5",
     "sequelize-cli": "^6.2.0",
-    "sqlite3": "^5.1.2"
+    "sqlite3": "^6.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2",
