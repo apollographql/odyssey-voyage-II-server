@@ -27,7 +27,7 @@
     "axios": "^1.6.2",
     "concurrently": "^6.3.0",
     "date-fns": "^2.25.0",
-    "graphql": "^16.6.0",
+    "graphql": "^17.0.0",
     "graphql-tag": "^2.12.6",
     "sequelize": "^6.9.0",
     "sqlite3": "^5.1.2",
