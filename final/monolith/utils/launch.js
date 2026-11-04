@@ -1,4 +1,4 @@
-const concurrently = require("concurrently");
+const { concurrently } = require("concurrently");
 const path = require("path");
 concurrently(
   [
@@ -26,7 +26,7 @@ concurrently(
     killOthers: ["failure"],
     restartTries: 3,
   },
-).then(
+).result.then(
   function onSuccess() {
     // This code is necessary to make sure the parent terminates
     // when the application is closed successfully.

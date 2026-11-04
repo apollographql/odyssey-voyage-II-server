@@ -1,4 +1,4 @@
-const concurrently = require("concurrently");
+const { concurrently } = require("concurrently");
 const path = require("path");
 
 concurrently(
