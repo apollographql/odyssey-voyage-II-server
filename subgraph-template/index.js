@@ -13,10 +13,7 @@ const resolvers = require("./resolvers");
 
 async function startApolloServer() {
   const server = new ApolloServer({
-    schema: buildSubgraphSchema({
-      typeDefs,
-      resolvers,
-    }),
+    schema: buildSubgraphSchema([{ typeDefs, resolvers }]),
   });
 
   const port = 0; // TODO: change port number

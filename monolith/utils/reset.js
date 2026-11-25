@@ -1,4 +1,4 @@
-const concurrently = require("concurrently");
+const { concurrently } = require("concurrently");
 const path = require("path");
 concurrently(
   [
@@ -32,7 +32,7 @@ concurrently(
     killOthers: ["failure"],
     restartTries: 3,
   },
-).then(
+).result.then(
   function onSuccess(exitInfo) {
     console.log(
       "SUCCESS: Databases successfully reset to initial state and data.",

@@ -31,13 +31,10 @@ After playing around with the data, you may want to reset to its initial state. 
 
 You can take a peek at what the final version of the code should look like (after completing all the steps in the course).
 
-To run the `final` version, navigate to the `final/router` directory.
+To run the `final` version, you'll need [Rover](https://www.apollographql.com/docs/rover/getting-started) installed.
 
-In a new terminal window, run `APOLLO_KEY=<APOLLO_KEY> APOLLO_GRAPH_REF=<APOLLO_GRAPH_REF> ./router --config config.yaml`.
-
-Make sure to replace the values for `APOLLO_KEY` and `APOLLO_GRAPH_REF` (see course content for more details on how to set these up).
-
-This will start the router on [http://localhost:4000](http://localhost:4000)
+1. In a new terminal window, navigate to the `final/router` directory.
+1. Run `rover dev --supergraph-config supergraph-config.yaml --router-config router-config.yaml`. This will compose the supergraph locally and start the router on [http://localhost:4000](http://localhost:4000). (The first time you run it, Rover downloads the composition and router plugins it needs.)
 
 Next, let's run the subgraphs we split off according to the course instructions: the monolith subgraph (what's left of it) and the `accounts` subgraph.
 

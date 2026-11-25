@@ -4,7 +4,7 @@
   "description": "",
   "engines": {
     "npm": ">=6.0.0",
-    "node": ">=14.0.0 <=20"
+    "node": ">=22"
   },
   "scripts": {
     "db:init": "sequelize-cli db:migrate && sequelize-cli db:seed:all",
@@ -14,9 +14,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "sequelize": "^6.6.5",
-    "sequelize-cli": "^6.2.0",
-    "sqlite3": "^5.1.2"
+    "sequelize": "^6.37.8",
+    "sequelize-cli": "^6.6.5",
+    "sqlite3": "^6.0.1"
   },
   "devDependencies": {
     "path": "^0.12.7"
